@@ -1,0 +1,47 @@
+{
+  "forms": {
+    "errors": {
+      "required": "This field is required",
+      "min": "Value is too low",
+      "max": "Value is too high",
+      "minLength": "Too short",
+      "maxLength": "Too long",
+      "pattern": "Invalid format",
+      "invalid": "Invalid value",
+      "invalidDate": "Invalid date",
+      "invalidFile": "Invalid file",
+      "fileTooLarge": "File is too large",
+      "fileTypeNotAllowed": "File type not allowed"
+    },
+    "labels": {
+      "email": "Email",
+      "password": "Password",
+      "name": "Name",
+      "amount": "Amount",
+      "volume": "Volume",
+      "date": "Date",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "otp": "Verification code",
+      "upload": "Upload file",
+      "chooseFile": "Choose file",
+      "noFileChosen": "No file chosen"
+    },
+    "placeholders": {
+      "email": "Enter your email",
+      "password": "Enter your password",
+      "name": "Enter your name",
+      "amount": "0.00",
+      "date": "Select date",
+      "otp": "Enter code",
+      "upload": "Drop files or click to upload"
+    },
+    "helpers": {
+      "optional": "Optional",
+      "required": "Required",
+      "maxSize": "Max size: {size}",
+      "acceptedTypes": "Accepted: {types}",
+      "clearFiles": "Clear all"
+    }
+  }
+}

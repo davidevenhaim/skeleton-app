@@ -1,65 +1,152 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useForm } from "react-hook-form";
+import { Form } from "@/components/form/Form";
+import {
+  TextInput,
+  FormOTPInput,
+  DateInput,
+  FileUpload,
+  FormattedInput,
+  Slider
+} from "@/components/form";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { AppDialog } from "@/components/app";
+import {
+  toastSuccess,
+  toastError,
+  toastInfo,
+  toastWarning,
+} from "@/lib/toast";
+import { inputFormatter } from "@/utils/formatters";
+import type { DateRange } from "react-day-picker";
+
+type ExampleForm = {
+  name: string;
+  amount?: string;
+  otp?: string;
+  date?: Date;
+  dateRange?: DateRange;
+  files?: File | File[];
+  volume?: number;
+};
+
+export default function HomePage() {
+  const form = useForm<ExampleForm>({
+    defaultValues: {
+      name: "",
+      amount: "",
+      otp: "",
+      volume: 50
+    }
+  });
+
+  const onSubmit = (data: ExampleForm) => {
+    console.log(data);
+    toastSuccess("Form submitted!", "Your data has been saved.");
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <main className='min-h-screen p-8'>
+      <div className='mx-auto max-w-2xl space-y-8'>
+        <h1 className='text-2xl font-bold'>Form Components Demo</h1>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Dialog & Toasts</CardTitle>
+          </CardHeader>
+          <CardContent className='flex flex-wrap gap-2'>
+            <AppDialog
+              trigger={<Button variant='outline'>Open Dialog</Button>}
+              title='Dialog Title'
+              description='A reusable dialog description.'
+              footer={<Button>Confirm</Button>}
+              showCloseButton
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              <p>Dialog content goes here.</p>
+            </AppDialog>
+            <Button
+              variant='outline'
+              onClick={() => toastSuccess("Success!", "Operation completed.")}
             >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+              Success Toast
+            </Button>
+            <Button
+              variant='outline'
+              onClick={() => toastError("Error!", "Something went wrong.")}
+            >
+              Error Toast
+            </Button>
+            <Button
+              variant='outline'
+              onClick={() => toastInfo("Info", "Here's some information.")}
+            >
+              Info Toast
+            </Button>
+            <Button
+              variant='outline'
+              onClick={() => toastWarning("Warning", "Please be careful.")}
+            >
+              Warning Toast
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Form form={form} onSubmit={onSubmit} className='space-y-6'>
+          <Card>
+            <CardHeader>
+              <CardTitle>Text & Formatted Inputs</CardTitle>
+            </CardHeader>
+            <CardContent className='space-y-4'>
+              <TextInput
+                name='name'
+                label='labels.name'
+                placeholder='placeholders.name'
+                required
+              />
+              <FormattedInput
+                name='amount'
+                label='labels.amount'
+                formatter={inputFormatter.dollar}
+                placeholder='placeholders.amount'
+              />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>OTP & Slider</CardTitle>
+            </CardHeader>
+            <CardContent className='space-y-4'>
+              <FormOTPInput name='otp' label='labels.otp' length={6} />
+              <Slider name='volume' label='labels.volume' min={0} max={100} />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Date & File Upload</CardTitle>
+            </CardHeader>
+            <CardContent className='space-y-4'>
+              <DateInput name='date' label='labels.date' mode='single' />
+              <DateInput
+                name='dateRange'
+                label='labels.startDate'
+                mode='range'
+              />
+              <FileUpload
+                name='files'
+                label='labels.upload'
+                multiple
+                maxSize={5 * 1024 * 1024}
+              />
+            </CardContent>
+          </Card>
+
+          <Button type='submit'>Submit</Button>
+        </Form>
+      </div>
+    </main>
   );
 }

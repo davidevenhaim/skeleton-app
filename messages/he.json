@@ -1,0 +1,47 @@
+{
+  "forms": {
+    "errors": {
+      "required": "שדה חובה",
+      "min": "הערך נמוך מדי",
+      "max": "הערך גבוה מדי",
+      "minLength": "קצר מדי",
+      "maxLength": "ארוך מדי",
+      "pattern": "פורמט לא תקין",
+      "invalid": "ערך לא תקין",
+      "invalidDate": "תאריך לא תקין",
+      "invalidFile": "קובץ לא תקין",
+      "fileTooLarge": "הקובץ גדול מדי",
+      "fileTypeNotAllowed": "סוג קובץ לא מורשה"
+    },
+    "labels": {
+      "email": "אימייל",
+      "password": "סיסמה",
+      "name": "שם",
+      "amount": "סכום",
+      "volume": "עוצמה",
+      "date": "תאריך",
+      "startDate": "תאריך התחלה",
+      "endDate": "תאריך סיום",
+      "otp": "קוד אימות",
+      "upload": "העלאת קובץ",
+      "chooseFile": "בחר קובץ",
+      "noFileChosen": "לא נבחר קובץ"
+    },
+    "placeholders": {
+      "email": "הזן את האימייל שלך",
+      "password": "הזן את הסיסמה שלך",
+      "name": "הזן את שמך",
+      "amount": "0.00",
+      "date": "בחר תאריך",
+      "otp": "הזן קוד",
+      "upload": "גרור קבצים או לחץ להעלאה"
+    },
+    "helpers": {
+      "optional": "אופציונלי",
+      "required": "חובה",
+      "maxSize": "גודל מקסימלי: {size}",
+      "acceptedTypes": "מקובל: {types}",
+      "clearFiles": "נקה הכל"
+    }
+  }
+}

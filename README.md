@@ -1,4 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is a [Next.js](https://nextjs.org) skeleton app with shadcn/ui, react-hook-form, and next-intl.
+
+## Stack
+
+- **UI**: shadcn/ui (Accordion, Button, Card, Drawer, Input, Label, Select, Tabs, Badge, Avatar, Dialog, Sheet, Calendar, Popover, Slider, InputOTP, etc.)
+- **Icons**: Iconify via `@/components/ui/iconify` (all app icons use this component)
+- **Forms**: react-hook-form with form components in `src/components/form`
+- **Toasts**: Sonner for success/error/info/warning popups
+- **i18n**: next-intl with translation files in `messages/`
+
+## AppDialog
+
+Reusable dialog in `src/components/app/AppDialog.tsx`:
+
+```tsx
+import { AppDialog } from "@/components/app";
+
+<AppDialog
+  trigger={<Button>Open</Button>}
+  title="Title"
+  description="Description"
+  footer={<Button>Confirm</Button>}
+  showCloseButton
+>
+  Content
+</AppDialog>
+```
+
+## Toasts (Sonner)
+
+Import from `@/lib/toast`:
+
+- `toastSuccess(message, description?)`
+- `toastError(message, description?)`
+- `toastInfo(message, description?)`
+- `toastWarning(message, description?)`
+- `toastLoading(message)` / `toastDismiss(id)`
+- `toastPromise(promise, { loading, success, error })`
+
+## Form Components
+
+All form components use `useFormContext()` and must be inside a `FormProvider` (use the `Form` wrapper):
+
+- **TextInput** – text/number input
+- **FormOTPInput** – OTP verification code
+- **DateInput** – single date or date range
+- **FileUpload** – file upload with optional multiple/maxSize/accept
+- **FormattedInput** – formatted input (currency, phone, etc.) using formatters from `@/utils/formatters`
+- **Slider** – range slider
+
+## Formatters
+
+Ready-to-use formatters in `src/utils/formatters.ts`:
+
+- `dollarFormatter` – $1,234.56
+- `euroFormatter` – €1.234,56
+- `percentFormatter` – 12.5%
+- `phoneFormatter` – (123) 456-7890
+- `ssnFormatter` – 123-45-6789
+- `creditCardFormatter` – 1234 5678 9012 3456
+
+## Translations
+
+Translation keys live under `forms` namespace. Example: `t("labels.email")`, `t("placeholders.date")`, `t("errors.required")`.
 
 ## Getting Started
 
