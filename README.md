@@ -1,5 +1,7 @@
 This is a [Next.js](https://nextjs.org) skeleton app with shadcn/ui, react-hook-form, and next-intl.
 
+I've created this skeleton to start new next projects with good standards.
+
 ## Stack
 
 - **UI**: shadcn/ui (Accordion, Button, Card, Drawer, Input, Label, Select, Tabs, Badge, Avatar, Dialog, Sheet, Calendar, Popover, Slider, InputOTP, etc.)
