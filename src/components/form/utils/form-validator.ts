@@ -1,0 +1,188 @@
+import { getMinMaxOfLength } from "@/utils/number.utils";
+import { z as zod } from "zod";
+import { isValidUrl } from "./form-validator.helpers";
+
+
+type InputProps = {
+  message?: {
+    required_error?: string;
+    invalid_type_error?: string;
+  };
+  minFiles?: number;
+  isValidPhoneNumber?: (text: string) => boolean;
+  required?: boolean;
+  canBeZero?: boolean;
+};
+
+export const formValidator = {
+  requiredPositiveNumber: (data?: { props?: InputProps }) =>
+    zod
+      .number()
+      .nonnegative({ error: "min0" })
+      .min(data?.props?.canBeZero ? 0 : 1, {
+        error: "required"
+      }),
+
+  optionalPositiveNumber: () =>
+    zod.number().nonnegative({ error: "min0" }).optional().nullable(),
+
+  requiredMinNumber: (min: number) => zod.number().min(min, { error: "min" }),
+
+  requiredString: (props?: InputProps) =>
+    zod
+      .string()
+      .min(1, { error: props?.message?.required_error ?? "required" }),
+
+  optionalString: () => zod.string().optional().nullable(),
+
+  requiredStringArray: (props?: InputProps) =>
+    zod
+      .array(zod.string(), {
+        error: props?.message?.required_error ?? "required"
+      })
+      .min(1, { error: props?.message?.required_error ?? "required" }),
+
+  optionalStringArray: (_props?: InputProps) => zod.array(zod.string()),
+
+  autocompleteSelection: () =>
+    zod.array(
+      formValidator
+        .requiredObject<{
+          value: string;
+          label: string;
+        } | null>()
+        .nullable()
+    ),
+
+  numberWithLength: (len = 9, props?: InputProps) => {
+    const { min, max } = getMinMaxOfLength(len);
+    return zod
+      .number()
+      .gte(min, { error: props?.message?.required_error ?? "minLen" })
+      .lte(max, { error: props?.message?.required_error ?? "minLen" });
+  },
+
+  stringWithLength: (len = 9, props?: InputProps) => {
+    const { min, max } = getMinMaxOfLength(len);
+    return zod
+      .string()
+      .min(min, { error: props?.message?.required_error ?? "minLen" })
+      .max(max, { error: props?.message?.required_error ?? "minLen" });
+  },
+
+  requiredEmail: () =>
+    zod.string().min(1, { error: "emailrequired" }).email({ error: "emailNotValid" }),
+
+  requiredPhoneNumber: (props?: InputProps) =>
+    zod
+      .string({
+        error: (iss) =>
+          iss.input === undefined
+            ? props?.message?.required_error ?? "required"
+            : props?.message?.invalid_type_error ?? "invalidPhoneNumber"
+      })
+      .min(1, { error: props?.message?.required_error ?? "required" })
+      .refine((data) => props?.isValidPhoneNumber?.(data), {
+        error: props?.message?.invalid_type_error ?? "invalidPhoneNumber"
+      }),
+
+  optionalPhoneNumber: (props?: InputProps) =>
+    zod
+      .string({
+        error: (iss) =>
+          iss.input === undefined
+            ? props?.message?.required_error ?? "required"
+            : props?.message?.invalid_type_error ?? "invalidPhoneNumber"
+      })
+      .refine(
+        (data) => (data.length > 0 ? props?.isValidPhoneNumber?.(data) : true),
+        {
+          error: props?.message?.invalid_type_error ?? "invalidPhoneNumber"
+        }
+      )
+      .optional()
+      .nullable(),
+
+  requiredStringDate: (_props?: InputProps) =>
+    zod.string().refine((val) => !isNaN(Date.parse(val)), {
+      error: "invalidDate"
+    }),
+
+  richTextContent: (props?: InputProps) =>
+    zod.string().min(8, {
+      error: props?.message?.required_error ?? "Editor is required!"
+    }),
+
+  requiredObject: <T>(props?: InputProps) =>
+    zod.custom<T | null>().refine((data) => data !== null && data !== "", {
+      error: props?.message?.required_error ?? "Field is required!"
+    }),
+
+  requiredBoolean: (props?: InputProps) =>
+    zod.coerce.boolean().refine((bool) => bool === true, {
+      error: props?.message?.required_error ?? "Switch is required!"
+    }),
+
+  singleFile: (props?: InputProps) =>
+    zod.custom<File | string | null>().transform((data, ctx) => {
+      const hasFile =
+        data instanceof File || (typeof data === "string" && !!data.length);
+
+      if (props?.required && !hasFile) {
+        ctx.addIssue({
+          code: "custom",
+          message: props?.message?.required_error ?? "File is required!"
+        });
+        return null;
+      }
+
+      return data;
+    }),
+
+  multipleFiles: (props?: InputProps) =>
+    zod.array(zod.custom<File | string>()).transform((data, ctx) => {
+      const minFiles = props?.minFiles ?? 2;
+
+      if (!data.length) {
+        ctx.addIssue({
+          code: "custom",
+          message: props?.message?.required_error ?? "Files is required!"
+        });
+      } else if (data.length < minFiles) {
+        ctx.addIssue({
+          code: "custom",
+          message: `Must have at least ${minFiles} items!`
+        });
+      }
+
+      return data;
+    }),
+
+  requiredWebUrl: (props?: InputProps) =>
+    zod
+      .string({
+        error: (iss) =>
+          iss.input === undefined
+            ? props?.message?.required_error ?? "required"
+            : props?.message?.invalid_type_error ?? "invalidUrl"
+      })
+      .min(1, { error: props?.message?.required_error ?? "required" })
+      .refine((url) => isValidUrl(url), {
+        error: props?.message?.invalid_type_error ?? "invalidUrl"
+      }),
+
+  optionalWebUrl: (props?: InputProps) =>
+    zod
+      .string({
+        error: (iss) =>
+          iss.input === undefined
+            ? props?.message?.required_error ?? "required"
+            : props?.message?.invalid_type_error ?? "invalidUrl"
+      })
+      .min(1, { error: props?.message?.required_error ?? "required" })
+      .refine((url) => isValidUrl(url), {
+        error: props?.message?.invalid_type_error ?? "invalidUrl"
+      })
+      .optional()
+      .nullable()
+};
