@@ -4,6 +4,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Controller, useFormContext } from "react-hook-form";
 import { useTranslations } from "next-intl";
+import { formatFormError } from "./utils/format-form-error";
 import {
   InputOTP,
   InputOTPGroup,
@@ -77,7 +78,7 @@ export const FormOTPInput = React.forwardRef<HTMLDivElement, OTPInputProps>(
             {(error || fieldError) && (
               <p className="mt-1 text-sm text-destructive">
                 {fieldError?.message
-                  ? t(`errors.${fieldError.message}` as "errors.required")
+                  ? formatFormError(t, fieldError.message)
                   : helperText}
               </p>
             )}

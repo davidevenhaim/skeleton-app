@@ -2,7 +2,6 @@ import { getMinMaxOfLength } from "@/utils/number.utils";
 import { z as zod } from "zod";
 import { isValidUrl } from "./form-validator.helpers";
 
-
 type InputProps = {
   message?: {
     required_error?: string;
@@ -34,6 +33,24 @@ export const formValidator = {
       .min(1, { error: props?.message?.required_error ?? "required" }),
 
   optionalString: () => zod.string().optional().nullable(),
+
+  requiredPassword: (props?: InputProps) =>
+    zod
+      .string()
+      .min(8, { error: props?.message?.required_error ?? "passwordMin8" })
+      .max(64, { error: props?.message?.required_error ?? "passwordMax64" })
+      .regex(/[A-Z]/, {
+        error: props?.message?.required_error ?? "passwordUppercase"
+      })
+      .regex(/[a-z]/, {
+        error: props?.message?.required_error ?? "passwordLowercase"
+      })
+      .regex(/[0-9]/, {
+        error: props?.message?.required_error ?? "passwordNumber"
+      })
+      .regex(/[!@#$%^&*]/, {
+        error: props?.message?.required_error ?? "passwordSpecial"
+      }),
 
   requiredStringArray: (props?: InputProps) =>
     zod
@@ -71,15 +88,18 @@ export const formValidator = {
   },
 
   requiredEmail: () =>
-    zod.string().min(1, { error: "emailrequired" }).email({ error: "emailNotValid" }),
+    zod
+      .string()
+      .min(1, { error: "emailrequired" })
+      .email({ error: "emailNotValid" }),
 
   requiredPhoneNumber: (props?: InputProps) =>
     zod
       .string({
         error: (iss) =>
           iss.input === undefined
-            ? props?.message?.required_error ?? "required"
-            : props?.message?.invalid_type_error ?? "invalidPhoneNumber"
+            ? (props?.message?.required_error ?? "required")
+            : (props?.message?.invalid_type_error ?? "invalidPhoneNumber")
       })
       .min(1, { error: props?.message?.required_error ?? "required" })
       .refine((data) => props?.isValidPhoneNumber?.(data), {
@@ -91,8 +111,8 @@ export const formValidator = {
       .string({
         error: (iss) =>
           iss.input === undefined
-            ? props?.message?.required_error ?? "required"
-            : props?.message?.invalid_type_error ?? "invalidPhoneNumber"
+            ? (props?.message?.required_error ?? "required")
+            : (props?.message?.invalid_type_error ?? "invalidPhoneNumber")
       })
       .refine(
         (data) => (data.length > 0 ? props?.isValidPhoneNumber?.(data) : true),
@@ -110,17 +130,17 @@ export const formValidator = {
 
   richTextContent: (props?: InputProps) =>
     zod.string().min(8, {
-      error: props?.message?.required_error ?? "Editor is required!"
+      error: props?.message?.required_error ?? "editorRequired"
     }),
 
   requiredObject: <T>(props?: InputProps) =>
     zod.custom<T | null>().refine((data) => data !== null && data !== "", {
-      error: props?.message?.required_error ?? "Field is required!"
+      error: props?.message?.required_error ?? "fieldRequired"
     }),
 
   requiredBoolean: (props?: InputProps) =>
     zod.coerce.boolean().refine((bool) => bool === true, {
-      error: props?.message?.required_error ?? "Switch is required!"
+      error: props?.message?.required_error ?? "switchRequired"
     }),
 
   singleFile: (props?: InputProps) =>
@@ -131,7 +151,7 @@ export const formValidator = {
       if (props?.required && !hasFile) {
         ctx.addIssue({
           code: "custom",
-          message: props?.message?.required_error ?? "File is required!"
+          message: props?.message?.required_error ?? "fileRequired"
         });
         return null;
       }
@@ -146,12 +166,12 @@ export const formValidator = {
       if (!data.length) {
         ctx.addIssue({
           code: "custom",
-          message: props?.message?.required_error ?? "Files is required!"
+          message: props?.message?.required_error ?? "filesRequired"
         });
       } else if (data.length < minFiles) {
         ctx.addIssue({
           code: "custom",
-          message: `Must have at least ${minFiles} items!`
+          message: `minFilesCount|${minFiles}`
         });
       }
 
@@ -163,8 +183,8 @@ export const formValidator = {
       .string({
         error: (iss) =>
           iss.input === undefined
-            ? props?.message?.required_error ?? "required"
-            : props?.message?.invalid_type_error ?? "invalidUrl"
+            ? (props?.message?.required_error ?? "required")
+            : (props?.message?.invalid_type_error ?? "invalidUrl")
       })
       .min(1, { error: props?.message?.required_error ?? "required" })
       .refine((url) => isValidUrl(url), {
@@ -176,8 +196,8 @@ export const formValidator = {
       .string({
         error: (iss) =>
           iss.input === undefined
-            ? props?.message?.required_error ?? "required"
-            : props?.message?.invalid_type_error ?? "invalidUrl"
+            ? (props?.message?.required_error ?? "required")
+            : (props?.message?.invalid_type_error ?? "invalidUrl")
       })
       .min(1, { error: props?.message?.required_error ?? "required" })
       .refine((url) => isValidUrl(url), {
