@@ -19,7 +19,7 @@ export const formValidator = {
       .number()
       .nonnegative({ error: "min0" })
       .min(data?.props?.canBeZero ? 0 : 1, {
-        error: "required"
+        error: "required",
       }),
 
   optionalPositiveNumber: () =>
@@ -40,22 +40,26 @@ export const formValidator = {
       .min(8, { error: props?.message?.required_error ?? "passwordMin8" })
       .max(64, { error: props?.message?.required_error ?? "passwordMax64" })
       .regex(/[A-Z]/, {
-        error: props?.message?.required_error ?? "passwordUppercase"
+        error: props?.message?.required_error ?? "passwordUppercase",
       })
       .regex(/[a-z]/, {
-        error: props?.message?.required_error ?? "passwordLowercase"
+        error: props?.message?.required_error ?? "passwordLowercase",
       })
       .regex(/[0-9]/, {
-        error: props?.message?.required_error ?? "passwordNumber"
+        error: props?.message?.required_error ?? "passwordNumber",
       })
       .regex(/[!@#$%^&*]/, {
-        error: props?.message?.required_error ?? "passwordSpecial"
+        error: props?.message?.required_error ?? "passwordSpecial",
       }),
 
+  requiredPasswordRelaxed: (props?: InputProps) =>
+    zod
+      .string()
+      .min(1, { error: props?.message?.required_error ?? "required" }),
   requiredStringArray: (props?: InputProps) =>
     zod
       .array(zod.string(), {
-        error: props?.message?.required_error ?? "required"
+        error: props?.message?.required_error ?? "required",
       })
       .min(1, { error: props?.message?.required_error ?? "required" }),
 
@@ -68,7 +72,7 @@ export const formValidator = {
           value: string;
           label: string;
         } | null>()
-        .nullable()
+        .nullable(),
     ),
 
   numberWithLength: (len = 9, props?: InputProps) => {
@@ -99,11 +103,11 @@ export const formValidator = {
         error: (iss) =>
           iss.input === undefined
             ? (props?.message?.required_error ?? "required")
-            : (props?.message?.invalid_type_error ?? "invalidPhoneNumber")
+            : (props?.message?.invalid_type_error ?? "invalidPhoneNumber"),
       })
       .min(1, { error: props?.message?.required_error ?? "required" })
       .refine((data) => props?.isValidPhoneNumber?.(data), {
-        error: props?.message?.invalid_type_error ?? "invalidPhoneNumber"
+        error: props?.message?.invalid_type_error ?? "invalidPhoneNumber",
       }),
 
   optionalPhoneNumber: (props?: InputProps) =>
@@ -112,35 +116,35 @@ export const formValidator = {
         error: (iss) =>
           iss.input === undefined
             ? (props?.message?.required_error ?? "required")
-            : (props?.message?.invalid_type_error ?? "invalidPhoneNumber")
+            : (props?.message?.invalid_type_error ?? "invalidPhoneNumber"),
       })
       .refine(
         (data) => (data.length > 0 ? props?.isValidPhoneNumber?.(data) : true),
         {
-          error: props?.message?.invalid_type_error ?? "invalidPhoneNumber"
-        }
+          error: props?.message?.invalid_type_error ?? "invalidPhoneNumber",
+        },
       )
       .optional()
       .nullable(),
 
   requiredStringDate: (_props?: InputProps) =>
     zod.string().refine((val) => !isNaN(Date.parse(val)), {
-      error: "invalidDate"
+      error: "invalidDate",
     }),
 
   richTextContent: (props?: InputProps) =>
     zod.string().min(8, {
-      error: props?.message?.required_error ?? "editorRequired"
+      error: props?.message?.required_error ?? "editorRequired",
     }),
 
   requiredObject: <T>(props?: InputProps) =>
     zod.custom<T | null>().refine((data) => data !== null && data !== "", {
-      error: props?.message?.required_error ?? "fieldRequired"
+      error: props?.message?.required_error ?? "fieldRequired",
     }),
 
   requiredBoolean: (props?: InputProps) =>
     zod.coerce.boolean().refine((bool) => bool === true, {
-      error: props?.message?.required_error ?? "switchRequired"
+      error: props?.message?.required_error ?? "switchRequired",
     }),
 
   singleFile: (props?: InputProps) =>
@@ -151,7 +155,7 @@ export const formValidator = {
       if (props?.required && !hasFile) {
         ctx.addIssue({
           code: "custom",
-          message: props?.message?.required_error ?? "fileRequired"
+          message: props?.message?.required_error ?? "fileRequired",
         });
         return null;
       }
@@ -166,12 +170,12 @@ export const formValidator = {
       if (!data.length) {
         ctx.addIssue({
           code: "custom",
-          message: props?.message?.required_error ?? "filesRequired"
+          message: props?.message?.required_error ?? "filesRequired",
         });
       } else if (data.length < minFiles) {
         ctx.addIssue({
           code: "custom",
-          message: `minFilesCount|${minFiles}`
+          message: `minFilesCount|${minFiles}`,
         });
       }
 
@@ -184,11 +188,11 @@ export const formValidator = {
         error: (iss) =>
           iss.input === undefined
             ? (props?.message?.required_error ?? "required")
-            : (props?.message?.invalid_type_error ?? "invalidUrl")
+            : (props?.message?.invalid_type_error ?? "invalidUrl"),
       })
       .min(1, { error: props?.message?.required_error ?? "required" })
       .refine((url) => isValidUrl(url), {
-        error: props?.message?.invalid_type_error ?? "invalidUrl"
+        error: props?.message?.invalid_type_error ?? "invalidUrl",
       }),
 
   optionalWebUrl: (props?: InputProps) =>
@@ -197,12 +201,12 @@ export const formValidator = {
         error: (iss) =>
           iss.input === undefined
             ? (props?.message?.required_error ?? "required")
-            : (props?.message?.invalid_type_error ?? "invalidUrl")
+            : (props?.message?.invalid_type_error ?? "invalidUrl"),
       })
       .min(1, { error: props?.message?.required_error ?? "required" })
       .refine((url) => isValidUrl(url), {
-        error: props?.message?.invalid_type_error ?? "invalidUrl"
+        error: props?.message?.invalid_type_error ?? "invalidUrl",
       })
       .optional()
-      .nullable()
+      .nullable(),
 };

@@ -51,12 +51,13 @@ export const FormattedInput = React.forwardRef<
         name={name}
         control={control}
         render={({ field, fieldState: { error: fieldError } }) => {
-          const raw = field.value ?? "";
+          const isNumeric = typeof field.value === "number";
+          const raw = String(field.value ?? "");
           const displayValue = formatter.format(raw);
 
           const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             const rawValue = formatter.parse(e.target.value);
-            field.onChange(rawValue);
+            field.onChange(isNumeric ? Number(rawValue) || 0 : rawValue);
           };
 
           return (

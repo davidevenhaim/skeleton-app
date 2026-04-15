@@ -1,7 +1,7 @@
-export { TextInput } from "./TextInput";
-export { FormOTPInput } from "./OTPInput";
-export { DateInput } from "./DateInput";
-export { FileUpload } from "./FileUpload";
-export { FormattedInput } from "./FormattedInput";
-export { Slider } from "./Slider";
+export { TextInput } from "./text-input";
+export { FormOTPInput } from "./otp-input";
+export { DateInput } from "./date-input";
+export { FileUpload } from "./file-upload";
+export { FormattedInput } from "./formatted-input";
+export { Slider } from "./slider";
 export { Form } from "./Form";

@@ -85,11 +85,46 @@ const creditCardFormatter: FormatterFn = {
   parse: (displayValue) => displayValue.replace(/\D/g, "")
 };
 
+export const formatBytes: FormatterFn = {
+  format: (value) => {
+    const decimals = 1;
+    const bytes = Number(value);
+    if (!Number.isFinite(bytes)) return "0 B";
+    if (bytes === 0) return "0 B";
+
+    const absBytes = Math.abs(bytes);
+    const units = ["B", "KB", "MB", "GB", "TB"];
+    const base = 1024;
+
+    const unitIndex = Math.min(
+      Math.floor(Math.log(absBytes) / Math.log(base)),
+      units.length - 1
+    );
+
+    const output = bytes / Math.pow(base, unitIndex);
+
+    return `${output.toFixed(decimals).replace(/\.0+$/, "")} ${units[unitIndex]}`;
+  },
+  parse: (displayValue) => displayValue.replace(/\D/g, "")
+};
+
+/** Integer with commas: 1,234 */
+const integerFormatter: FormatterFn = {
+  format: (value) => {
+    const num = value.replace(/[^0-9]/g, "");
+    if (!num) return "";
+    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  },
+  parse: (displayValue) => displayValue.replace(/[^0-9]/g, "")
+};
+
 export const inputFormatter = {
   dollar: dollarFormatter,
   euro: euroFormatter,
   percent: percentFormatter,
   phone: phoneFormatter,
   ssn: ssnFormatter,
-  creditCard: creditCardFormatter
+  creditCard: creditCardFormatter,
+  bytes: formatBytes,
+  integer: integerFormatter
 };

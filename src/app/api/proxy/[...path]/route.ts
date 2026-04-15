@@ -1,7 +1,8 @@
+"use server";
+import { CONFIG } from "@/lib/app-config";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { NextRequest, NextResponse } from "next/server";
-import { CONFIG } from "@/lib/app-config";
 
 const SERVER_URL = CONFIG.serverUrl;
 
@@ -28,39 +29,59 @@ async function handleProxy(
   const apiUrl = `${SERVER_URL}/${endpoint}${queryString}`;
   console.log(`🔄 Proxying request to: ${apiUrl}`);
 
-  let body: string | undefined;
+  const contentType = req.headers.get("content-type") || "";
+  let body: string | ArrayBuffer | undefined;
+
   if (req.method !== "GET" && req.method !== "HEAD") {
-    try {
-      const data = await req.json();
-      body = JSON.stringify(data);
-      console.log("📝 Parsed body=", data);
-    } catch (err) {
-      console.log("🛑 Error parsing JSON:", err);
+    if (contentType.includes("multipart/form-data")) {
+      // Stream raw body through - parsing/re-serializing FormData can corrupt multipart
+      body = await req.arrayBuffer();
+      console.log("📝 Forwarding multipart body (raw)");
+    } else {
+      try {
+        const data = await req.json();
+        body = JSON.stringify(data);
+        console.log("📝 Parsed body=", data);
+      } catch (err) {
+        console.log("🛑 Error parsing JSON:", err);
+      }
     }
   }
 
   try {
     const incomingCookie = req.headers.get("cookie");
-    const newHeaders = new Headers(req.headers);
+    const authorization = req.headers.get("authorization");
 
-    newHeaders.set("Content-Type", "application/json");
-    newHeaders.delete("content-length");
-    if (incomingCookie) {
-      newHeaders.set("Cookie", incomingCookie);
+    const newHeaders = new Headers();
+    // Forward Supabase auth cookie + Authorization so backend can identify the user
+    if (incomingCookie) newHeaders.set("Cookie", incomingCookie);
+    if (authorization) newHeaders.set("Authorization", authorization);
+    // Copy other headers (except host - backend has its own)
+    req.headers.forEach((value, key) => {
+      if (key.toLowerCase() !== "host") {
+        newHeaders.set(key, value);
+      }
+    });
+    // Override with our explicit auth headers (ensure cookie/authorization are set)
+    if (incomingCookie) newHeaders.set("Cookie", incomingCookie);
+    if (authorization) newHeaders.set("Authorization", authorization);
+
+    if (!contentType.includes("multipart/form-data")) {
+      newHeaders.set("Content-Type", "application/json");
+      newHeaders.delete("content-length");
     }
 
     const requestOptions: RequestInit = {
       method: req.method || "GET",
       headers: newHeaders,
-      credentials: "include",
       body
     };
     const response = await fetch(apiUrl, requestOptions);
 
     // Parse the backend response
-    const contentType = response.headers.get("content-type");
+    const responseContentType = response.headers.get("content-type");
     let responseData;
-    if (contentType && contentType.includes("application/json")) {
+    if (responseContentType?.includes("application/json")) {
       responseData = await response.json();
     } else {
       responseData = await response.text();
@@ -95,21 +116,26 @@ async function handleProxy(
 }
 
 export async function GET(req: NextRequest, { params }: any) {
-  return handleProxy(req, params);
+  const resolved = await params;
+  return handleProxy(req, resolved);
 }
 
 export async function POST(req: NextRequest, { params }: any) {
-  return handleProxy(req, params);
+  const resolved = await params;
+  return handleProxy(req, resolved);
 }
 
 export async function PUT(req: NextRequest, { params }: any) {
-  return handleProxy(req, params);
+  const resolved = await params;
+  return handleProxy(req, resolved);
 }
 
 export async function DELETE(req: NextRequest, { params }: any) {
-  return handleProxy(req, params);
+  const resolved = await params;
+  return handleProxy(req, resolved);
 }
 
 export async function PATCH(req: NextRequest, { params }: any) {
-  return handleProxy(req, params);
+  const resolved = await params;
+  return handleProxy(req, resolved);
 }

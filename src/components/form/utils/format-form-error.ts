@@ -4,7 +4,7 @@
  */
 export function formatFormError(
   t: (key: string, values?: Record<string, string | number>) => string,
-  message: string
+  message: string,
 ): string {
   if (message.includes("|")) {
     const [key, ...paramParts] = message.split("|");

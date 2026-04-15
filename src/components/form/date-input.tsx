@@ -28,6 +28,8 @@ interface DateInputProps {
   /** "single" for one date, "range" for date range */
   mode?: "single" | "range";
   placeholder?: string;
+  placeholderText?: string;
+  displayFormat?: string;
   disabled?: boolean;
 }
 
@@ -43,6 +45,8 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
       labelClassName = "",
       mode = "single",
       placeholder,
+      placeholderText,
+      displayFormat = "PPP",
       disabled,
     },
     ref
@@ -51,7 +55,8 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
     const t = useTranslations("forms");
     const [open, setOpen] = React.useState(false);
 
-    const placeholderText =
+    const resolvedPlaceholderText =
+      placeholderText ??
       placeholder ??
       (mode === "range"
         ? `${t("labels.startDate")} - ${t("labels.endDate")}`
@@ -65,14 +70,14 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
           const value = field.value as Date | DateRange | undefined;
           const displayValue =
             mode === "single" && value && !Array.isArray(value)
-              ? format(value as Date, "PPP")
+              ? format(value as Date, displayFormat)
               : mode === "range" && value && typeof value === "object" && "from" in value
                 ? value.from
                   ? value.to
-                    ? `${format(value.from, "PPP")} - ${format(value.to, "PPP")}`
-                    : format(value.from, "PPP")
-                  : placeholderText
-                : placeholderText;
+                    ? `${format(value.from, displayFormat)} - ${format(value.to, displayFormat)}`
+                    : format(value.from, displayFormat)
+                  : resolvedPlaceholderText
+                : resolvedPlaceholderText;
 
           return (
             <div className={cn("w-full", className)}>
