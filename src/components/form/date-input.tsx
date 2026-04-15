@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Typography } from "@/components/ui/typography";
 import type { DateRange } from "react-day-picker";
 
 interface DateInputProps {
@@ -86,9 +87,13 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
                   htmlFor={name}
                   className={cn("mb-1", labelClassName)}
                 >
-                  {t(label)}
+                  <Typography variant="caption1" as="span">
+                    {t(label)}
+                  </Typography>
                   {required && (
-                    <span className="text-destructive ms-1">*</span>
+                    <Typography variant="caption2" as="span" color="destructive" className="ms-1">
+                      *
+                    </Typography>
                   )}
                 </Label>
               )}
@@ -109,7 +114,9 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
                     )}
                   >
                     <Iconify icon="lucide:calendar" className="me-2 size-4" />
-                    {displayValue}
+                    <Typography variant="caption1" as="span" className="font-normal text-inherit">
+                      {displayValue}
+                    </Typography>
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
@@ -137,16 +144,16 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
                 </PopoverContent>
               </Popover>
               {(error || fieldError) && (
-                <p className="mt-1 text-sm text-destructive">
+                <Typography variant="caption2" as="p" color="destructive" className="mt-1">
                   {fieldError?.message
                     ? formatFormError(t, fieldError.message)
                     : helperText}
-                </p>
+                </Typography>
               )}
               {!error && !fieldError && helperText && (
-                <p className="mt-1 text-sm text-muted-foreground">
+                <Typography variant="caption2" as="p" color="muted" className="mt-1">
                   {helperText}
-                </p>
+                </Typography>
               )}
             </div>
           );

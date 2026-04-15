@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import AnimatedNumber from "@/components/ui/animations/animated-number";
 import Iconify from "@/components/ui/iconify";
+import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 
 // ----------------------------------------------------------------------
@@ -52,7 +53,9 @@ const StatCard = ({
   return (
     <Card className={cn("", className)}>
       <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <span className="text-sm font-medium text-muted-foreground">{title}</span>
+        <Typography variant="label2" as="span" color="muted" className="text-sm font-medium">
+          {title}
+        </Typography>
         {icon && (
           <div className="flex size-9 items-center justify-center rounded-lg bg-primary/10">
             <Iconify icon={icon} className="size-5 text-primary" />
@@ -60,12 +63,16 @@ const StatCard = ({
         )}
       </CardHeader>
       <CardContent className="space-y-2">
-        <div className="text-3xl font-bold tracking-tight">
+        <Typography
+          variant="h4"
+          as="div"
+          className="text-3xl font-bold tracking-tight tabular-nums text-foreground"
+        >
           <AnimatedNumber
             value={value}
             formatter={formatter ? (v) => formatter(v) : undefined}
           />
-        </div>
+        </Typography>
         {delta !== undefined && (
           <div className="flex items-center gap-2">
             <Badge
@@ -81,11 +88,15 @@ const StatCard = ({
                 icon={isPositive ? "lucide:trending-up" : "lucide:trending-down"}
                 className="size-3"
               />
-              {isPositive ? "+" : ""}
-              {delta.toFixed(1)}%
+              <Typography variant="caption2" as="span" className="text-inherit">
+                {isPositive ? "+" : ""}
+                {delta.toFixed(1)}%
+              </Typography>
             </Badge>
             {deltaLabel && (
-              <span className="text-xs text-muted-foreground">{deltaLabel}</span>
+              <Typography variant="caption2" as="span" color="muted" className="text-xs">
+                {deltaLabel}
+              </Typography>
             )}
           </div>
         )}

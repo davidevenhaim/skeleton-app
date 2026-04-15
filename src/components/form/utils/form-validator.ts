@@ -65,6 +65,35 @@ export const formValidator = {
 
   optionalStringArray: (_props?: InputProps) => zod.array(zod.string()),
 
+  /** Exact string length (e.g. OTP digits). */
+  requiredExactStringLength: (length: number, props?: InputProps) =>
+    zod
+      .string()
+      .min(length, { error: props?.message?.required_error ?? "minLen" })
+      .max(length, { error: props?.message?.required_error ?? "minLen" }),
+
+  /** Inclusive numeric range (e.g. slider 0–100). */
+  numberInRange: (min: number, max: number, props?: InputProps) =>
+    zod
+      .number()
+      .min(min, { error: props?.message?.required_error ?? "min" })
+      .max(max, { error: props?.message?.required_error ?? "max" }),
+
+  /** Boolean from toggles/switches (not coerced). */
+  booleanField: () => zod.boolean(),
+
+  /** Required `Date` from date pickers (single mode). */
+  requiredDate: (props?: InputProps) =>
+    zod
+      .union([zod.undefined(), zod.null(), zod.date()])
+      .refine(
+        (v) => v instanceof Date && !Number.isNaN((v as Date).getTime()),
+        { error: props?.message?.required_error ?? "invalidDate" },
+      ),
+
+  /** Optional range value from react-day-picker (not validated here). */
+  optionalDateRange: () => zod.any().optional(),
+
   autocompleteSelection: () =>
     zod.array(
       formValidator
@@ -143,9 +172,11 @@ export const formValidator = {
     }),
 
   requiredBoolean: (props?: InputProps) =>
-    zod.coerce.boolean().refine((bool) => bool === true, {
-      error: props?.message?.required_error ?? "switchRequired",
-    }),
+    zod
+      .boolean()
+      .refine((bool) => bool === true, {
+        error: props?.message?.required_error ?? "switchRequired",
+      }),
 
   singleFile: (props?: InputProps) =>
     zod.custom<File | string | null>().transform((data, ctx) => {

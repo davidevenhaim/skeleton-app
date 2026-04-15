@@ -4,6 +4,8 @@ import { Typography } from "./typography";
 import Link from "next/link";
 import WEB_ROUTES from "@/constants/web-routes.constants";
 
+const LOGO_URL = "/brand/logo.png";
+
 type Props = {
   size?: number;
   alt?: string;
@@ -23,7 +25,7 @@ const Logo = ({
   const AppLogo = (
     <div className='flex items-center gap-2'>
       <Image
-        src='/brand/rounded-logo.png'
+        src={LOGO_URL}
         height={size}
         width={size}
         alt={alt}

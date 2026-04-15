@@ -68,16 +68,16 @@ export function FormCombobox({
                   aria-expanded={open}
                   aria-invalid={fieldState.invalid}
                   className={cn(
-                    "border-input data-[placeholder]:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 flex h-9 w-full items-center justify-between rounded-md border bg-transparent px-3 py-2 text-sm text-start shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50",
+                    "font-sans border-input data-[placeholder]:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 flex h-9 w-full items-center justify-between rounded-md border bg-transparent px-3 py-2 text-sm text-start shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50",
                     !selected && "text-muted-foreground",
                     fieldState.invalid && "border-destructive ring-destructive/20"
                   )}
                 >
-                  <span className="truncate">
+                  <Typography variant="caption1" as="span" className="truncate text-sm">
                     {selected
                       ? tr(selected.label)
                       : (placeholder ? tr(placeholder) : tRoot("select"))}
-                  </span>
+                  </Typography>
                   <Iconify
                     icon="lucide:chevrons-up-down"
                     className="ms-2 size-4 shrink-0 opacity-50"

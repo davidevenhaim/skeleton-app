@@ -13,6 +13,7 @@ import {
 import { Pagination } from "@/components/ui/pagination";
 import { SearchInput } from "@/components/ui/search-input";
 import Iconify from "@/components/ui/iconify";
+import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 
 // ----------------------------------------------------------------------
@@ -173,7 +174,11 @@ export function DataTable<T extends object>({
                   )}
                   onClick={col.sortable ? () => handleSort(String(col.key)) : undefined}
                 >
-                  <span className="flex items-center gap-1">
+                  <Typography
+                    variant="label2"
+                    as="span"
+                    className="flex items-center gap-1 text-sm font-medium text-foreground"
+                  >
                     {col.header}
                     {col.sortable && (
                       <Iconify
@@ -187,7 +192,7 @@ export function DataTable<T extends object>({
                         className="size-3.5 text-muted-foreground"
                       />
                     )}
-                  </span>
+                  </Typography>
                 </TableHead>
               ))}
             </TableRow>
@@ -199,7 +204,11 @@ export function DataTable<T extends object>({
                   colSpan={columns.length}
                   className="h-24 text-center text-muted-foreground"
                 >
-                  {emptyState ?? t("noResults")}
+                  {emptyState ?? (
+                    <Typography variant="caption2" as="span" color="muted">
+                      {t("noResults")}
+                    </Typography>
+                  )}
                 </TableCell>
               </TableRow>
             ) : (
@@ -230,9 +239,9 @@ export function DataTable<T extends object>({
 
       {pageSize > 0 && totalPages > 1 && (
         <div className="flex items-center justify-between">
-          <span className="text-sm text-muted-foreground">
+          <Typography variant="caption2" as="span" color="muted">
             {t("resultsCount", { count: sorted.length })}
-          </span>
+          </Typography>
           <Pagination
             currentPage={page}
             totalPages={totalPages}

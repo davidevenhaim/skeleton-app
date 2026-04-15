@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 
 // ----------------------------------------------------------------------
@@ -43,10 +44,18 @@ export function PageContainer({
         <div className="mb-6 flex items-start justify-between gap-4">
           <div className="flex flex-col gap-1">
             {title && (
-              <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
+              <Typography
+                variant="subtitle1"
+                as="h1"
+                className="text-2xl font-bold tracking-tight text-foreground"
+              >
+                {title}
+              </Typography>
             )}
             {subtitle && (
-              <p className="text-sm text-muted-foreground">{subtitle}</p>
+              <Typography variant="caption2" as="p" color="muted">
+                {subtitle}
+              </Typography>
             )}
           </div>
           {actions && (

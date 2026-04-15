@@ -171,7 +171,9 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
                   <Label htmlFor={name} className={cn("mb-1", labelClassName)}>
                     <Typography variant='caption1'>{t(label)}</Typography>
                     {required && (
-                      <span className='text-destructive ml-1'>*</span>
+                      <Typography variant='caption2' as='span' color='destructive' className='ms-1'>
+                        *
+                      </Typography>
                     )}
                   </Label>
                 )}
@@ -266,8 +268,14 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
             <div className={cn("w-full", className)}>
               {label && (
                 <Label htmlFor={name} className={cn("mb-1", labelClassName)}>
-                  {t(label)}
-                  {required && <span className='text-destructive ml-1'>*</span>}
+                  <Typography variant='caption1' as='span'>
+                    {t(label)}
+                  </Typography>
+                  {required && (
+                    <Typography variant='caption2' as='span' color='destructive' className='ms-1'>
+                      *
+                    </Typography>
+                  )}
                 </Label>
               )}
               {renderInput()}

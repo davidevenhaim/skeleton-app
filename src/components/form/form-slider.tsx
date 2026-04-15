@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { Controller, useFormContext } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { formatFormError } from "./utils/format-form-error";
-import { Typography } from "../ui/typography";
+import { Typography } from "@/components/ui/typography";
 
 interface SliderProps extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string;
@@ -55,13 +55,16 @@ export const FormSlider = React.forwardRef<HTMLInputElement, SliderProps>(
               {label && (
                 <label
                   htmlFor={name}
-                  className={cn(
-                    "block text-sm font-medium mb-1",
-                    labelClassName
-                  )}
+                  className={cn("mb-1 block", labelClassName)}
                 >
-                  {t(label)}
-                  {required && <span className='text-destructive ml-1'>*</span>}
+                  <Typography variant='label2' as='span' className='text-sm font-medium'>
+                    {t(label)}
+                  </Typography>
+                  {required && (
+                    <Typography variant='caption2' as='span' color='destructive' className='ms-1'>
+                      *
+                    </Typography>
+                  )}
                 </label>
               )}
               <div className='relative w-full pt-6'>
@@ -108,16 +111,16 @@ export const FormSlider = React.forwardRef<HTMLInputElement, SliderProps>(
                 </div>
               </div>
               {(error || fieldError) && (
-                <p className='mt-1 text-sm text-destructive'>
+                <Typography variant='caption2' as='p' color='destructive' className='mt-1'>
                   {fieldError?.message
                     ? formatFormError(t, fieldError.message)
                     : helperText}
-                </p>
+                </Typography>
               )}
               {!error && !fieldError && helperText && (
-                <p className='mt-1 text-sm text-muted-foreground'>
+                <Typography variant='caption2' as='p' color='muted' className='mt-1'>
                   {helperText}
-                </p>
+                </Typography>
               )}
             </div>
           );

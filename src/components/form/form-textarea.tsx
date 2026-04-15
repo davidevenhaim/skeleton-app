@@ -47,7 +47,11 @@ export function FormTextarea({
               <FieldLabel htmlFor={`form-textarea-${name}`}>
                 <Typography variant="label2">
                   {t(label)}
-                  {required && <span className="text-destructive ml-1">*</span>}
+                  {required && (
+                    <Typography variant="caption2" as="span" color="destructive" className="ms-1">
+                      *
+                    </Typography>
+                  )}
                 </Typography>
               </FieldLabel>
             )}
@@ -62,14 +66,16 @@ export function FormTextarea({
                 value={field.value ?? ""}
               />
               {showCharCount && maxLength && (
-                <span
+                <Typography
+                  variant="caption2"
+                  as="span"
                   className={cn(
-                    "absolute bottom-2 end-2 text-xs text-muted-foreground",
-                    charCount >= maxLength && "text-destructive"
+                    "absolute bottom-2 end-2 text-xs",
+                    charCount >= maxLength ? "text-destructive" : "text-muted-foreground"
                   )}
                 >
                   {charCount}/{maxLength}
-                </span>
+                </Typography>
               )}
             </div>
             {description && !fieldState.invalid && (

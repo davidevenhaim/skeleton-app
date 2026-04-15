@@ -11,6 +11,7 @@ import {
   PopoverTrigger
 } from "@/components/ui/popover";
 import Iconify from "@/components/ui/iconify";
+import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import {
   LOCALE_COOKIE,
@@ -92,7 +93,9 @@ export function LocaleDialog() {
                     className='size-6 shrink-0'
                     aria-hidden
                   />
-                  <span className='font-medium'>{t(`languages.${code}`)}</span>
+                  <Typography variant='label2' as='span' className='font-medium'>
+                    {t(`languages.${code}`)}
+                  </Typography>
                 </Button>
               </li>
             );

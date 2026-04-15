@@ -11,6 +11,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { Label } from "@/components/ui/label";
+import { Typography } from "@/components/ui/typography";
 
 interface OTPInputProps {
   name: string;
@@ -51,8 +52,14 @@ export const FormOTPInput = React.forwardRef<HTMLDivElement, OTPInputProps>(
                 htmlFor={name}
                 className={cn("mb-1", labelClassName)}
               >
-                {t(label)}
-                {required && <span className="text-destructive ml-1">*</span>}
+                <Typography variant="caption1" as="span">
+                  {t(label)}
+                </Typography>
+                {required && (
+                  <Typography variant="caption2" as="span" color="destructive" className="ms-1">
+                    *
+                  </Typography>
+                )}
               </Label>
             )}
             <InputOTP
@@ -76,14 +83,16 @@ export const FormOTPInput = React.forwardRef<HTMLDivElement, OTPInputProps>(
               </InputOTPGroup>
             </InputOTP>
             {(error || fieldError) && (
-              <p className="mt-1 text-sm text-destructive">
+              <Typography variant="caption2" as="p" color="destructive" className="mt-1">
                 {fieldError?.message
                   ? formatFormError(t, fieldError.message)
                   : helperText}
-              </p>
+              </Typography>
             )}
             {!error && !fieldError && helperText && (
-              <p className="mt-1 text-sm text-muted-foreground">{helperText}</p>
+              <Typography variant="caption2" as="p" color="muted" className="mt-1">
+                {helperText}
+              </Typography>
             )}
           </div>
         )}

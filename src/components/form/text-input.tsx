@@ -9,7 +9,7 @@ import { formatFormError } from "./utils/format-form-error";
 import { Label } from "@/components/ui/label";
 import Iconify from "@/components/ui/iconify";
 import { Button } from "@/components/ui/button";
-import { Typography } from "../ui/typography";
+import { Typography } from "@/components/ui/typography";
 
 interface TextInputProps extends Omit<
   React.ComponentProps<typeof Input>,
@@ -67,7 +67,11 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               {label && (
                 <Label htmlFor={name} className={cn("mb-1", labelClassName)}>
                   <Typography variant='caption1'>{t(label)}</Typography>
-                  {required && <span className='text-destructive'>*</span>}
+                  {required && (
+                    <Typography variant='caption2' as='span' color='destructive'>
+                      *
+                    </Typography>
+                  )}
                 </Label>
               )}
               <div className='relative'>
@@ -113,16 +117,26 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
                 )}
               </div>
               {(error || fieldError) && (
-                <p className='mt-1 text-sm text-destructive'>
+                <Typography
+                  variant='caption2'
+                  as='p'
+                  color='destructive'
+                  className='mt-1'
+                >
                   {fieldError?.message
                     ? formatFormError(t, fieldError.message)
                     : helperText}
-                </p>
+                </Typography>
               )}
               {!error && !fieldError && helperText && (
-                <p className='mt-1 text-sm text-muted-foreground'>
+                <Typography
+                  variant='caption2'
+                  as='p'
+                  color='muted'
+                  className='mt-1'
+                >
                   {helperText}
-                </p>
+                </Typography>
               )}
             </div>
           );

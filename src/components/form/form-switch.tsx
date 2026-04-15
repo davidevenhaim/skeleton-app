@@ -4,6 +4,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { Switch } from "@/components/ui/switch";
 import { Field, FieldDescription, FieldError } from "@/components/form/field";
+import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 
 export type FormSwitchProps = {
@@ -38,9 +39,9 @@ export function FormSwitch({
         >
           <div className="flex flex-1 flex-col gap-1">
             {label && (
-              <span className="text-sm font-medium leading-none select-none">
+              <Typography variant="label2" as="span" className="text-sm font-medium leading-none select-none">
                 {tForms(label as never)}
-              </span>
+              </Typography>
             )}
             {description && !fieldState.invalid && (
               <FieldDescription>{tForms(description as never)}</FieldDescription>

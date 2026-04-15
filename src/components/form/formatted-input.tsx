@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
 import { formatFormError } from "./utils/format-form-error";
 import { Label } from "@/components/ui/label";
+import { Typography } from "@/components/ui/typography";
 import type { FormatterFn } from "@/utils/formatters";
 
 interface FormattedInputProps extends Omit<
@@ -64,8 +65,14 @@ export const FormattedInput = React.forwardRef<
             <div className={cn("w-full", className)}>
               {label && (
                 <Label htmlFor={name} className={cn("mb-1", labelClassName)}>
-                  {t(label)}
-                  {required && <span className='text-destructive ml-1'>*</span>}
+                  <Typography variant='caption1' as='span'>
+                    {t(label)}
+                  </Typography>
+                  {required && (
+                    <Typography variant='caption2' as='span' color='destructive' className='ms-1'>
+                      *
+                    </Typography>
+                  )}
                 </Label>
               )}
               <Input
@@ -86,16 +93,16 @@ export const FormattedInput = React.forwardRef<
                 {...props}
               />
               {(error || fieldError) && (
-                <p className='mt-1 text-sm text-destructive'>
+                <Typography variant='caption2' as='p' color='destructive' className='mt-1'>
                   {fieldError?.message
                     ? formatFormError(t, fieldError.message)
                     : helperText}
-                </p>
+                </Typography>
               )}
               {!error && !fieldError && helperText && (
-                <p className='mt-1 text-sm text-muted-foreground'>
+                <Typography variant='caption2' as='p' color='muted' className='mt-1'>
                   {helperText}
-                </p>
+                </Typography>
               )}
             </div>
           );

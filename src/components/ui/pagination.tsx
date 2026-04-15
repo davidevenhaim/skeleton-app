@@ -5,6 +5,7 @@ import { useDirection } from "@/components/app";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import Iconify from "@/components/ui/iconify";
+import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 
 // ----------------------------------------------------------------------
@@ -79,9 +80,15 @@ export function Pagination({
 
       {pages.map((page, i) =>
         page === "ellipsis" ? (
-          <span key={`ellipsis-${i}`} className="px-1 text-muted-foreground">
+          <Typography
+            key={`ellipsis-${i}`}
+            variant="caption2"
+            as="span"
+            color="muted"
+            className="px-1"
+          >
             …
-          </span>
+          </Typography>
         ) : (
           <Button
             key={page}

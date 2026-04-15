@@ -1,5 +1,6 @@
 import * as React from "react"
 
+import { Typography } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 
 function Card({ className, ...props }: React.ComponentProps<"div">) {
@@ -28,23 +29,43 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
+function CardTitle({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<"div">) {
+  const { color: _htmlColor, ...rest } = props
+  void _htmlColor
   return (
-    <div
-      data-slot="card-title"
-      className={cn("leading-none font-semibold", className)}
-      {...props}
-    />
+    <Typography
+      variant='subtitle2'
+      as='div'
+      data-slot='card-title'
+      className={cn("leading-none font-semibold text-card-foreground", className)}
+      {...rest}
+    >
+      {children}
+    </Typography>
   )
 }
 
-function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
+function CardDescription({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<"div">) {
+  const { color: _htmlColor, ...rest } = props
+  void _htmlColor
   return (
-    <div
-      data-slot="card-description"
-      className={cn("text-muted-foreground text-sm", className)}
-      {...props}
-    />
+    <Typography
+      variant='caption2'
+      as='div'
+      data-slot='card-description'
+      className={cn("text-muted-foreground", className)}
+      {...rest}
+    >
+      {children}
+    </Typography>
   )
 }
 

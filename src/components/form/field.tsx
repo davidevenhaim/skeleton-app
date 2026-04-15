@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 
@@ -62,14 +63,20 @@ FieldLabel.displayName = "FieldLabel";
 const FieldDescription = React.forwardRef<
   HTMLParagraphElement,
   React.ComponentPropsWithoutRef<"p">
->(({ className, ...props }, ref) => {
+>(({ className, children, color: _htmlColor, ...rest }, ref) => {
+  void _htmlColor;
   return (
-    <p
+    <Typography
       ref={ref}
+      variant='caption2'
+      as='p'
+      color='muted'
       data-slot='field-description'
-      className={cn("text-muted-foreground text-sm", className)}
-      {...props}
-    />
+      className={className}
+      {...rest}
+    >
+      {children}
+    </Typography>
   );
 });
 FieldDescription.displayName = "FieldDescription";
@@ -93,12 +100,15 @@ const FieldError = React.forwardRef<
       {...props}
     >
       {errors.map((error, index) => (
-        <p
+        <Typography
           key={index}
-          className='text-destructive text-sm leading-none font-medium'
+          variant='caption2'
+          as='p'
+          color='destructive'
+          className='leading-none font-medium'
         >
           {t(error?.message || "form_validation.required")}
-        </p>
+        </Typography>
       ))}
     </div>
   );
