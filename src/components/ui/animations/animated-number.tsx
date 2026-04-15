@@ -12,6 +12,20 @@ type AnimatedNumberProps = {
 
 const easeOutQuart = (t: number) => 1 - Math.pow(1 - t, 4);
 
+/** At most two digits after the decimal point while animating (avoids long float tails). */
+function toMaxTwoFractionDigits(n: number): number {
+  return Math.round(n * 100) / 100;
+}
+
+function formatDefault(n: number): string {
+  const r = toMaxTwoFractionDigits(n);
+  return r.toLocaleString(undefined, {
+    useGrouping: false,
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 0
+  });
+}
+
 const AnimatedNumber = ({
   value,
   duration = 700,
@@ -19,7 +33,9 @@ const AnimatedNumber = ({
   formatter,
   className
 }: AnimatedNumberProps) => {
-  const [display, setDisplay] = useState(formatter ? formatter(0) : "0");
+  const [display, setDisplay] = useState(() =>
+    formatter ? formatter(toMaxTwoFractionDigits(0)) : formatDefault(0)
+  );
   const rafRef = useRef<number | null>(null);
   const startTimeRef = useRef<number | null>(null);
 
@@ -35,9 +51,8 @@ const AnimatedNumber = ({
         const easedProgress = easeOutQuart(progress);
         const current = easedProgress * value;
 
-        setDisplay(
-          formatter ? formatter(current) : String(Math.round(current))
-        );
+        const stepped = toMaxTwoFractionDigits(current);
+        setDisplay(formatter ? formatter(stepped) : formatDefault(stepped));
 
         if (progress < 1) {
           rafRef.current = requestAnimationFrame(animate);

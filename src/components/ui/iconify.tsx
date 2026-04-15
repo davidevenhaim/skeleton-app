@@ -2,6 +2,7 @@ import { Icon, type IconProps } from "@iconify/react";
 import { cn } from "@/lib/utils";
 
 export type IconifyColor =
+  | "foreground"
   | "error"
   | "warning"
   | "primary"
@@ -12,10 +13,16 @@ export type IconifyColor =
 export type IconifyProps = {
   icon: string;
   className?: string;
+  /**
+   * When omitted, the icon uses `text-inherit` so it follows the parent `color`
+   * (e.g. `text-primary-foreground` on a solid primary `Button`).
+   * Use `foreground` for theme body text on neutral surfaces.
+   */
   color?: IconifyColor;
 } & Omit<IconProps, "icon">;
 
 const colorClasses: Record<IconifyColor, string> = {
+  foreground: "text-foreground",
   error: "text-red-500",
   warning: "text-orange-500",
   primary: "text-primary",
@@ -27,14 +34,14 @@ const colorClasses: Record<IconifyColor, string> = {
 export default function Iconify({
   icon,
   className,
-  color = "black",
+  color,
   ...props
 }: IconifyProps) {
   return (
     <Icon
       {...props}
       icon={icon}
-      className={cn(colorClasses[color], className)}
+      className={cn(color ? colorClasses[color] : "text-inherit", className)}
     />
   );
 }

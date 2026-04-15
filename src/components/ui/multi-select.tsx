@@ -8,6 +8,18 @@ import { Badge } from "./badge";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 
+/** Resolve option / group labels: keys with a dot use the `forms` namespace; plain strings pass through. */
+function useFormLabel() {
+  const tForms = useTranslations("forms");
+  return React.useCallback(
+    (key: string) => {
+      if (key.includes(".")) return tForms(key as never);
+      return key;
+    },
+    [tForms]
+  );
+}
+
 type MultiSelectProps = {
   options: MultiSelectOption[];
   selected: string[];
@@ -41,6 +53,7 @@ export function MultiSelect({
   const [searchValue, setSearchValue] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
   const t = useTranslations();
+  const labelText = useFormLabel();
 
   type FlatOpt = {
     option: MultiSelectOption;
@@ -126,8 +139,10 @@ export function MultiSelect({
     const source = searchValue ? allOptionsFlat : visibleOptions;
     if (!searchValue) return source;
     const q = searchValue.toLowerCase();
-    return source.filter((o) => o.option.label.toLowerCase().includes(q));
-  }, [allOptionsFlat, searchValue, visibleOptions]);
+    return source.filter((o) =>
+      labelText(o.option.label).toLowerCase().includes(q)
+    );
+  }, [allOptionsFlat, searchValue, visibleOptions, labelText]);
 
   // Group options by their group field for rendering
   const groupedOptions = React.useMemo(() => {
@@ -225,7 +240,7 @@ export function MultiSelect({
       return t(allSelectedLabel);
     }
     if (selected.length <= maxDisplay) {
-      return selectedOptions.map((opt) => opt.label).join(", ");
+      return selectedOptions.map((opt) => labelText(opt.label)).join(", ");
     }
     return `${selected.length} ${t("selected")}`;
   }, [
@@ -235,7 +250,8 @@ export function MultiSelect({
     selected,
     selectedOptions,
     t,
-    allSelectedLabel
+    allSelectedLabel,
+    labelText
   ]);
 
   const toggleFolder = (value: string) => {
@@ -312,7 +328,7 @@ export function MultiSelect({
                 type='button'
                 className='text-muted-foreground hover:text-foreground disabled:opacity-40 text-xs transition-colors'
               >
-                {t("deselect_all")}
+                {t("deselectAll")}
               </button>
             ) : (
               <button
@@ -320,7 +336,7 @@ export function MultiSelect({
                 type='button'
                 className='text-muted-foreground hover:text-foreground text-xs transition-colors'
               >
-                {allFilteredSelected ? t("deselect_all") : t("select_all")}
+                {allFilteredSelected ? t("deselectAll") : t("selectAll")}
               </button>
             )}
             {selected.length > 0 && (
@@ -336,7 +352,7 @@ export function MultiSelect({
           <div className='min-h-0 flex-1 overflow-y-auto p-1'>
             {filteredOptions.length === 0 ? (
               <div className='text-muted-foreground px-2 py-4 text-center text-sm'>
-                {t("no_results")}
+                {t("noResults")}
               </div>
             ) : (
               groupedOptions.map((group, gi) => (
@@ -347,7 +363,7 @@ export function MultiSelect({
                         <div className='bg-border pointer-events-none -mx-1 my-1 h-px' />
                       )}
                       <div className='text-muted-foreground px-2 py-1.5 text-xs font-medium'>
-                        {group.label}
+                        {group.label ? labelText(group.label) : null}
                       </div>
                     </>
                   )}
@@ -411,7 +427,7 @@ export function MultiSelect({
                           />
                         )}
                         <span className='flex-1 truncate text-left'>
-                          {option.label}
+                          {labelText(option.label)}
                         </span>
 
                         <span className='absolute right-2 flex size-3.5 items-center justify-center'>

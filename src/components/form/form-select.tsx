@@ -35,9 +35,13 @@ export function FormSelect({
   searchPlaceholder
 }: FormSelectProps) {
   const { control } = useFormContext();
-  const t = useTranslations();
+  const tForms = useTranslations("forms");
+  const tRoot = useTranslations();
   void searchable;
   void searchPlaceholder;
+
+  const tr = (key: string) =>
+    key.includes(".") ? tForms(key as never) : tRoot(key as never);
 
   return (
     <Controller
@@ -47,7 +51,7 @@ export function FormSelect({
         <Field data-invalid={fieldState.invalid} className={className}>
           {label && (
             <FieldLabel htmlFor={`form-select-${name}`}>
-              <Typography variant='label2'>{t(label)}</Typography>
+              <Typography variant='label2'>{tr(label)}</Typography>
             </FieldLabel>
           )}
           <Select
@@ -59,12 +63,12 @@ export function FormSelect({
               id={`form-select-${name}`}
               aria-invalid={fieldState.invalid}
             >
-              <SelectValue placeholder={placeholder ? t(placeholder) : undefined} />
+              <SelectValue placeholder={placeholder ? tr(placeholder) : undefined} />
             </SelectTrigger>
             <SelectContent>
               {options.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
-                  {t(option.label)}
+                  {tr(option.label)}
                 </SelectItem>
               ))}
             </SelectContent>

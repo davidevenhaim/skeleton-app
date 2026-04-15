@@ -1,4 +1,227 @@
 {
+  "select": "בחר",
+  "selected": "נבחרו",
+  "selectAll": "בחר הכל",
+  "deselectAll": "בטל בחירת הכל",
+  "noResults": "לא נמצאו תוצאות",
+  "loading": "טוען…",
+  "save": "שמור",
+  "cancel": "ביטול",
+  "confirm": "אישור",
+  "search": "חיפוש",
+  "clear": "נקה",
+  "close": "סגור",
+  "back": "חזרה",
+  "next": "הבא",
+  "previous": "הקודם",
+  "actions": "פעולות",
+  "optional": "אופציונלי",
+  "required": "חובה",
+  "all": "הכל",
+  "tabGuide": "מדריך",
+  "tabDashboard": "לוח בקרה",
+  "tabForms": "טפסים",
+  "tabDialogs": "דיאלוגים",
+  "tabSettings": "הגדרות",
+  "themeLight": "בהיר",
+  "themeDark": "כהה",
+  "themeCurrentLabel": "ערכת נושא",
+  "localeHint": "הגדר עוגיית NEXT_LOCALE ל-en, es, he או ar כדי להחליף שפה.",
+  "languageDialogTriggerAria": "החלפת שפה",
+  "languageDialogTitle": "שפה",
+  "languageSettingsNote": "השפה נשמרת בעוגיית NEXT_LOCALE כדי שהשרת יוכל להחזיר את ההודעות המתאימות.",
+  "languages": {
+    "en": "אנגלית",
+    "he": "עברית",
+    "ar": "ערבית",
+    "es": "ספרדית"
+  },
+  "currentLabel": "נוכחי",
+  "clearSearchAria": "נקה חיפוש",
+  "resultsCount": "{count, plural, one {# תוצאה} other {# תוצאות}}",
+  "paginationAria": "דפדוף עמודים",
+  "previousPage": "העמוד הקודם",
+  "nextPage": "העמוד הבא",
+  "pageAria": "עמוד {page}",
+  "themeSwitchToLightAria": "החלף למצב בהיר",
+  "themeSwitchToDarkAria": "החלף למצב כהה",
+  "themeLightMode": "מצב בהיר",
+  "themeDarkMode": "מצב כהה",
+  "demo": {
+    "pageTitle": "אפליקציית Skeleton",
+    "pageSubtitle": "נקודת פתיחה מוכנה לפרודקשן עם רכיבי UI, הוקים וכלי עזר שכבר מחוברים.",
+    "guide": {
+      "heroDescription": "ערכת התחלה ל-Next.js ותבנית GitHub מוכנות לפרודקשן. אבני הבניין הנפוצות כבר מחוברות כך שאפשר להתחיל לפתח פיצ'רים מהיום הראשון.",
+      "heroStats": {
+        "hooks": "11 הוקים מותאמים",
+        "forms": "12 רכיבי טופס",
+        "api": "פרוקסי API מובנה",
+        "claude": "מדריך AI של CLAUDE.md כלול"
+      },
+      "whatsIncluded": {
+        "title": "מה כלול",
+        "description": "שמונה מערכות שלמות, מחוברות מראש ומוכנות לשימוש."
+      },
+      "features": {
+        "hooks": { "title": "11 הוקים מותאמים", "description": "הוקים מוכנים לשימוש עבור דפוסי פרונטנד נפוצים." },
+        "forms": { "title": "מערכת טפסים", "description": "React Hook Form + Zod עם רכיבי שדות מתורגמים." },
+        "api": { "title": "שכבת API", "description": "פרוקסי מאובטח, הוקי SWR וטיפול אוטומטי בשגיאות." },
+        "ui": { "title": "רכיבי UI", "description": "רכיבי shadcn/ui, טבלאות, גרפים, אנימציות ועוד." },
+        "i18n": { "title": "רב-לשוניות", "description": "next-intl, החלפת שפה ופריסות מוכנות ל-RTL." },
+        "state": { "title": "ניהול מצב", "description": "חנויות Zustand עבור ערכת נושא, אימות וטעינה." },
+        "utilities": { "title": "כלי עזר", "description": "פורמוט, עזרי מחרוזות ופונקציות שימושיות נוספות." },
+        "loading": { "title": "מערכת טעינה", "description": "מצבי טעינה עקביים בכל האפליקציה." }
+      },
+      "goldenRules": {
+        "title": "13 כללי זהב",
+        "description": "הכללים האלה נאכפים על ידי",
+        "neverLabel": "לעולם לא"
+      },
+      "rules": {
+        "useBoolean": "useState(false) עבור מתגים",
+        "formatDate": "מחרוזות פורמט גולמיות או toLocaleDateString()",
+        "useTranslations": "מחרוזות קשיחות בתוך JSX",
+        "useFetch": "useEffect + axios.get",
+        "useMutation": "axios.post/put/delete בתוך קומפוננטות",
+        "apiRoutes": "מחרוזות API ישירות בקוד",
+        "webRoutes": "מחרוזות נתיב ישירות בקישורים",
+        "forms": "אלמנטי input גולמיים",
+        "toasts": "Sonner ישירות",
+        "storage": "localStorage ישירות",
+        "config": "process.env בתוך קומפוננטות",
+        "styles": "style inline סטטי",
+        "icons": "ספריות אייקונים אחרות"
+      },
+      "quickReference": {
+        "title": "עיון מהיר",
+        "description": "איפה כל דבר נמצא בקוד.",
+        "keyDirectories": "תיקיות מרכזיות",
+        "techStack": "סטאק טכנולוגי",
+        "directories": {
+          "hooks": "הוקים מותאמים",
+          "form": "רכיבי טפסים",
+          "utils": "עזרי תאריך, מחרוזות ופורמט",
+          "lib": "לקוח API, toast וקונפיגורציה",
+          "store": "חנויות Zustand",
+          "constants": "נתיבים ונתיבי API",
+          "types": "טיפוסי TypeScript משותפים",
+          "messages": "קבצי תרגום"
+        },
+        "layers": {
+          "framework": "Framework",
+          "language": "שפה",
+          "styling": "עיצוב",
+          "ui": "ממשק",
+          "forms": "טפסים",
+          "fetching": "שליפה",
+          "state": "מצב",
+          "i18n": "רב-לשוניות",
+          "charts": "גרפים",
+          "icons": "אייקונים"
+        }
+      },
+      "gettingStarted": {
+        "title": "מתחילים",
+        "description": "שלושה צעדים כדי להתחיל לבנות את הפיצ'ר שלך.",
+        "steps": {
+          "template": {
+            "title": "השתמש בתבנית",
+            "description": "לחץ על \"Use this template\" ב-GitHub, או שכפל את המאגר והסר את היסטוריית git."
+          },
+          "install": {
+            "title": "התקנה והגדרה",
+            "description": "התקן תלותיות והגדר משתני סביבה ב-.env.local."
+          },
+          "build": {
+            "title": "התחל לבנות",
+            "description": "הרץ את שרת הפיתוח ופעל לפי דפוסי העבודה של הפרויקט מהיום הראשון."
+          }
+        }
+      }
+    },
+    "roles": {
+      "admin": "מנהל",
+      "editor": "עורך",
+      "viewer": "צופה"
+    },
+    "table": {
+      "role": "תפקיד"
+    },
+    "dashboard": {
+      "statsAndCharts": "סטטיסטיקות וגרפים",
+      "totalRevenue": "סה\"כ הכנסות",
+      "activeUsers": "משתמשים פעילים",
+      "conversions": "המרות",
+      "windowWidth": "רוחב חלון",
+      "vsLastQuarter": "לעומת הרבעון הקודם",
+      "vsLastMonth": "לעומת החודש הקודם",
+      "balanceOverTime": "יתרה לאורך זמן",
+      "quarterlyRevenueVsExpenses": "הכנסות מול הוצאות לפי רבעון",
+      "revenue": "הכנסות",
+      "expenses": "הוצאות",
+      "userRoles": "תפקידי משתמשים",
+      "animatedNumbers": "מספרים מונפשים",
+      "animatedNumbersDescription": "אנימציית ספירה עם פורמטרים אופציונליים",
+      "uptime": "זמינות",
+      "requestsPerDay": "בקשות ליום",
+      "rating": "דירוג",
+      "dataTable": "טבלת נתונים",
+      "searchUsers": "חפש משתמשים…"
+    },
+    "forms": {
+      "textAndFormattedInputs": "קלטים רגילים ומעוצבים",
+      "selectAndMultiSelect": "בחירה ובחירה מרובה",
+      "otpSliderAndToggles": "OTP, סליידר ומתגים",
+      "dateAndFileUpload": "תאריך והעלאת קבצים",
+      "submit": "שלח טופס",
+      "submitSuccessTitle": "הטופס נשלח",
+      "submitSuccessDescription": "בדוק בקונסול את הערכים שנשלחו."
+    },
+    "dialogs": {
+      "toastsAndDialogs": "התראות ודיאלוגים",
+      "openDialog": "פתח דיאלוג",
+      "areYouSure": "האם אתה בטוח?",
+      "actionCannotBeUndone": "לא ניתן לבטל פעולה זו.",
+      "confirmed": "אושר",
+      "actionExecuted": "הפעולה בוצעה.",
+      "deleteItemPermanently": "אתה עומד למחוק את הפריט הזה לצמיתות.",
+      "nestedDialog": "דיאלוג בסגנון מקונן",
+      "welcome": "ברוך הבא",
+      "reusableDialog": "AppDialog לשימוש חוזר עם טריגר, פוטר וגדלים שונים.",
+      "nestedBody": "השתמש בתבנית הזו לאישורים, אשפים או טפסים בתוך מודאל.",
+      "success": "הצלחה",
+      "operationCompleted": "הפעולה הושלמה.",
+      "error": "שגיאה",
+      "somethingWentWrong": "משהו השתבש.",
+      "info": "מידע",
+      "someInformation": "הנה קצת מידע.",
+      "warning": "אזהרה",
+      "pleaseBeCareful": "נא להיזהר.",
+      "loadingButton": "כפתור טעינה",
+      "copied": "הועתק!",
+      "copyText": "העתק טקסט",
+      "resendIn": "שלח שוב בעוד {seconds}ש׳",
+      "startCountdown": "התחל ספירה של 30 שניות",
+      "spinnerInline": "ספינר (בתוך התוכן)",
+      "demoSpinner": "ספינר לדוגמה",
+      "stopSpinner": "עצור ספינר",
+      "startSpinner": "הפעל ספינר",
+      "skeletonRows": "Skeleton (3 שורות)",
+      "hideSkeleton": "הסתר skeleton",
+      "showSkeleton": "הצג skeleton",
+      "disabledRegion": "אזור מושבת",
+      "overlayAxios": "שכבת כיסוי (Axios)",
+      "overlayDescription": "שכבת כיסוי מלאה מופיעה בזמן שבקשות Axios פעילות (ראה",
+      "disabledPlaceholder": "מושבת בזמן טעינה…",
+      "action": "פעולה",
+      "reEnable": "הפעל מחדש",
+      "disableRegion": "השבת אזור"
+    },
+    "settings": {
+      "themeDescription": "החלף בין מצב בהיר וכהה. ההעדפה נשמרת ב-localStorage.",
+      "language": "שפה"
+    }
+  },
   "forms": {
     "errors": {
       "required": "שדה חובה",
@@ -43,7 +266,31 @@
       "otp": "קוד אימות",
       "upload": "העלאת קובץ",
       "chooseFile": "בחר קובץ",
-      "noFileChosen": "לא נבחר קובץ"
+      "noFileChosen": "לא נבחר קובץ",
+      "notes": "הערות",
+      "category": "קטגוריה",
+      "status": "סטטוס",
+      "agree": "אני מסכים לתנאי השימוש",
+      "enableNotifications": "הפעל התראות",
+      "darkMode": "מצב כהה",
+      "technologyStack": "מחסנית טכנולוגיות",
+      "categoryTechnology": "טכנולוגיה",
+      "categoryDesign": "עיצוב",
+      "categoryMarketing": "שיווק",
+      "categoryFinance": "כספים",
+      "statusActive": "פעיל",
+      "statusInactive": "לא פעיל",
+      "statusPending": "ממתין",
+      "stackReact": "React",
+      "stackNextjs": "Next.js",
+      "stackTypescript": "TypeScript",
+      "stackNodejs": "Node.js",
+      "stackPostgres": "PostgreSQL",
+      "stackRedis": "Redis"
+    },
+    "groups": {
+      "frontend": "צד לקוח",
+      "backend": "צד שרת"
     },
     "placeholders": {
       "email": "הזן את האימייל שלך",
@@ -52,7 +299,9 @@
       "amount": "0.00",
       "date": "בחר תאריך",
       "otp": "הזן קוד",
-      "upload": "גרור קבצים או לחץ להעלאה"
+      "upload": "גרור קבצים או לחץ להעלאה",
+      "notes": "כתוב משהו…",
+      "search": "חיפוש…"
     },
     "helpers": {
       "optional": "אופציונלי",

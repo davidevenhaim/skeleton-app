@@ -21,7 +21,7 @@ interface SliderProps extends React.InputHTMLAttributes<HTMLInputElement> {
   labelClassName?: string;
 }
 
-export const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
+export const FormSlider = React.forwardRef<HTMLInputElement, SliderProps>(
   (
     {
       name,
@@ -126,4 +126,4 @@ export const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
     );
   }
 );
-Slider.displayName = "Slider";
+FormSlider.displayName = "Slider";

@@ -88,7 +88,7 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
                 >
                   {t(label)}
                   {required && (
-                    <span className="text-destructive ml-1">*</span>
+                    <span className="text-destructive ms-1">*</span>
                   )}
                 </Label>
               )}
@@ -101,14 +101,14 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
                     disabled={disabled}
                     aria-invalid={!!(error || fieldError)}
                     className={cn(
-                      "w-full justify-start text-left font-normal",
+                      "w-full justify-start text-start font-normal",
                       !value && "text-muted-foreground",
                       error || fieldError
                         ? "border-destructive focus-visible:ring-destructive"
                         : ""
                     )}
                   >
-                    <Iconify icon="lucide:calendar" className="mr-2 size-4" />
+                    <Iconify icon="lucide:calendar" className="me-2 size-4" />
                     {displayValue}
                   </Button>
                 </PopoverTrigger>

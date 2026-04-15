@@ -84,7 +84,7 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
                     error || fieldError
                       ? "border-destructive focus-visible:ring-destructive"
                       : "",
-                    isPassword && "pr-10"
+                    isPassword && "pe-10"
                   )}
                   {...fieldRest}
                   value={field.value ?? ""}
@@ -98,7 +98,7 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
                     type='button'
                     variant='ghost'
                     size='icon'
-                    className='absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent'
+                    className='absolute end-0 top-0 h-full px-3 py-2 hover:bg-transparent'
                     onClick={() => setShowPassword((p) => !p)}
                     tabIndex={-1}
                     aria-label={

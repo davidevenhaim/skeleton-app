@@ -1,0 +1,60 @@
+import * as React from "react";
+import { cn } from "@/lib/utils";
+
+// ----------------------------------------------------------------------
+
+export type PageContainerProps = {
+  /** Page title text */
+  title?: React.ReactNode;
+  /** Optional subtitle or breadcrumb below the title */
+  subtitle?: React.ReactNode;
+  /** Slot for action buttons rendered to the right of the title */
+  actions?: React.ReactNode;
+  /** Page body content */
+  children: React.ReactNode;
+  className?: string;
+  /** Max-width class (default: "max-w-7xl") */
+  maxWidth?: string;
+};
+
+/**
+ * Standard page layout wrapper with title, subtitle, actions, and content.
+ *
+ * @example
+ * <PageContainer
+ *   title="Users"
+ *   subtitle="Manage your team"
+ *   actions={<Button>Invite</Button>}
+ * >
+ *   <DataTable ... />
+ * </PageContainer>
+ */
+export function PageContainer({
+  title,
+  subtitle,
+  actions,
+  children,
+  className,
+  maxWidth = "max-w-7xl"
+}: PageContainerProps) {
+  return (
+    <div className={cn("mx-auto w-full px-4 py-8 sm:px-6 lg:px-8", maxWidth, className)}>
+      {(title || actions) && (
+        <div className="mb-6 flex items-start justify-between gap-4">
+          <div className="flex flex-col gap-1">
+            {title && (
+              <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
+            )}
+            {subtitle && (
+              <p className="text-sm text-muted-foreground">{subtitle}</p>
+            )}
+          </div>
+          {actions && (
+            <div className="flex shrink-0 items-center gap-2">{actions}</div>
+          )}
+        </div>
+      )}
+      {children}
+    </div>
+  );
+}

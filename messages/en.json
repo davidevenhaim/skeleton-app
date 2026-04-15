@@ -1,4 +1,227 @@
 {
+  "select": "Select",
+  "selected": "selected",
+  "selectAll": "Select all",
+  "deselectAll": "Deselect all",
+  "noResults": "No results found",
+  "loading": "Loading…",
+  "save": "Save",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "search": "Search",
+  "clear": "Clear",
+  "close": "Close",
+  "back": "Back",
+  "next": "Next",
+  "previous": "Previous",
+  "actions": "Actions",
+  "optional": "Optional",
+  "required": "Required",
+  "all": "All",
+  "tabGuide": "Guide",
+  "tabDashboard": "Dashboard",
+  "tabForms": "Forms",
+  "tabDialogs": "Dialogs",
+  "tabSettings": "Settings",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "themeCurrentLabel": "Theme",
+  "localeHint": "Set the NEXT_LOCALE cookie to en, es, he, or ar to switch language.",
+  "languageDialogTriggerAria": "Change language",
+  "languageDialogTitle": "Language",
+  "languages": {
+    "en": "English",
+    "he": "Hebrew",
+    "ar": "Arabic",
+    "es": "Spanish"
+  },
+  "languageSettingsNote": "Locale is saved in the NEXT_LOCALE cookie so the server can render the correct messages.",
+  "currentLabel": "Current",
+  "clearSearchAria": "Clear search",
+  "resultsCount": "{count, plural, one {# result} other {# results}}",
+  "paginationAria": "Pagination",
+  "previousPage": "Previous page",
+  "nextPage": "Next page",
+  "pageAria": "Page {page}",
+  "themeSwitchToLightAria": "Switch to light mode",
+  "themeSwitchToDarkAria": "Switch to dark mode",
+  "themeLightMode": "Light mode",
+  "themeDarkMode": "Dark mode",
+  "demo": {
+    "pageTitle": "Skeleton App",
+    "pageSubtitle": "A production-ready starting point with the core UI, hooks, and utilities already wired in.",
+    "guide": {
+      "heroDescription": "A production-ready Next.js starter kit and GitHub template. Common building blocks are already wired up so you can focus on shipping features from day one.",
+      "heroStats": {
+        "hooks": "11 custom hooks",
+        "forms": "12 form components",
+        "api": "API proxy built-in",
+        "claude": "CLAUDE.md AI guide included"
+      },
+      "whatsIncluded": {
+        "title": "What's Included",
+        "description": "Eight complete systems, pre-wired and ready to use."
+      },
+      "features": {
+        "hooks": { "title": "11 Custom Hooks", "description": "Ready-to-use hooks covering common frontend patterns." },
+        "forms": { "title": "Form System", "description": "React Hook Form + Zod with translated field components." },
+        "api": { "title": "API Layer", "description": "Secure proxy, SWR hooks, and automatic error handling." },
+        "ui": { "title": "UI Components", "description": "shadcn/ui primitives, tables, charts, animations, and more." },
+        "i18n": { "title": "Internationalization", "description": "next-intl, locale switching, and RTL-ready layouts." },
+        "state": { "title": "State Management", "description": "Zustand stores for theme, auth, and loaders." },
+        "utilities": { "title": "Utilities", "description": "Formatting, string helpers, and reusable helpers." },
+        "loading": { "title": "Loading System", "description": "Consistent loading states across the whole app." }
+      },
+      "goldenRules": {
+        "title": "13 Golden Rules",
+        "description": "These rules are enforced by",
+        "neverLabel": "never"
+      },
+      "rules": {
+        "useBoolean": "useState(false) for toggles",
+        "formatDate": "raw format strings or toLocaleDateString()",
+        "useTranslations": "hardcoded strings in JSX",
+        "useFetch": "useEffect + axios.get",
+        "useMutation": "axios.post/put/delete in components",
+        "apiRoutes": "inline API path strings",
+        "webRoutes": "inline route strings in links",
+        "forms": "raw input elements",
+        "toasts": "Sonner directly",
+        "storage": "localStorage directly",
+        "config": "process.env in components",
+        "styles": "static inline style objects",
+        "icons": "other icon libraries"
+      },
+      "quickReference": {
+        "title": "Quick Reference",
+        "description": "Where things live in the codebase.",
+        "keyDirectories": "Key Directories",
+        "techStack": "Tech Stack",
+        "directories": {
+          "hooks": "custom hooks",
+          "form": "form components",
+          "utils": "date, string, and formatter helpers",
+          "lib": "API client, toast, and config",
+          "store": "Zustand stores",
+          "constants": "routes and API paths",
+          "types": "shared TypeScript types",
+          "messages": "translation files"
+        },
+        "layers": {
+          "framework": "Framework",
+          "language": "Language",
+          "styling": "Styling",
+          "ui": "UI",
+          "forms": "Forms",
+          "fetching": "Fetching",
+          "state": "State",
+          "i18n": "i18n",
+          "charts": "Charts",
+          "icons": "Icons"
+        }
+      },
+      "gettingStarted": {
+        "title": "Getting Started",
+        "description": "Three steps to start building your feature.",
+        "steps": {
+          "template": {
+            "title": "Use this template",
+            "description": "Click \"Use this template\" on GitHub, or clone the repo and remove the git history."
+          },
+          "install": {
+            "title": "Install and configure",
+            "description": "Install dependencies and set your environment variables in .env.local."
+          },
+          "build": {
+            "title": "Start building",
+            "description": "Run the dev server and follow the project patterns from day one."
+          }
+        }
+      }
+    },
+    "roles": {
+      "admin": "Admin",
+      "editor": "Editor",
+      "viewer": "Viewer"
+    },
+    "table": {
+      "role": "Role"
+    },
+    "dashboard": {
+      "statsAndCharts": "Stats and charts",
+      "totalRevenue": "Total Revenue",
+      "activeUsers": "Active users",
+      "conversions": "Conversions",
+      "windowWidth": "Window width",
+      "vsLastQuarter": "vs last quarter",
+      "vsLastMonth": "vs last month",
+      "balanceOverTime": "Balance over time",
+      "quarterlyRevenueVsExpenses": "Quarterly revenue vs expenses",
+      "revenue": "Revenue",
+      "expenses": "Expenses",
+      "userRoles": "User roles",
+      "animatedNumbers": "Animated numbers",
+      "animatedNumbersDescription": "Count-up animation with optional formatters",
+      "uptime": "Uptime",
+      "requestsPerDay": "Requests/day",
+      "rating": "Rating",
+      "dataTable": "Data table",
+      "searchUsers": "Search users…"
+    },
+    "forms": {
+      "textAndFormattedInputs": "Text and formatted inputs",
+      "selectAndMultiSelect": "Select and multi-select",
+      "otpSliderAndToggles": "OTP, slider and toggles",
+      "dateAndFileUpload": "Date and file upload",
+      "submit": "Submit form",
+      "submitSuccessTitle": "Form submitted",
+      "submitSuccessDescription": "Check the console for the submitted values."
+    },
+    "dialogs": {
+      "toastsAndDialogs": "Toasts and dialogs",
+      "openDialog": "Open dialog",
+      "areYouSure": "Are you sure?",
+      "actionCannotBeUndone": "This action cannot be undone.",
+      "confirmed": "Confirmed",
+      "actionExecuted": "Action was executed.",
+      "deleteItemPermanently": "You are about to delete this item permanently.",
+      "nestedDialog": "Nested-style dialog",
+      "welcome": "Welcome",
+      "reusableDialog": "Reusable AppDialog with trigger, footer, and sizes.",
+      "nestedBody": "Use this pattern for confirmations, wizards, or forms in a modal.",
+      "success": "Success",
+      "operationCompleted": "Operation completed.",
+      "error": "Error",
+      "somethingWentWrong": "Something went wrong.",
+      "info": "Info",
+      "someInformation": "Here is some information.",
+      "warning": "Warning",
+      "pleaseBeCareful": "Please be careful.",
+      "loadingButton": "Loading button",
+      "copied": "Copied!",
+      "copyText": "Copy text",
+      "resendIn": "Resend in {seconds}s",
+      "startCountdown": "Start 30s countdown",
+      "spinnerInline": "Spinner (inline)",
+      "demoSpinner": "Demo spinner",
+      "stopSpinner": "Stop spinner",
+      "startSpinner": "Start spinner",
+      "skeletonRows": "Skeleton (3 rows)",
+      "hideSkeleton": "Hide skeleton",
+      "showSkeleton": "Show skeleton",
+      "disabledRegion": "Disabled region",
+      "overlayAxios": "Overlay (Axios)",
+      "overlayDescription": "Full-screen overlay runs while Axios requests are in flight (see",
+      "disabledPlaceholder": "Disabled when loading…",
+      "action": "Action",
+      "reEnable": "Re-enable",
+      "disableRegion": "Disable region"
+    },
+    "settings": {
+      "themeDescription": "Toggle light or dark appearance. Preference is saved in localStorage.",
+      "language": "Language"
+    }
+  },
   "forms": {
     "errors": {
       "required": "This field is required",
@@ -43,7 +266,31 @@
       "otp": "Verification code",
       "upload": "Upload file",
       "chooseFile": "Choose file",
-      "noFileChosen": "No file chosen"
+      "noFileChosen": "No file chosen",
+      "notes": "Notes",
+      "category": "Category",
+      "status": "Status",
+      "agree": "I agree to the terms and conditions",
+      "enableNotifications": "Enable notifications",
+      "darkMode": "Dark mode",
+      "technologyStack": "Technology stack",
+      "categoryTechnology": "Technology",
+      "categoryDesign": "Design",
+      "categoryMarketing": "Marketing",
+      "categoryFinance": "Finance",
+      "statusActive": "Active",
+      "statusInactive": "Inactive",
+      "statusPending": "Pending",
+      "stackReact": "React",
+      "stackNextjs": "Next.js",
+      "stackTypescript": "TypeScript",
+      "stackNodejs": "Node.js",
+      "stackPostgres": "PostgreSQL",
+      "stackRedis": "Redis"
+    },
+    "groups": {
+      "frontend": "Frontend",
+      "backend": "Backend"
     },
     "placeholders": {
       "email": "Enter your email",
@@ -52,7 +299,9 @@
       "amount": "0.00",
       "date": "Select date",
       "otp": "Enter code",
-      "upload": "Drop files or click to upload"
+      "upload": "Drop files or click to upload",
+      "notes": "Write something…",
+      "search": "Search…"
     },
     "helpers": {
       "optional": "Optional",
