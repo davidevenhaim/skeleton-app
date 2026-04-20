@@ -9,6 +9,8 @@ import {
   DialogTitle
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
+import { useTranslations } from "next-intl";
 
 type AreYouSureDialogProps = {
   open: boolean;
@@ -18,6 +20,8 @@ type AreYouSureDialogProps = {
   description?: string;
   okText?: string;
   cancelText?: string;
+  variant?: "default" | "destructive";
+  isLoading?: boolean;
 };
 
 export function AreYouSureDialog({
@@ -26,9 +30,13 @@ export function AreYouSureDialog({
   onConfirm,
   title,
   description,
-  okText = "Confirm",
-  cancelText = "Cancel"
+  okText,
+  cancelText,
+  variant = "default",
+  isLoading = false
 }: AreYouSureDialogProps) {
+  const t = useTranslations();
+
   const handleConfirm = () => {
     onOpenChange(false);
     onConfirm();
@@ -47,12 +55,18 @@ export function AreYouSureDialog({
           <Button
             type='button'
             variant='outline'
+            disabled={isLoading}
             onClick={() => onOpenChange(false)}
           >
-            {cancelText}
+            {cancelText ?? t("cancel")}
           </Button>
-          <Button type='button' onClick={handleConfirm}>
-            {okText}
+          <Button
+            type='button'
+            variant={variant === "destructive" ? "destructive" : "default"}
+            disabled={isLoading}
+            onClick={handleConfirm}
+          >
+            {isLoading ? <Spinner /> : (okText ?? t("confirm"))}
           </Button>
         </DialogFooter>
       </DialogContent>

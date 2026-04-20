@@ -8,3 +8,18 @@ export function getMinMaxOfLength(x: number): { min: number; max: number } {
 
   return { min, max };
 }
+
+/** Clamps a number between min and max (inclusive). */
+export const clamp = (value: number, min: number, max: number): number =>
+  Math.min(Math.max(value, min), max);
+
+/** Locale-aware number formatting. */
+export const formatNumber = (
+  value: number,
+  locale?: string,
+  options?: Intl.NumberFormatOptions
+): string => new Intl.NumberFormat(locale, options).format(value);
+
+/** Returns a random integer between min and max (inclusive). */
+export const randomInt = (min: number, max: number): number =>
+  Math.floor(Math.random() * (max - min + 1)) + min;

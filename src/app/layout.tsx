@@ -16,6 +16,7 @@ import {
   isAppLocale,
   type AppLocale
 } from "@/constants/locale";
+import { CONFIG } from "@/lib/app-config";
 import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { DirectionProvider } from "@/components/app/direction-provider";
@@ -69,18 +70,11 @@ function fontVariableClasses(locale: AppLocale): string {
   return `${mono} ${spaceGrotesk.variable} ${plusJakarta.variable}`;
 }
 
-/** Used so og:image and icons resolve to absolute URLs for crawlers (WhatsApp, Facebook, etc.). */
-function siteUrl(): URL {
-  const explicit = process.env.NEXT_PUBLIC_SITE_URL;
-  if (explicit) return new URL(explicit);
-  return new URL("http://localhost:3000");
-}
-
 const ogDescription =
   "Skeleton UI is a library of components, hooks, and utilities for building web applications fast and efficiently with AI.";
 
 export const metadata: Metadata = {
-  metadataBase: siteUrl(),
+  metadataBase: new URL(CONFIG.siteUrl),
   title: "Skeleton UI",
   description: ogDescription,
   icons: {

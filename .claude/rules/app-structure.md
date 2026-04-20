@@ -41,6 +41,25 @@ Use:
 - state → `src/store`
 - constants → `src/constants`
 - types → `src/types`
+- API client, toast helpers, app config → `src/lib`
+
+## API Route Constants
+
+Do not hardcode API endpoint strings inside components, hooks, or utilities.
+
+Add API route constants to `src/constants/api-routes.constants.ts`:
+
+```ts
+const API_ROUTES = {
+  USERS: {
+    LIST: "/users",
+    BY_ID: (id: string) => `/users/${id}`,
+  },
+} as const
+export default API_ROUTES
+```
+
+Import `API_ROUTES` wherever a URL is passed to `useFetch` or `useMutation`. Use the nested domain-grouped structure to keep the file organized as it grows.
 
 ## Philosophy
 

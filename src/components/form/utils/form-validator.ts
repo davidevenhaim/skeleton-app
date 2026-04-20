@@ -240,4 +240,36 @@ export const formValidator = {
       })
       .optional()
       .nullable(),
+
+  /** Named alias for requiredString — signals intent for FormSelect / FormCombobox fields. */
+  requiredSelect: (props?: InputProps) =>
+    zod
+      .string()
+      .min(1, { error: props?.message?.required_error ?? "required" }),
+
+  /** Array-based multi-select with configurable minimum selection count. */
+  requiredMultiSelect: (min = 1, props?: InputProps) =>
+    zod
+      .array(zod.string(), {
+        error: props?.message?.required_error ?? "required",
+      })
+      .min(min, { error: props?.message?.required_error ?? "required" }),
+
+  /** Optional email — valid if provided, empty string / undefined / null is OK. */
+  optionalEmail: () =>
+    zod
+      .string()
+      .email({ error: "emailNotValid" })
+      .or(zod.literal(""))
+      .optional()
+      .nullable(),
+
+  /**
+   * Schema-level password confirmation helper.
+   * Usage: schema.refine(...formValidator.confirmPassword("password", "confirmPassword"), { path: ["confirmPassword"] })
+   */
+  confirmPassword:
+    (passwordField: string, confirmField: string) =>
+    (data: Record<string, unknown>) =>
+      data[passwordField] === data[confirmField],
 };

@@ -9,6 +9,14 @@ export { useCopyToClipboard } from "./use-copy-to-clipboard";
 export { useOutsideClick } from "./use-outside-click";
 export { useCountdown } from "./use-countdown";
 export { usePrevious } from "./use-previous";
+export { useEventListener } from "./use-event-listener";
+export { useMediaQuery } from "./use-media-query";
+export { useInterval } from "./use-interval";
+export { useTimeout } from "./use-timeout";
+export { useScrollPosition } from "./use-scroll-position";
+export { useKeyPress } from "./use-key-press";
+export { usePermissions } from "./use-permissions";
+export { useAsync } from "./use-async";
 
 export type { UseBooleanReturn } from "./use-boolean";
 export type { UseDebounceReturn } from "./use-debounce";

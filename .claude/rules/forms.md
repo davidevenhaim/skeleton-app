@@ -31,17 +31,39 @@ Use the project’s form system by default.
 
 Prefer `formValidator` helpers for:
 
-- required strings
-- email
-- password
-- phone
-- positive numbers
-- dates
-- booleans
-- file uploads
-- URLs
+- required strings → `requiredString()`
+- select fields → `requiredSelect()`
+- multi-select with minimum → `requiredMultiSelect(min?)`
+- email → `requiredEmail()` / `optionalEmail()`
+- password → `requiredPassword()` / `requiredPasswordRelaxed()`
+- password confirmation → use `confirmPassword(pwField, confirmField)` as a schema-level `.refine()`
+- phone → `requiredPhoneNumber()` / `optionalPhoneNumber()`
+- positive numbers → `requiredPositiveNumber()`
+- dates → `requiredDate()`
+- booleans → `booleanField()` / `requiredBoolean()`
+- file uploads → `singleFile()` / `multipleFiles()`
+- URLs → `requiredWebUrl()` / `optionalWebUrl()`
 
 Only write raw custom zod validation when the project helpers do not cover the use case clearly.
+
+## List Views and Tables
+
+For displaying paginated, searchable, sortable data — use the `DataTable` component.
+
+```tsx
+import { DataTable } from "@/components/ui/data-table"
+```
+
+`DataTable` handles sorting, client-side search, and pagination internally. Do not build a custom table with manual sort/filter/pagination state.
+
+```tsx
+const columns = [
+  { key: "name", header: "Name", sortable: true },
+  { key: "email", header: "Email" },
+  { key: "id", header: "Actions", cell: (row) => <ActionsMenu id={row.id} /> },
+]
+<DataTable data={users} columns={columns} searchable searchKeys={["name", "email"]} />
+```
 
 ## Translation Guidance
 

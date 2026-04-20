@@ -55,6 +55,13 @@ Do not introduce unnecessary abstraction or custom patterns when an existing pro
     - reuse dialog patterns
     - reuse table / filter patterns
 
+11. Never call `toast()` directly inside components.
+    - Use the shared helpers: `toastSuccess`, `toastError`, `toastWarning`, `toastInfo`, `toastPromise`
+    - These live in `src/lib/toast.ts`
+
+12. Never add new fields to a Zustand store unless the data needs to be shared across unrelated components.
+    - Read `.claude/rules/stores.md` before touching any store
+
 ---
 
 ## Workflow Rules
@@ -79,6 +86,7 @@ Do not introduce unnecessary abstraction or custom patterns when an existing pro
 - Shared types belong in `src/types`
 - i18n configuration belongs in `src/i18n`
 - Translation messages belong in `messages/`
+- App-level library code (API client, toast helpers, config) belongs in `src/lib`
 
 ---
 
@@ -94,6 +102,7 @@ Read the relevant rule file when working in these areas:
 - routes / config / storage → `.claude/rules/app-structure.md`
 - UI / styling / layout → `.claude/rules/ui-patterns.md`
 - utilities / hooks → `.claude/rules/hooks-and-utils.md`
+- stores / state → `.claude/rules/stores.md`
 
 ---
 
@@ -106,5 +115,6 @@ When implementing a new feature:
 3. prefer shared components and hooks
 4. keep translations and routes centralized
 5. avoid one-off solutions unless clearly justified
+6. for list views with data, prefer `DataTable` before building a custom table
 
 If unsure, choose the simplest solution that matches the project’s conventions.

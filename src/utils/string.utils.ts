@@ -80,3 +80,33 @@ export const buildWhatsappUrl = (phone: string): string => {
 export const buildWazeUrl = (address: string): string => {
   return `https://www.waze.com/ul?ll=${address}`;
 };
+
+/** Truncates a string to maxLength and appends suffix if it was cut. */
+export const truncate = (str: string, maxLength: number, suffix = "…"): string => {
+  if (!str || str.length <= maxLength) return str;
+  return str.slice(0, maxLength) + suffix;
+};
+
+/** Capitalizes the first letter of a string. */
+export const capitalize = (str: string): string => {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+/** Converts a string to a URL-safe slug (lowercase, hyphens, no special chars). */
+export const slugify = (str: string): string => {
+  return str
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+};
+
+/** Converts camelCase or PascalCase to Title Case. */
+export const camelToTitleCase = (str: string): string => {
+  return str
+    .replace(/([A-Z])/g, " $1")
+    .replace(/^./, (s) => s.toUpperCase())
+    .trim();
+};

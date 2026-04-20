@@ -251,7 +251,7 @@
     "guide": {
       "heroDescription": "Una base lista para usar para crear sitios web y aplicaciones de forma ordenada, clara y escalable. Es especialmente útil para trabajar con herramientas de AI, para que incluso usuarios no técnicos puedan construir más rápido sin terminar con código desordenado que luego sea difícil de mantener.",
       "heroStats": {
-        "hooks": "11 hooks listos",
+        "hooks": "19 hooks listos",
         "forms": "12 componentes de formulario",
         "api": "Conexión estructurada con el servidor",
         "claude": "Guía de AI en CLAUDE.md"
@@ -262,7 +262,7 @@
       },
       "features": {
         "hooks": {
-          "title": "11 hooks listos",
+          "title": "19 hooks listos",
           "description": "Piezas de código reutilizables que ahorran tiempo en patrones comunes del frontend."
         },
         "forms": {
@@ -690,7 +690,8 @@
       "switchRequired": "Por favor elige una opción",
       "fileRequired": "Debes adjuntar un archivo",
       "filesRequired": "Debes adjuntar archivos",
-      "minFilesCount": "Se requieren al menos {count} elementos"
+      "minFilesCount": "Se requieren al menos {count} elementos",
+      "passwordsDoNotMatch": "Las contraseñas no coinciden"
     },
     "labels": {
       "email": "Correo electrónico",
@@ -764,5 +765,10 @@
       "acceptedTypes": "Tipos admitidos: {types}",
       "clearFiles": "Limpiar todo"
     }
+  },
+  "errorBoundary": {
+    "title": "Algo salió mal",
+    "description": "Ocurrió un error inesperado. Intenta recargar la página.",
+    "refresh": "Recargar página"
   }
 }

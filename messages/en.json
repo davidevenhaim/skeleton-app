@@ -255,7 +255,7 @@
     "guide": {
       "heroDescription": "A ready-to-use foundation for building websites and apps in a clean, organized, and scalable way. Especially useful for working with AI tools, so even non-technical users can build faster without ending up with messy code that developers struggle to maintain later.",
       "heroStats": {
-        "hooks": "11 ready-made hooks",
+        "hooks": "19 ready-made hooks",
         "forms": "12 form components",
         "api": "Structured server connection",
         "claude": "AI guide in CLAUDE.md"
@@ -266,7 +266,7 @@
       },
       "features": {
         "hooks": {
-          "title": "11 ready-made hooks",
+          "title": "19 ready-made hooks",
           "description": "Reusable pieces of code that save time on common frontend patterns."
         },
         "forms": {
@@ -693,7 +693,8 @@
       "switchRequired": "Please choose an option",
       "fileRequired": "Please attach a file",
       "filesRequired": "Please attach files",
-      "minFilesCount": "At least {count} items are required"
+      "minFilesCount": "At least {count} items are required",
+      "passwordsDoNotMatch": "Passwords do not match"
     },
     "labels": {
       "email": "Email",
@@ -767,5 +768,10 @@
       "acceptedTypes": "Supported types: {types}",
       "clearFiles": "Clear all"
     }
+  },
+  "errorBoundary": {
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred. Try refreshing the page.",
+    "refresh": "Refresh page"
   }
 }
