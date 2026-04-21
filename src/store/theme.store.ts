@@ -19,9 +19,7 @@ const getInitialTheme = (): Theme => {
   if (typeof window === "undefined") return "light";
   const stored = getStorage(STORAGE_KEY) as Theme | null;
   if (stored === "light" || stored === "dark") return stored;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 };
 
 export const useThemeStore = create<ThemeState>((set, get) => ({
@@ -33,7 +31,7 @@ export const useThemeStore = create<ThemeState>((set, get) => ({
   toggle: () => {
     const next: Theme = get().theme === "light" ? "dark" : "light";
     get().setTheme(next);
-  }
+  },
 }));
 
 /** Call once on app mount to sync with persisted/OS preference */

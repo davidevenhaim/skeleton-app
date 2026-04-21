@@ -11,15 +11,8 @@ type DirectionProviderProps = {
   children: React.ReactNode;
 };
 
-export function DirectionProvider({
-  dir,
-  children
-}: DirectionProviderProps) {
-  return (
-    <DirectionContext.Provider value={dir}>
-      {children}
-    </DirectionContext.Provider>
-  );
+export function DirectionProvider({ dir, children }: DirectionProviderProps) {
+  return <DirectionContext.Provider value={dir}>{children}</DirectionContext.Provider>;
 }
 
 export function useDirection(): Direction {

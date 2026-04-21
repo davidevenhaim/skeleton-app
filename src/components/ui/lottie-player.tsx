@@ -17,7 +17,7 @@ const LottiePlayer = ({
   className,
   fallback = null,
   loop = true,
-  autoplay = true
+  autoplay = true,
 }: LottiePlayerProps) => {
   const [animationData, setAnimationData] = useState<object | null>(null);
   const [hasError, setHasError] = useState(false);

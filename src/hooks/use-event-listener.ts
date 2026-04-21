@@ -17,15 +17,11 @@ export function useEventListener<K extends keyof WindowEventMap>(
   }, [handler]);
 
   useEffect(() => {
-    const target =
-      element && "current" in element
-        ? element.current
-        : element ?? window;
+    const target = element && "current" in element ? element.current : (element ?? window);
 
     if (!target || !target.addEventListener) return;
 
-    const listener = (event: Event) =>
-      savedHandler.current(event as WindowEventMap[K]);
+    const listener = (event: Event) => savedHandler.current(event as WindowEventMap[K]);
 
     target.addEventListener(eventName, listener, options);
     return () => target.removeEventListener(eventName, listener, options);

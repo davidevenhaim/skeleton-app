@@ -57,7 +57,7 @@ export function LoadingIndicator({
   children,
   className,
   spinnerClassName,
-  skeletonRows = 3
+  skeletonRows = 3,
 }: LoadingIndicatorProps) {
   const isLoading = useIsLoading(loadingKey);
 
@@ -83,11 +83,11 @@ export function LoadingIndicator({
         role="status"
         aria-label="Loading"
         className={cn(
-          "fixed inset-0 z-[9999] flex items-center justify-center bg-background/60 backdrop-blur-sm",
+          "bg-background/60 fixed inset-0 z-[9999] flex items-center justify-center backdrop-blur-sm",
           className
         )}
       >
-        <div className="rounded-xl border bg-card p-6 shadow-xl">
+        <div className="bg-card rounded-xl border p-6 shadow-xl">
           <Spinner className={cn("size-8", spinnerClassName)} />
         </div>
       </div>
@@ -99,26 +99,15 @@ export function LoadingIndicator({
     if (!isLoading) return <>{children}</>;
     if (children) {
       return (
-        <div
-          role="status"
-          aria-label="Loading"
-          className={cn("animate-pulse", className)}
-        >
+        <div role="status" aria-label="Loading" className={cn("animate-pulse", className)}>
           {children}
         </div>
       );
     }
     return (
-      <div
-        role="status"
-        aria-label="Loading"
-        className={cn("flex flex-col gap-3", className)}
-      >
+      <div role="status" aria-label="Loading" className={cn("flex flex-col gap-3", className)}>
         {Array.from({ length: skeletonRows }).map((_, i) => (
-          <Skeleton
-            key={i}
-            className={cn("h-4 w-full", i === skeletonRows - 1 && "w-3/4")}
-          />
+          <Skeleton key={i} className={cn("h-4 w-full", i === skeletonRows - 1 && "w-3/4")} />
         ))}
       </div>
     );
@@ -128,17 +117,11 @@ export function LoadingIndicator({
   if (variant === "disabled") {
     return (
       <div
-        className={cn(
-          "relative",
-          isLoading && "pointer-events-none select-none",
-          className
-        )}
+        className={cn("relative", isLoading && "pointer-events-none select-none", className)}
         aria-busy={isLoading}
       >
         {children}
-        {isLoading && (
-          <div className="absolute inset-0 rounded-[inherit] bg-background/30" />
-        )}
+        {isLoading && <div className="bg-background/30 absolute inset-0 rounded-[inherit]" />}
       </div>
     );
   }

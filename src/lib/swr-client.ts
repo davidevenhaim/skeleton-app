@@ -25,7 +25,5 @@ export const mutator = <TData, TArg extends { method?: string; data?: TData }>(
   { arg }: { arg: TArg }
 ): Promise<TData> => {
   const { method = "POST", data } = arg;
-  return apiClient
-    .request<TData>({ url, method, data })
-    .then((res) => res.data);
+  return apiClient.request<TData>({ url, method, data }).then((res) => res.data);
 };

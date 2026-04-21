@@ -1,8 +1,5 @@
 /** Returns a new object with the specified keys removed. */
-export const omit = <T extends object, K extends keyof T>(
-  obj: T,
-  keys: K[]
-): Omit<T, K> => {
+export const omit = <T extends object, K extends keyof T>(obj: T, keys: K[]): Omit<T, K> => {
   const result = { ...obj };
   for (const key of keys) {
     delete result[key];
@@ -11,10 +8,7 @@ export const omit = <T extends object, K extends keyof T>(
 };
 
 /** Returns a new object with only the specified keys. */
-export const pick = <T extends object, K extends keyof T>(
-  obj: T,
-  keys: K[]
-): Pick<T, K> => {
+export const pick = <T extends object, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> => {
   const result = {} as Pick<T, K>;
   for (const key of keys) {
     if (key in obj) result[key] = obj[key];

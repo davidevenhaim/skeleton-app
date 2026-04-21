@@ -2,11 +2,7 @@
 
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import Iconify from "@/components/ui/iconify";
 
 interface PdfPreviewProps {
@@ -24,10 +20,7 @@ export const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(
           className
         )}
       >
-        <Iconify
-          icon="lucide:file-text"
-          className="size-12 text-slate-400 dark:text-slate-500"
-        />
+        <Iconify icon="lucide:file-text" className="size-12 text-slate-400 dark:text-slate-500" />
       </div>
     );
 

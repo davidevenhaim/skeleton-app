@@ -17,7 +17,7 @@ import {
   FormSlider,
   FormSwitch,
   FormTextarea,
-  TextInput
+  TextInput,
 } from "@/components/form";
 import { formValidator } from "@/components/form/utils/form-validator";
 import { Button } from "@/components/ui/button";
@@ -35,7 +35,7 @@ import {
   type DemoFormattedForm,
   type DemoOtpForm,
   type DemoSelectForm,
-  type DemoTextForm
+  type DemoTextForm,
 } from "@/components/demo/data";
 
 const FORMATTED_SCHEMA = zod.object({
@@ -46,32 +46,32 @@ const FORMATTED_SCHEMA = zod.object({
   formatSsn: formValidator.requiredString(),
   formatCreditCard: formValidator.requiredString(),
   formatInteger: formValidator.requiredString(),
-  formatBytes: formValidator.requiredString()
+  formatBytes: formValidator.requiredString(),
 });
 
 const TEXT_SCHEMA = zod.object({
   name: formValidator.requiredString(),
   email: formValidator.requiredEmail(),
-  notes: formValidator.requiredString()
+  notes: formValidator.requiredString(),
 });
 
 const SELECT_SCHEMA = zod.object({
   category: formValidator.requiredString(),
   status: formValidator.requiredString(),
-  skills: formValidator.optionalStringArray()
+  skills: formValidator.optionalStringArray(),
 });
 
 const OTP_SCHEMA = zod.object({
   otp: formValidator.requiredExactStringLength(6),
   volume: formValidator.numberInRange(0, 100),
   enableNotifications: formValidator.booleanField(),
-  agree: formValidator.requiredBoolean()
+  agree: formValidator.requiredBoolean(),
 });
 
 const DATE_FILE_SCHEMA = zod.object({
   date: formValidator.requiredDate(),
   dateRange: formValidator.optionalDateRange(),
-  files: formValidator.multipleFiles({ minFiles: 1 })
+  files: formValidator.multipleFiles({ minFiles: 1 }),
 });
 
 const FORMATTED_DEFAULTS: DemoFormattedForm = {
@@ -82,7 +82,7 @@ const FORMATTED_DEFAULTS: DemoFormattedForm = {
   formatSsn: "",
   formatCreditCard: "",
   formatInteger: "",
-  formatBytes: ""
+  formatBytes: "",
 };
 
 export function DemoFormsTab() {
@@ -90,17 +90,17 @@ export function DemoFormsTab() {
 
   const formattedForm = useForm<DemoFormattedForm>({
     resolver: zodResolver(FORMATTED_SCHEMA),
-    defaultValues: FORMATTED_DEFAULTS
+    defaultValues: FORMATTED_DEFAULTS,
   });
 
   const textForm = useForm<DemoTextForm>({
     resolver: zodResolver(TEXT_SCHEMA),
-    defaultValues: { name: "", email: "", notes: "" }
+    defaultValues: { name: "", email: "", notes: "" },
   });
 
   const selectForm = useForm<DemoSelectForm>({
     resolver: zodResolver(SELECT_SCHEMA),
-    defaultValues: { category: "", status: "", skills: [] }
+    defaultValues: { category: "", status: "", skills: [] },
   });
 
   const otpForm = useForm<DemoOtpForm>({
@@ -109,8 +109,8 @@ export function DemoFormsTab() {
       otp: "",
       volume: 50,
       enableNotifications: false,
-      agree: false
-    }
+      agree: false,
+    },
   });
 
   const dateFileForm = useForm<DemoDateFileForm>({
@@ -118,15 +118,12 @@ export function DemoFormsTab() {
     defaultValues: {
       date: undefined,
       dateRange: undefined,
-      files: []
-    }
+      files: [],
+    },
   });
 
   const toastSubmitted = () => {
-    toastSuccess(
-      tDemo("forms.submitSuccessTitle"),
-      tDemo("forms.submitSuccessDescription")
-    );
+    toastSuccess(tDemo("forms.submitSuccessTitle"), tDemo("forms.submitSuccessDescription"));
   };
 
   const onSubmitFormatted = async (data: DemoFormattedForm) => {
@@ -156,248 +153,232 @@ export function DemoFormsTab() {
   };
 
   return (
-    <TabsContent value='forms' className='space-y-6'>
-      <div className='grid grid-cols-1 gap-6 lg:grid-cols-2'>
-        <Form
-          form={formattedForm}
-          onSubmit={onSubmitFormatted}
-          className='contents'
-        >
-          <Card className='lg:col-span-2'>
+    <TabsContent value="forms" className="space-y-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <Form form={formattedForm} onSubmit={onSubmitFormatted} className="contents">
+          <Card className="lg:col-span-2">
             <CardHeader>
               <CardTitle>{tDemo("forms.allFormattedInputs")}</CardTitle>
               <CardDescription>
-                <Typography variant='caption1' as='span' color='muted'>
+                <Typography variant="caption1" as="span" color="muted">
                   {tDemo("forms.formattedInputsHint")}
                 </Typography>
               </CardDescription>
             </CardHeader>
-            <CardContent className='space-y-4'>
-              <div className='grid gap-4 sm:grid-cols-2'>
+            <CardContent className="space-y-4">
+              <div className="grid gap-4 sm:grid-cols-2">
                 <FormattedInput
-                  name='formatUsd'
-                  label='labels.formatUsd'
+                  name="formatUsd"
+                  label="labels.formatUsd"
                   formatter={inputFormatter.dollar}
-                  placeholder='placeholders.formatUsd'
+                  placeholder="placeholders.formatUsd"
                   required
                 />
                 <FormattedInput
-                  name='formatEur'
-                  label='labels.formatEur'
+                  name="formatEur"
+                  label="labels.formatEur"
                   formatter={inputFormatter.euro}
-                  placeholder='placeholders.formatEur'
+                  placeholder="placeholders.formatEur"
                   required
                 />
                 <FormattedInput
-                  name='formatPercent'
-                  label='labels.formatPercent'
+                  name="formatPercent"
+                  label="labels.formatPercent"
                   formatter={inputFormatter.percent}
-                  placeholder='placeholders.formatPercent'
+                  placeholder="placeholders.formatPercent"
                   required
                 />
                 <FormattedInput
-                  name='formatPhone'
-                  label='labels.formatPhone'
+                  name="formatPhone"
+                  label="labels.formatPhone"
                   formatter={inputFormatter.phone}
-                  placeholder='placeholders.formatPhone'
+                  placeholder="placeholders.formatPhone"
                   required
                 />
                 <FormattedInput
-                  name='formatSsn'
-                  label='labels.formatSsn'
+                  name="formatSsn"
+                  label="labels.formatSsn"
                   formatter={inputFormatter.ssn}
-                  placeholder='placeholders.formatSsn'
+                  placeholder="placeholders.formatSsn"
                   required
                 />
                 <FormattedInput
-                  name='formatCreditCard'
-                  label='labels.formatCreditCard'
+                  name="formatCreditCard"
+                  label="labels.formatCreditCard"
                   formatter={inputFormatter.creditCard}
-                  placeholder='placeholders.formatCreditCard'
+                  placeholder="placeholders.formatCreditCard"
                   required
                 />
                 <FormattedInput
-                  name='formatInteger'
-                  label='labels.formatInteger'
+                  name="formatInteger"
+                  label="labels.formatInteger"
                   formatter={inputFormatter.integer}
-                  placeholder='placeholders.formatInteger'
+                  placeholder="placeholders.formatInteger"
                   required
                 />
                 <FormattedInput
-                  name='formatBytes'
-                  label='labels.formatBytes'
+                  name="formatBytes"
+                  label="labels.formatBytes"
                   formatter={inputFormatter.bytes}
-                  placeholder='placeholders.formatBytes'
+                  placeholder="placeholders.formatBytes"
                   required
                 />
               </div>
               <Button
-                type='submit'
-                size='lg'
+                type="submit"
+                size="lg"
                 loading={formattedForm.formState.isSubmitting}
-                loadingVariant='dots'
+                loadingVariant="dots"
               >
-                <Iconify icon='lucide:send' />
+                <Iconify icon="lucide:send" />
                 {tDemo("forms.submitFormatted")}
               </Button>
             </CardContent>
           </Card>
         </Form>
 
-        <Form form={textForm} onSubmit={onSubmitText} className='contents'>
+        <Form form={textForm} onSubmit={onSubmitText} className="contents">
           <Card>
             <CardHeader>
               <CardTitle>{tDemo("forms.textInputs")}</CardTitle>
               <CardDescription>
-                <Typography variant='caption1' as='span' color='muted'>
+                <Typography variant="caption1" as="span" color="muted">
                   {tDemo("forms.textInputsHint")}
                 </Typography>
               </CardDescription>
             </CardHeader>
-            <CardContent className='space-y-4'>
+            <CardContent className="space-y-4">
+              <TextInput name="name" label="labels.name" placeholder="placeholders.name" required />
               <TextInput
-                name='name'
-                label='labels.name'
-                placeholder='placeholders.name'
-                required
-              />
-              <TextInput
-                name='email'
-                type='email'
-                label='labels.email'
-                placeholder='placeholders.email'
+                name="email"
+                type="email"
+                label="labels.email"
+                placeholder="placeholders.email"
                 required
               />
               <FormTextarea
-                name='notes'
-                label='labels.notes'
-                placeholder='placeholders.notes'
+                name="notes"
+                label="labels.notes"
+                placeholder="placeholders.notes"
                 rows={3}
                 maxLength={200}
                 showCharCount
                 required
               />
               <Button
-                type='submit'
-                size='lg'
+                type="submit"
+                size="lg"
                 loading={textForm.formState.isSubmitting}
-                loadingVariant='spinner'
+                loadingVariant="spinner"
               >
-                <Iconify icon='lucide:send' />
+                <Iconify icon="lucide:send" />
                 {tDemo("forms.submitText")}
               </Button>
             </CardContent>
           </Card>
         </Form>
 
-        <Form form={selectForm} onSubmit={onSubmitSelect} className='contents'>
+        <Form form={selectForm} onSubmit={onSubmitSelect} className="contents">
           <Card>
             <CardHeader>
               <CardTitle>{tDemo("forms.selectAndMultiSelect")}</CardTitle>
               <CardDescription>
-                <Typography variant='caption1' as='span' color='muted'>
+                <Typography variant="caption1" as="span" color="muted">
                   {tDemo("forms.selectSectionHint")}
                 </Typography>
               </CardDescription>
             </CardHeader>
-            <CardContent className='space-y-4'>
+            <CardContent className="space-y-4">
               <FormSelect
-                name='category'
-                label='labels.category'
-                placeholder='select'
+                name="category"
+                label="labels.category"
+                placeholder="select"
                 options={CATEGORY_OPTIONS}
               />
               <FormCombobox
-                name='status'
-                label='labels.status'
-                placeholder='select'
+                name="status"
+                label="labels.status"
+                placeholder="select"
                 options={STATUS_OPTIONS}
               />
               <FormMultiSelect
-                name='skills'
-                label='labels.technologyStack'
+                name="skills"
+                label="labels.technologyStack"
                 options={MULTI_OPTIONS}
                 searchable
-                searchPlaceholder='placeholders.search'
+                searchPlaceholder="placeholders.search"
                 maxDisplay={2}
               />
               <Button
-                type='submit'
-                size='lg'
+                type="submit"
+                size="lg"
                 loading={selectForm.formState.isSubmitting}
-                loadingVariant='ring'
+                loadingVariant="ring"
               >
-                <Iconify icon='lucide:send' />
+                <Iconify icon="lucide:send" />
                 {tDemo("forms.submitSelect")}
               </Button>
             </CardContent>
           </Card>
         </Form>
 
-        <Form form={otpForm} onSubmit={onSubmitOtp} className='contents'>
+        <Form form={otpForm} onSubmit={onSubmitOtp} className="contents">
           <Card>
             <CardHeader>
               <CardTitle>{tDemo("forms.otpSliderAndToggles")}</CardTitle>
               <CardDescription>
-                <Typography variant='caption1' as='span' color='muted'>
+                <Typography variant="caption1" as="span" color="muted">
                   {tDemo("forms.otpSectionHint")}
                 </Typography>
               </CardDescription>
             </CardHeader>
-            <CardContent className='space-y-4'>
-              <FormOTPInput name='otp' label='labels.otp' length={6} required />
-              <FormSlider name='volume' label='labels.volume' min={0} max={100} />
-              <FormSwitch
-                name='enableNotifications'
-                label='labels.enableNotifications'
-              />
-              <FormCheckbox name='agree' label='labels.agree' />
+            <CardContent className="space-y-4">
+              <FormOTPInput name="otp" label="labels.otp" length={6} required />
+              <FormSlider name="volume" label="labels.volume" min={0} max={100} />
+              <FormSwitch name="enableNotifications" label="labels.enableNotifications" />
+              <FormCheckbox name="agree" label="labels.agree" />
               <Button
-                type='submit'
-                size='lg'
+                type="submit"
+                size="lg"
                 loading={otpForm.formState.isSubmitting}
-                loadingVariant='pulse'
+                loadingVariant="pulse"
               >
-                <Iconify icon='lucide:send' />
+                <Iconify icon="lucide:send" />
                 {tDemo("forms.submitOtp")}
               </Button>
             </CardContent>
           </Card>
         </Form>
 
-        <Form form={dateFileForm} onSubmit={onSubmitDateFile} className='contents'>
-          <Card className='lg:col-span-2'>
+        <Form form={dateFileForm} onSubmit={onSubmitDateFile} className="contents">
+          <Card className="lg:col-span-2">
             <CardHeader>
               <CardTitle>{tDemo("forms.dateAndFileUpload")}</CardTitle>
               <CardDescription>
-                <Typography variant='caption1' as='span' color='muted'>
+                <Typography variant="caption1" as="span" color="muted">
                   {tDemo("forms.dateFileSectionHint")}
                 </Typography>
               </CardDescription>
             </CardHeader>
-            <CardContent className='space-y-4'>
-              <div className='grid gap-4 md:grid-cols-2'>
-                <DateInput name='date' label='labels.date' mode='single' required />
-                <DateInput
-                  name='dateRange'
-                  label='labels.startDate'
-                  mode='range'
-                />
+            <CardContent className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2">
+                <DateInput name="date" label="labels.date" mode="single" required />
+                <DateInput name="dateRange" label="labels.startDate" mode="range" />
               </div>
               <FileUpload
-                name='files'
-                label='labels.upload'
+                name="files"
+                label="labels.upload"
                 multiple
                 maxSize={5 * 1024 * 1024}
                 required
               />
               <Button
-                type='submit'
-                size='lg'
+                type="submit"
+                size="lg"
                 loading={dateFileForm.formState.isSubmitting}
-                loadingVariant='spinner'
+                loadingVariant="spinner"
               >
-                <Iconify icon='lucide:send' />
+                <Iconify icon="lucide:send" />
                 {tDemo("forms.submitDateFiles")}
               </Button>
             </CardContent>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // ----------------------------------------------------------------------
 
 export function isEqual(a: any, b: any): boolean {
@@ -9,11 +10,7 @@ export function isEqual(a: any, b: any): boolean {
     return false;
   }
 
-  if (
-    typeof a === "string" ||
-    typeof a === "number" ||
-    typeof a === "boolean"
-  ) {
+  if (typeof a === "string" || typeof a === "number" || typeof a === "boolean") {
     return a === b;
   }
 
@@ -50,7 +47,6 @@ export const merge = (target: any, ...sources: any[]): any => {
 
   const source = sources.shift();
 
-  // eslint-disable-next-line no-restricted-syntax
   for (const key in source) {
     if (isObject(source[key])) {
       if (!target[key]) Object.assign(target, { [key]: {} });

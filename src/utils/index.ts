@@ -1,7 +1,12 @@
 export { isEqual, merge, getRandomPastelColor, getIsImageValid } from "./general.utils";
-export { localStorageAvailable, localStorageGetItem, localStorageSetItem, localStorageRemoveItem } from "./local-storage.utils";
+export {
+  localStorageAvailable,
+  localStorageGetItem,
+  localStorageSetItem,
+  localStorageRemoveItem,
+} from "./local-storage.utils";
 export { getMinMaxOfLength, clamp, formatNumber, randomInt } from "./number.utils";
-export { formatDate, DateFormating } from "./date.utils";
+export { formatDate, DateFormatting } from "./date.utils";
 export { inputFormatter, formatBytes } from "./formatters";
 export type { FormatterFn } from "./formatters";
 export {
@@ -22,7 +27,7 @@ export {
   truncate,
   capitalize,
   slugify,
-  camelToTitleCase
+  camelToTitleCase,
 } from "./string.utils";
 export { groupBy, unique, chunk } from "./arr.utils";
 export { omit, pick } from "./object.utils";

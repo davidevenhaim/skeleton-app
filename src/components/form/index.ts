@@ -20,7 +20,7 @@ export {
   FieldError,
   FieldContent,
   FieldSet,
-  FieldLegend
+  FieldLegend,
 } from "./field";
 export type { FormSelectProps } from "./form-select";
 export type { FormMultiSelectProps } from "./form-multi-select";

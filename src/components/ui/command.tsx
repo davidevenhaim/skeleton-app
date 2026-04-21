@@ -1,16 +1,13 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { useTranslations } from "next-intl"
-import { Command as CommandPrimitive } from "cmdk"
+import * as React from "react";
+import { useTranslations } from "next-intl";
+import { Command as CommandPrimitive } from "cmdk";
 
-import { cn } from "@/lib/utils"
-import Iconify from "@/components/ui/iconify"
+import { cn } from "@/lib/utils";
+import Iconify from "@/components/ui/iconify";
 
-function Command({
-  className,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive>) {
+function Command({ className, ...props }: React.ComponentProps<typeof CommandPrimitive>) {
   return (
     <CommandPrimitive
       data-slot="command"
@@ -20,62 +17,48 @@ function Command({
       )}
       {...props}
     />
-  )
+  );
 }
 
 function CommandInput({
   className,
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.Input>) {
-  const t = useTranslations()
+  const t = useTranslations();
   return (
-    <div
-      data-slot="command-input-wrapper"
-      className="flex items-center border-b px-3"
-    >
-      <Iconify
-        icon="lucide:search"
-        className="me-2 size-4 shrink-0 opacity-50"
-      />
+    <div data-slot="command-input-wrapper" className="flex items-center border-b px-3">
+      <Iconify icon="lucide:search" className="me-2 size-4 shrink-0 opacity-50" />
       <CommandPrimitive.Input
         data-slot="command-input"
         className={cn(
-          "placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm text-start outline-none disabled:cursor-not-allowed disabled:opacity-50",
+          "placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-start text-sm outline-none disabled:cursor-not-allowed disabled:opacity-50",
           className
         )}
         placeholder={props.placeholder ?? t("search")}
         {...props}
       />
     </div>
-  )
+  );
 }
 
-function CommandList({
-  className,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.List>) {
+function CommandList({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.List>) {
   return (
     <CommandPrimitive.List
       data-slot="command-list"
-      className={cn(
-        "max-h-[300px] scroll-py-1 overflow-x-hidden overflow-y-auto",
-        className
-      )}
+      className={cn("max-h-[300px] scroll-py-1 overflow-x-hidden overflow-y-auto", className)}
       {...props}
     />
-  )
+  );
 }
 
-function CommandEmpty({
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.Empty>) {
+function CommandEmpty({ ...props }: React.ComponentProps<typeof CommandPrimitive.Empty>) {
   return (
     <CommandPrimitive.Empty
       data-slot="command-empty"
       className="py-6 text-center text-sm"
       {...props}
     />
-  )
+  );
 }
 
 function CommandGroup({
@@ -91,7 +74,7 @@ function CommandGroup({
       )}
       {...props}
     />
-  )
+  );
 }
 
 function CommandSeparator({
@@ -104,13 +87,10 @@ function CommandSeparator({
       className={cn("bg-border -mx-1 my-1 h-px", className)}
       {...props}
     />
-  )
+  );
 }
 
-function CommandItem({
-  className,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.Item>) {
+function CommandItem({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.Item>) {
   return (
     <CommandPrimitive.Item
       data-slot="command-item"
@@ -120,23 +100,17 @@ function CommandItem({
       )}
       {...props}
     />
-  )
+  );
 }
 
-function CommandShortcut({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLSpanElement>) {
+function CommandShortcut({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) {
   return (
     <span
       data-slot="command-shortcut"
-      className={cn(
-        "text-muted-foreground ml-auto text-xs tracking-widest",
-        className
-      )}
+      className={cn("text-muted-foreground ml-auto text-xs tracking-widest", className)}
       {...props}
     />
-  )
+  );
 }
 
 export {
@@ -148,4 +122,4 @@ export {
   CommandItem,
   CommandSeparator,
   CommandShortcut,
-}
+};

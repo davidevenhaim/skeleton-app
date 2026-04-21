@@ -2,11 +2,7 @@
 
 import * as React from "react";
 import { toast as sonnerToast } from "sonner";
-import {
-  ToastSuccessIcon,
-  ToastErrorIcon,
-  ToastWarningIcon,
-} from "@/components/ui/toast-icons";
+import { ToastSuccessIcon, ToastErrorIcon, ToastWarningIcon } from "@/components/ui/toast-icons";
 
 /** Success toast - green checkmark */
 export function toastSuccess(message: string, description?: string) {

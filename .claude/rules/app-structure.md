@@ -55,8 +55,8 @@ const API_ROUTES = {
     LIST: "/users",
     BY_ID: (id: string) => `/users/${id}`,
   },
-} as const
-export default API_ROUTES
+} as const;
+export default API_ROUTES;
 ```
 
 Import `API_ROUTES` wherever a URL is passed to `useFetch` or `useMutation`. Use the nested domain-grouped structure to keep the file organized as it grows.

@@ -17,9 +17,7 @@ export function usePermissions(): UsePermissionsReturn {
 
   const hasRole = (required: Permission | Permission[]): boolean => {
     if (!role) return false;
-    return Array.isArray(required)
-      ? required.includes(role)
-      : role === required;
+    return Array.isArray(required) ? required.includes(role) : role === required;
   };
 
   return {

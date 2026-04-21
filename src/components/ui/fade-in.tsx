@@ -10,12 +10,7 @@ type FadeInProps = {
   direction?: "up" | "left" | "right" | "none";
 };
 
-const FadeIn = ({
-  children,
-  className,
-  delay = 0,
-  direction = "up",
-}: FadeInProps) => {
+const FadeIn = ({ children, className, delay = 0, direction = "up" }: FadeInProps) => {
   const { ref, inView } = useInView();
 
   const hiddenTranslate = {
@@ -30,9 +25,7 @@ const FadeIn = ({
       ref={ref}
       className={cn(
         "transition-all duration-700 ease-out",
-        inView
-          ? "opacity-100 translate-y-0 translate-x-0"
-          : `opacity-0 ${hiddenTranslate}`,
+        inView ? "translate-x-0 translate-y-0 opacity-100" : `opacity-0 ${hiddenTranslate}`,
         className
       )}
       style={{ transitionDelay: `${delay}ms` }}

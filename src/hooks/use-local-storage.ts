@@ -12,10 +12,7 @@ export type UseLocalStorageReturn<T> = {
   setField: (name: keyof T, updateValue: T[keyof T]) => void;
 };
 
-export function useLocalStorage<T>(
-  key: string,
-  initialState: T
-): UseLocalStorageReturn<T> {
+export function useLocalStorage<T>(key: string, initialState: T): UseLocalStorageReturn<T> {
   const [state, set] = useState(initialState);
 
   const multiValue = initialState && typeof initialState === "object";
@@ -27,6 +24,7 @@ export function useLocalStorage<T>(
 
     if (restoredValue) {
       if (multiValue) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         set((prevValue) => ({ ...prevValue, ...restoredValue }));
       } else {
         set(restoredValue);
@@ -69,7 +67,7 @@ export function useLocalStorage<T>(
       setState,
       setField,
       resetState,
-      canReset
+      canReset,
     }),
     [canReset, resetState, setField, setState, state]
   );

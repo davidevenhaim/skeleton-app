@@ -19,23 +19,16 @@ export type UseFetchReturn<T> = {
  * const { data, isLoading, error } = useFetch<User[]>("/users");
  * const { data } = useFetch<User>(isReady ? `/users/${id}` : null);
  */
-export function useFetch<T>(
-  url: string | null,
-  config?: SWRConfiguration<T>
-): UseFetchReturn<T> {
-  const { data, isLoading, error, mutate } = useSWR<T>(
-    url,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-      ...config
-    }
-  );
+export function useFetch<T>(url: string | null, config?: SWRConfiguration<T>): UseFetchReturn<T> {
+  const { data, isLoading, error, mutate } = useSWR<T>(url, fetcher, {
+    revalidateOnFocus: false,
+    ...config,
+  });
 
   return {
     data,
     isLoading,
     error,
-    mutate: () => void mutate()
+    mutate: () => void mutate(),
   };
 }

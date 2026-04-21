@@ -6,10 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const SERVER_URL = CONFIG.serverUrl;
 
-async function handleProxy(
-  req: NextRequest,
-  pathParam: { [key: string]: any }
-) {
+async function handleProxy(req: NextRequest, pathParam: { [key: string]: any }) {
   let pathArray: string[] = [];
   if (Array.isArray(pathParam.path)) {
     pathArray = pathParam.path;
@@ -18,10 +15,7 @@ async function handleProxy(
   }
 
   if (!pathArray.length) {
-    return NextResponse.json(
-      { message: "Invalid request: No path provided" },
-      { status: 400 }
-    );
+    return NextResponse.json({ message: "Invalid request: No path provided" }, { status: 400 });
   }
   const endpoint = pathArray.join("/");
   const originalUrl = new URL(req.url);
@@ -74,7 +68,7 @@ async function handleProxy(
     const requestOptions: RequestInit = {
       method: req.method || "GET",
       headers: newHeaders,
-      body
+      body,
     };
     const response = await fetch(apiUrl, requestOptions);
 
@@ -90,7 +84,7 @@ async function handleProxy(
     console.log(`✅ Received response from backend (${response.status})`);
 
     const nextResp = NextResponse.json(responseData, {
-      status: response.status
+      status: response.status,
     });
     const setCookieValue = response.headers.get("set-cookie");
     console.log("setCookieValue: ", setCookieValue);
@@ -100,15 +94,11 @@ async function handleProxy(
 
     return nextResp;
   } catch (error) {
-    console.error(
-      `❌ Proxy error: ${
-        error instanceof Error ? error.message : "Unknown error"
-      }`
-    );
+    console.error(`❌ Proxy error: ${error instanceof Error ? error.message : "Unknown error"}`);
     return NextResponse.json(
       {
         message: "Internal Server Error",
-        error: error instanceof Error ? error.message : "Unknown error"
+        error: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }
     );

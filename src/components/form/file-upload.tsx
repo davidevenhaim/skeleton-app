@@ -48,7 +48,7 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
       accept,
       multiple = false,
       disabled,
-      compact = true
+      compact = true,
     },
     ref
   ) => {
@@ -95,20 +95,14 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
           const isDuplicate = (file: File, existing: File[]) =>
             existing.some(
               (f) =>
-                f.name === file.name &&
-                f.size === file.size &&
-                f.lastModified === file.lastModified
+                f.name === file.name && f.size === file.size && f.lastModified === file.lastModified
             );
 
           const addFiles = (newFiles: FileList | File[]) => {
             const arr = Array.from(newFiles);
             const valid = maxSize ? arr.filter((f) => f.size <= maxSize) : arr;
             const newUnique = valid.filter((f) => !isDuplicate(f, fileList));
-            field.onChange(
-              multiple
-                ? [...fileList, ...newUnique]
-                : (newUnique[0] ?? fileList[0])
-            );
+            field.onChange(multiple ? [...fileList, ...newUnique] : (newUnique[0] ?? fileList[0]));
           };
 
           const removeFile = (index: number) => {
@@ -147,19 +141,17 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
           const renderInput = () => (
             <input
               ref={(el) => {
-                (
-                  inputRef as React.MutableRefObject<HTMLInputElement | null>
-                ).current = el;
+                (inputRef as React.MutableRefObject<HTMLInputElement | null>).current = el;
                 if (typeof ref === "function") ref(el);
                 else if (ref) ref.current = el;
               }}
               id={name}
-              type='file'
+              type="file"
               accept={acceptStr}
               multiple={multiple}
               disabled={disabled}
               onChange={handleChange}
-              className='hidden'
+              className="hidden"
               aria-invalid={!!(error || fieldError)}
             />
           );
@@ -169,9 +161,9 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
               <div className={cn("w-full", className)}>
                 {label && (
                   <Label htmlFor={name} className={cn("mb-1", labelClassName)}>
-                    <Typography variant='caption1'>{t(label)}</Typography>
+                    <Typography variant="caption1">{t(label)}</Typography>
                     {required && (
-                      <Typography variant='caption2' as='span' color='destructive' className='ms-1'>
+                      <Typography variant="caption2" as="span" color="destructive" className="ms-1">
                         *
                       </Typography>
                     )}
@@ -186,39 +178,35 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
                 >
                   {renderInput()}
                   <Button
-                    type='button'
-                    variant='outline'
-                    size='sm'
+                    type="button"
+                    variant="outline"
+                    size="sm"
                     disabled={disabled}
                     onClick={() => inputRef.current?.click()}
-                    className='w-fit'
+                    className="w-fit"
                   >
-                    <Iconify icon='lucide:upload' className='mr-2 size-4' />
+                    <Iconify icon="lucide:upload" className="mr-2 size-4" />
                     {t("placeholders.upload")}
                   </Button>
                   {fileList.length > 0 && (
-                    <ul className='space-y-1'>
+                    <ul className="space-y-1">
                       {fileList.map((file, i) => (
                         <li
                           key={i}
-                          className='flex items-center justify-between rounded bg-muted px-2 py-1 text-sm'
+                          className="bg-muted flex items-center justify-between rounded px-2 py-1 text-sm"
                         >
-                          <Typography
-                            variant='caption1'
-                            as='span'
-                            className='truncate'
-                          >
+                          <Typography variant="caption1" as="span" className="truncate">
                             {file.name}
                           </Typography>
                           <Button
-                            type='button'
-                            variant='ghost'
-                            size='icon'
-                            className='size-6'
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="size-6"
                             onClick={() => removeFile(i)}
-                            aria-label='Remove file'
+                            aria-label="Remove file"
                           >
-                            <Iconify icon='lucide:x' className='size-3' />
+                            <Iconify icon="lucide:x" className="size-3" />
                           </Button>
                         </li>
                       ))}
@@ -226,36 +214,30 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
                   )}
                   {fileList.length > 0 && (
                     <Button
-                      type='button'
-                      variant='ghost'
-                      size='sm'
+                      type="button"
+                      variant="ghost"
+                      size="sm"
                       onClick={clearAll}
-                      className='w-fit text-muted-foreground'
+                      className="text-muted-foreground w-fit"
                     >
                       {t("helpers.clearFiles")}
                     </Button>
                   )}
                 </div>
                 {(error || fieldError) && (
-                  <Typography
-                    variant='caption1'
-                    color='destructive'
-                    className='mt-1'
-                  >
-                    {fieldError?.message
-                      ? formatFormError(t, fieldError.message)
-                      : helperText}
+                  <Typography variant="caption1" color="destructive" className="mt-1">
+                    {fieldError?.message ? formatFormError(t, fieldError.message) : helperText}
                   </Typography>
                 )}
                 {!error && !fieldError && helperText && (
-                  <Typography variant='caption1' color='muted' className='mt-1'>
+                  <Typography variant="caption1" color="muted" className="mt-1">
                     {helperText}
                   </Typography>
                 )}
                 {!error && !fieldError && maxSize && (
-                  <Typography variant='caption2' color='muted' className='mt-1'>
+                  <Typography variant="caption2" color="muted" className="mt-1">
                     {t("helpers.maxSize", {
-                      size: inputFormatter.bytes.format(maxSize.toString())
+                      size: inputFormatter.bytes.format(maxSize.toString()),
                     })}
                   </Typography>
                 )}
@@ -268,11 +250,11 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
             <div className={cn("w-full", className)}>
               {label && (
                 <Label htmlFor={name} className={cn("mb-1", labelClassName)}>
-                  <Typography variant='caption1' as='span'>
+                  <Typography variant="caption1" as="span">
                     {t(label)}
                   </Typography>
                   {required && (
-                    <Typography variant='caption2' as='span' color='destructive' className='ms-1'>
+                    <Typography variant="caption2" as="span" color="destructive" className="ms-1">
                       *
                     </Typography>
                   )}
@@ -293,7 +275,7 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
                   dragError && "border-destructive bg-destructive/5"
                 )}
               >
-                <div className='flex flex-col items-center justify-center gap-4 px-8 py-16'>
+                <div className="flex flex-col items-center justify-center gap-4 px-8 py-16">
                   <div
                     className={cn(
                       "flex size-16 items-center justify-center rounded-2xl transition-colors",
@@ -302,38 +284,26 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
                         : "bg-slate-100 text-slate-500 group-hover:bg-slate-200 group-hover:text-slate-600 dark:bg-slate-800 dark:text-slate-400 dark:group-hover:bg-slate-700 dark:group-hover:text-slate-300"
                     )}
                   >
-                    <Iconify icon='lucide:file-up' className='size-8' />
+                    <Iconify icon="lucide:file-up" className="size-8" />
                   </div>
-                  <div className='text-center'>
-                    <Typography variant='label2' className='font-medium'>
-                      {isDragging
-                        ? t("placeholders.dropHere")
-                        : t("placeholders.dragDrop")}
+                  <div className="text-center">
+                    <Typography variant="label2" className="font-medium">
+                      {isDragging ? t("placeholders.dropHere") : t("placeholders.dragDrop")}
                     </Typography>
-                    <Typography
-                      variant='caption1'
-                      color='muted'
-                      className='mt-1'
-                    >
+                    <Typography variant="caption1" color="muted" className="mt-1">
                       {t("placeholders.browseHint")}
                       {maxSize && (
                         <>
                           {" "}
                           ·{" "}
                           {t("helpers.maxSize", {
-                            size: inputFormatter.bytes.format(
-                              maxSize.toString()
-                            )
+                            size: inputFormatter.bytes.format(maxSize.toString()),
                           })}
                         </>
                       )}
                     </Typography>
                     {dragError && (
-                      <Typography
-                        variant='caption1'
-                        color='destructive'
-                        className='mt-2'
-                      >
+                      <Typography variant="caption1" color="destructive" className="mt-2">
                         {dragError}
                       </Typography>
                     )}
@@ -342,73 +312,60 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
               </div>
 
               {fileList.length > 0 && (
-                <div className='mt-6'>
-                  <div className='mb-4 flex items-center justify-between'>
-                    <Typography
-                      variant='caption1'
-                      color='muted'
-                      className='font-medium'
-                    >
-                      {fileList.length} file{fileList.length !== 1 ? "s" : ""}{" "}
-                      selected
+                <div className="mt-6">
+                  <div className="mb-4 flex items-center justify-between">
+                    <Typography variant="caption1" color="muted" className="font-medium">
+                      {fileList.length} file{fileList.length !== 1 ? "s" : ""} selected
                     </Typography>
                     <Button
-                      type='button'
-                      variant='ghost'
-                      size='sm'
+                      type="button"
+                      variant="ghost"
+                      size="sm"
                       onClick={clearAll}
-                      className='text-muted-foreground hover:text-destructive'
+                      className="text-muted-foreground hover:text-destructive"
                     >
                       {t("helpers.clearFiles")}
                     </Button>
                   </div>
-                  <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5'>
+                  <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                     {fileList.map((file, index) => (
                       <div
                         key={`${file.name}-${index}`}
-                        className='group/card relative overflow-hidden rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:shadow-md dark:border-slate-700 dark:bg-slate-900/50'
+                        className="group/card relative overflow-hidden rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:shadow-md dark:border-slate-700 dark:bg-slate-900/50"
                       >
                         {file.type === "application/pdf" ? (
                           <PdfPreview file={file} />
                         ) : (
-                          <div className='flex aspect-[3/4] items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800'>
+                          <div className="flex aspect-[3/4] items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800">
                             <Iconify
-                              icon='lucide:file-text'
-                              className='size-12 text-slate-400 dark:text-slate-500'
+                              icon="lucide:file-text"
+                              className="size-12 text-slate-400 dark:text-slate-500"
                             />
                           </div>
                         )}
                         <div title={file.name}>
                           <Typography
-                            variant='caption2'
-                            className='mt-3 truncate text-center font-medium'
+                            variant="caption2"
+                            className="mt-3 truncate text-center font-medium"
                           >
                             {file.name}
                           </Typography>
                         </div>
-                        <Typography
-                          variant='caption2'
-                          color='muted'
-                          className='mt-0.5 text-center'
-                        >
+                        <Typography variant="caption2" color="muted" className="mt-0.5 text-center">
                           {inputFormatter.bytes.format(file.size.toString())}
                         </Typography>
                         <Button
-                          type='button'
-                          variant='destructive'
-                          size='icon'
-                          className='absolute right-2 top-2 size-7 opacity-0 transition-opacity group-hover/card:opacity-100'
+                          type="button"
+                          variant="destructive"
+                          size="icon"
+                          className="absolute top-2 right-2 size-7 opacity-0 transition-opacity group-hover/card:opacity-100"
                           onClick={(e) => {
                             e.stopPropagation();
                             removeFile(index);
                           }}
                           aria-label={`Remove ${file.name}`}
                         >
-                          <Iconify
-                            icon='lucide:x'
-                            color='white'
-                            className='size-3.5'
-                          />
+                          <Iconify icon="lucide:x" color="white" className="size-3.5" />
                         </Button>
                       </div>
                     ))}
@@ -417,18 +374,12 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
               )}
 
               {(error || fieldError) && (
-                <Typography
-                  variant='caption1'
-                  color='destructive'
-                  className='mt-1'
-                >
-                  {fieldError?.message
-                    ? formatFormError(t, fieldError.message)
-                    : helperText}
+                <Typography variant="caption1" color="destructive" className="mt-1">
+                  {fieldError?.message ? formatFormError(t, fieldError.message) : helperText}
                 </Typography>
               )}
               {!error && !fieldError && helperText && (
-                <Typography variant='caption1' color='muted' className='mt-1'>
+                <Typography variant="caption1" color="muted" className="mt-1">
                   {helperText}
                 </Typography>
               )}

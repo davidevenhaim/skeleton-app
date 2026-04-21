@@ -6,7 +6,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle
+  DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
@@ -33,7 +33,7 @@ export function AreYouSureDialog({
   okText,
   cancelText,
   variant = "default",
-  isLoading = false
+  isLoading = false,
 }: AreYouSureDialogProps) {
   const t = useTranslations();
 
@@ -47,21 +47,19 @@ export function AreYouSureDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          {description && (
-            <DialogDescription>{description}</DialogDescription>
-          )}
+          {description && <DialogDescription>{description}</DialogDescription>}
         </DialogHeader>
         <DialogFooter>
           <Button
-            type='button'
-            variant='outline'
+            type="button"
+            variant="outline"
             disabled={isLoading}
             onClick={() => onOpenChange(false)}
           >
             {cancelText ?? t("cancel")}
           </Button>
           <Button
-            type='button'
+            type="button"
             variant={variant === "destructive" ? "destructive" : "default"}
             disabled={isLoading}
             onClick={handleConfirm}

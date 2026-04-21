@@ -14,7 +14,7 @@ const Field = React.forwardRef<
   return (
     <div
       ref={ref}
-      data-slot='field'
+      data-slot="field"
       data-orientation={orientation}
       className={cn(
         // gap-1.5 for consistent label-to-field spacing across all form fields
@@ -27,37 +27,35 @@ const Field = React.forwardRef<
 });
 Field.displayName = "Field";
 
-const FieldGroup = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<"div">
->(({ className, ...props }, ref) => {
-  return (
-    <div
-      ref={ref}
-      data-slot='field-group'
-      className={cn("flex flex-col gap-4", className)}
-      {...props}
-    />
-  );
-});
+const FieldGroup = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<"div">>(
+  ({ className, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        data-slot="field-group"
+        className={cn("flex flex-col gap-4", className)}
+        {...props}
+      />
+    );
+  }
+);
 FieldGroup.displayName = "FieldGroup";
 
-const FieldLabel = React.forwardRef<
-  HTMLLabelElement,
-  React.ComponentPropsWithoutRef<"label">
->(({ className, ...props }, ref) => {
-  return (
-    <label
-      ref={ref}
-      data-slot='field-label'
-      className={cn(
-        "group-data-[invalid=true]/field:text-destructive text-sm leading-none font-medium select-none peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
-        className
-      )}
-      {...props}
-    />
-  );
-});
+const FieldLabel = React.forwardRef<HTMLLabelElement, React.ComponentPropsWithoutRef<"label">>(
+  ({ className, ...props }, ref) => {
+    return (
+      <label
+        ref={ref}
+        data-slot="field-label"
+        className={cn(
+          "group-data-[invalid=true]/field:text-destructive text-sm leading-none font-medium select-none peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
+          className
+        )}
+        {...props}
+      />
+    );
+  }
+);
 FieldLabel.displayName = "FieldLabel";
 
 const FieldDescription = React.forwardRef<
@@ -68,10 +66,10 @@ const FieldDescription = React.forwardRef<
   return (
     <Typography
       ref={ref}
-      variant='caption2'
-      as='p'
-      color='muted'
-      data-slot='field-description'
+      variant="caption2"
+      as="p"
+      color="muted"
+      data-slot="field-description"
       className={className}
       {...rest}
     >
@@ -95,17 +93,17 @@ const FieldError = React.forwardRef<
   return (
     <div
       ref={ref}
-      data-slot='field-error'
+      data-slot="field-error"
       className={cn("flex flex-col gap-1", className)}
       {...props}
     >
       {errors.map((error, index) => (
         <Typography
           key={index}
-          variant='caption2'
-          as='p'
-          color='destructive'
-          className='leading-none font-medium'
+          variant="caption2"
+          as="p"
+          color="destructive"
+          className="leading-none font-medium"
         >
           {t(error?.message || "form_validation.required")}
         </Typography>
@@ -115,34 +113,32 @@ const FieldError = React.forwardRef<
 });
 FieldError.displayName = "FieldError";
 
-const FieldContent = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<"div">
->(({ className, ...props }, ref) => {
-  return (
-    <div
-      ref={ref}
-      data-slot='field-content'
-      className={cn("flex flex-1 flex-col gap-1.5", className)}
-      {...props}
-    />
-  );
-});
+const FieldContent = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<"div">>(
+  ({ className, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        data-slot="field-content"
+        className={cn("flex flex-1 flex-col gap-1.5", className)}
+        {...props}
+      />
+    );
+  }
+);
 FieldContent.displayName = "FieldContent";
 
-const FieldSet = React.forwardRef<
-  HTMLFieldSetElement,
-  React.ComponentPropsWithoutRef<"fieldset">
->(({ className, ...props }, ref) => {
-  return (
-    <fieldset
-      ref={ref}
-      data-slot='fieldset'
-      className={cn("flex flex-col gap-2", className)}
-      {...props}
-    />
-  );
-});
+const FieldSet = React.forwardRef<HTMLFieldSetElement, React.ComponentPropsWithoutRef<"fieldset">>(
+  ({ className, ...props }, ref) => {
+    return (
+      <fieldset
+        ref={ref}
+        data-slot="fieldset"
+        className={cn("flex flex-col gap-2", className)}
+        {...props}
+      />
+    );
+  }
+);
 FieldSet.displayName = "FieldSet";
 
 const FieldLegend = React.forwardRef<
@@ -154,12 +150,9 @@ const FieldLegend = React.forwardRef<
   return (
     <legend
       ref={ref}
-      data-slot='field-legend'
+      data-slot="field-legend"
       data-variant={variant}
-      className={cn(
-        "text-sm leading-none font-medium data-[variant=label]:text-base",
-        className
-      )}
+      className={cn("text-sm leading-none font-medium data-[variant=label]:text-base", className)}
       {...props}
     />
   );
@@ -174,5 +167,5 @@ export {
   FieldError,
   FieldContent,
   FieldSet,
-  FieldLegend
+  FieldLegend,
 };

@@ -10,33 +10,15 @@ type LoadingVariant = "spinner" | "dots" | "ring" | "pulse";
 
 function ButtonLoadingIndicator({ variant }: { variant: LoadingVariant }) {
   if (variant === "dots") {
-    return (
-      <Iconify
-        icon='svg-spinners:3-dots-fade'
-        className='size-4 shrink-0'
-        aria-hidden
-      />
-    );
+    return <Iconify icon="svg-spinners:3-dots-fade" className="size-4 shrink-0" aria-hidden />;
   }
   if (variant === "ring") {
-    return (
-      <Iconify
-        icon='svg-spinners:ring-resize'
-        className='size-4 shrink-0'
-        aria-hidden
-      />
-    );
+    return <Iconify icon="svg-spinners:ring-resize" className="size-4 shrink-0" aria-hidden />;
   }
   if (variant === "pulse") {
-    return (
-      <Iconify
-        icon='svg-spinners:pulse-3'
-        className='size-4 shrink-0'
-        aria-hidden
-      />
-    );
+    return <Iconify icon="svg-spinners:pulse-3" className="size-4 shrink-0" aria-hidden />;
   }
-  return <Spinner className='size-4' />;
+  return <Spinner className="size-4" />;
 }
 
 const buttonVariants = cva(
@@ -49,11 +31,9 @@ const buttonVariants = cva(
           "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
           "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost:
-          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
-        link: "text-primary underline-offset-4 hover:underline"
+        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
+        link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
         default: "h-9 px-5 py-2 has-[>svg]:px-4",
@@ -64,13 +44,13 @@ const buttonVariants = cva(
         "icon-xs": "size-6 [&_svg:not([class*='size-'])]:size-3",
         "icon-sm": "size-8",
         "icon-lg": "size-10",
-        none: "p-0 [&_svg]:p-0"
-      }
+        none: "p-0 [&_svg]:p-0",
+      },
     },
     defaultVariants: {
       variant: "default",
-      size: "default"
-    }
+      size: "default",
+    },
   }
 );
 
@@ -94,15 +74,11 @@ function Button({
   }) {
   // Slot (asChild) must receive exactly one element — never a sibling loader + children.
   if (asChild && loading) {
-    const child = React.Children.only(children) as React.ReactElement<
-      Record<string, unknown>
-    >;
-    const originalOnClick = child.props.onClick as
-      | React.MouseEventHandler<HTMLElement>
-      | undefined;
+    const child = React.Children.only(children) as React.ReactElement<Record<string, unknown>>;
+    const originalOnClick = child.props.onClick as React.MouseEventHandler<HTMLElement> | undefined;
     return (
       <Slot.Root
-        data-slot='button'
+        data-slot="button"
         data-variant={variant}
         data-size={size}
         className={cn(buttonVariants({ variant, size, className }))}
@@ -120,7 +96,7 @@ function Button({
               <ButtonLoadingIndicator variant={loadingVariant} />
               {child.props.children as React.ReactNode}
             </>
-          )
+          ),
         })}
       </Slot.Root>
     );
@@ -129,7 +105,7 @@ function Button({
   if (asChild) {
     return (
       <Slot.Root
-        data-slot='button'
+        data-slot="button"
         data-variant={variant}
         data-size={size}
         className={cn(buttonVariants({ variant, size, className }))}
@@ -142,7 +118,7 @@ function Button({
 
   return (
     <button
-      data-slot='button'
+      data-slot="button"
       data-variant={variant}
       data-size={size}
       disabled={disabled || loading}

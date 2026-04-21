@@ -34,15 +34,10 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
           aria-label={isDark ? t("themeSwitchToLightAria") : t("themeSwitchToDarkAria")}
           className={className}
         >
-          <Iconify
-            icon={isDark ? "lucide:sun" : "lucide:moon"}
-            className="size-4"
-          />
+          <Iconify icon={isDark ? "lucide:sun" : "lucide:moon"} className="size-4" />
         </Button>
       </TooltipTrigger>
-      <TooltipContent>
-        {isDark ? t("themeLightMode") : t("themeDarkMode")}
-      </TooltipContent>
+      <TooltipContent>{isDark ? t("themeLightMode") : t("themeDarkMode")}</TooltipContent>
     </Tooltip>
   );
 }

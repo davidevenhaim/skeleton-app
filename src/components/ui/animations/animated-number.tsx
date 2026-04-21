@@ -22,22 +22,25 @@ function formatDefault(n: number): string {
   return r.toLocaleString(undefined, {
     useGrouping: false,
     maximumFractionDigits: 2,
-    minimumFractionDigits: 0
+    minimumFractionDigits: 0,
   });
 }
 
 const AnimatedNumber = ({
   value,
-  duration = 700,
+  duration = 900,
   delay = 0,
   formatter,
-  className
+  className,
 }: AnimatedNumberProps) => {
   const [display, setDisplay] = useState(() =>
     formatter ? formatter(toMaxTwoFractionDigits(0)) : formatDefault(0)
   );
   const rafRef = useRef<number | null>(null);
   const startTimeRef = useRef<number | null>(null);
+  /** Inline formatters from parents change identity every render; deps on them restart the animation forever. */
+  const formatterRef = useRef(formatter);
+  formatterRef.current = formatter;
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -52,7 +55,8 @@ const AnimatedNumber = ({
         const current = easedProgress * value;
 
         const stepped = toMaxTwoFractionDigits(current);
-        setDisplay(formatter ? formatter(stepped) : formatDefault(stepped));
+        const fmt = formatterRef.current;
+        setDisplay(fmt ? fmt(stepped) : formatDefault(stepped));
 
         if (progress < 1) {
           rafRef.current = requestAnimationFrame(animate);
@@ -69,7 +73,7 @@ const AnimatedNumber = ({
       }
       startTimeRef.current = null;
     };
-  }, [value, duration, delay, formatter]);
+  }, [value, duration, delay]);
 
   return <span className={className}>{display}</span>;
 };

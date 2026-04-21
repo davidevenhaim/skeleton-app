@@ -8,7 +8,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
@@ -44,7 +44,7 @@ const sizeClasses = {
   md: "sm:max-w-md",
   lg: "sm:max-w-lg",
   xl: "sm:max-w-xl",
-  full: "sm:max-w-[calc(100vw-2rem)]"
+  full: "sm:max-w-[calc(100vw-2rem)]",
 };
 
 export function AppDialog({
@@ -59,7 +59,7 @@ export function AppDialog({
   onClose,
   className,
   size = "lg",
-  showCloseX = true
+  showCloseX = true,
 }: AppDialogProps) {
   const handleOpenChange = (nextOpen: boolean) => {
     onOpenChange?.(nextOpen);
@@ -69,23 +69,16 @@ export function AppDialog({
   const content = (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
-      <DialogContent
-        className={cn(sizeClasses[size], className)}
-        showCloseButton={showCloseX}
-      >
+      <DialogContent className={cn(sizeClasses[size], className)} showCloseButton={showCloseX}>
         {(title || description) && (
           <DialogHeader>
             {title && <DialogTitle>{title}</DialogTitle>}
-            {description && (
-              <DialogDescription>{description}</DialogDescription>
-            )}
+            {description && <DialogDescription>{description}</DialogDescription>}
           </DialogHeader>
         )}
         <div className={cn(!title && !description && "pt-0")}>{children}</div>
         {(footer || showCloseButton) && (
-          <DialogFooter showCloseButton={showCloseButton}>
-            {footer}
-          </DialogFooter>
+          <DialogFooter showCloseButton={showCloseButton}>{footer}</DialogFooter>
         )}
       </DialogContent>
     </Dialog>

@@ -11,10 +11,7 @@ import Iconify from "@/components/ui/iconify";
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
 
-interface TextInputProps extends Omit<
-  React.ComponentProps<typeof Input>,
-  "name"
-> {
+interface TextInputProps extends Omit<React.ComponentProps<typeof Input>, "name"> {
   name: string;
   label?: string;
   helperText?: string;
@@ -50,11 +47,7 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     const [showPassword, setShowPassword] = React.useState(false);
     const resolvedType = typeProp ?? inputType;
     const isPassword = resolvedType === "password";
-    const inputTypeResolved = isPassword
-      ? showPassword
-        ? "text"
-        : "password"
-      : resolvedType;
+    const inputTypeResolved = isPassword ? (showPassword ? "text" : "password") : resolvedType;
 
     return (
       <Controller
@@ -66,15 +59,15 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
             <div className={cn("w-full", className)}>
               {label && (
                 <Label htmlFor={name} className={cn("mb-1", labelClassName)}>
-                  <Typography variant='caption1'>{t(label)}</Typography>
+                  <Typography variant="caption1">{t(label)}</Typography>
                   {required && (
-                    <Typography variant='caption2' as='span' color='destructive'>
+                    <Typography variant="caption2" as="span" color="destructive">
                       *
                     </Typography>
                   )}
                 </Label>
               )}
-              <div className='relative'>
+              <div className="relative">
                 <Input
                   ref={(el) => {
                     fieldRef(el);
@@ -85,56 +78,38 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
                   type={inputTypeResolved}
                   aria-invalid={!!(error || fieldError)}
                   className={cn(
-                    error || fieldError
-                      ? "border-destructive focus-visible:ring-destructive"
-                      : "",
+                    error || fieldError ? "border-destructive focus-visible:ring-destructive" : "",
                     isPassword && "pe-10"
                   )}
                   {...fieldRest}
                   value={field.value ?? ""}
-                  placeholder={
-                    placeholderText ?? (placeholder ? t(placeholder) : "")
-                  }
+                  placeholder={placeholderText ?? (placeholder ? t(placeholder) : "")}
                   {...restProps}
                 />
                 {isPassword && (
                   <Button
-                    type='button'
-                    variant='ghost'
-                    size='icon'
-                    className='absolute end-0 top-0 h-full px-3 py-2 hover:bg-transparent'
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="absolute end-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                     onClick={() => setShowPassword((p) => !p)}
                     tabIndex={-1}
-                    aria-label={
-                      showPassword ? "Hide password" : "Show password"
-                    }
+                    aria-label={showPassword ? "Hide password" : "Show password"}
                   >
                     <Iconify
                       icon={showPassword ? "lucide:eye-off" : "lucide:eye"}
-                      className='size-4 text-muted-foreground'
+                      className="text-muted-foreground size-4"
                     />
                   </Button>
                 )}
               </div>
               {(error || fieldError) && (
-                <Typography
-                  variant='caption2'
-                  as='p'
-                  color='destructive'
-                  className='mt-1'
-                >
-                  {fieldError?.message
-                    ? formatFormError(t, fieldError.message)
-                    : helperText}
+                <Typography variant="caption2" as="p" color="destructive" className="mt-1">
+                  {fieldError?.message ? formatFormError(t, fieldError.message) : helperText}
                 </Typography>
               )}
               {!error && !fieldError && helperText && (
-                <Typography
-                  variant='caption2'
-                  as='p'
-                  color='muted'
-                  className='mt-1'
-                >
+                <Typography variant="caption2" as="p" color="muted" className="mt-1">
                   {helperText}
                 </Typography>
               )}

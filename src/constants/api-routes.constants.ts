@@ -8,6 +8,9 @@ const API_ROUTES = {
     LIST: "/users",
     BY_ID: (id: string) => `/users/${id}`,
   },
+  CONTACT: {
+    SUBMIT: "/contact",
+  },
 } as const;
 
 export default API_ROUTES;

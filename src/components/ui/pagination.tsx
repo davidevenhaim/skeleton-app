@@ -52,7 +52,7 @@ export function Pagination({
   totalPages,
   onPageChange,
   siblingCount = 1,
-  className
+  className,
 }: PaginationProps) {
   const t = useTranslations();
   const dir = useDirection();
@@ -61,10 +61,7 @@ export function Pagination({
   const pages = generatePages(currentPage, totalPages, siblingCount);
 
   return (
-    <nav
-      aria-label={t("paginationAria")}
-      className={cn("flex items-center gap-1", className)}
-    >
+    <nav aria-label={t("paginationAria")} className={cn("flex items-center gap-1", className)}>
       <Button
         variant="outline"
         size="icon-sm"

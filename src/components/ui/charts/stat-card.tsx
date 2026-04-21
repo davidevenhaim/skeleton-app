@@ -46,7 +46,7 @@ const StatCard = ({
   delta,
   deltaLabel,
   icon,
-  className
+  className,
 }: StatCardProps) => {
   const isPositive = delta !== undefined && delta >= 0;
 
@@ -57,8 +57,8 @@ const StatCard = ({
           {title}
         </Typography>
         {icon && (
-          <div className="flex size-9 items-center justify-center rounded-lg bg-primary/10">
-            <Iconify icon={icon} className="size-5 text-primary" />
+          <div className="bg-primary/10 flex size-9 items-center justify-center rounded-lg">
+            <Iconify icon={icon} className="text-primary size-5" />
           </div>
         )}
       </CardHeader>
@@ -66,12 +66,9 @@ const StatCard = ({
         <Typography
           variant="h4"
           as="div"
-          className="text-3xl font-bold tracking-tight tabular-nums text-foreground"
+          className="text-foreground text-3xl font-bold tracking-tight tabular-nums"
         >
-          <AnimatedNumber
-            value={value}
-            formatter={formatter ? (v) => formatter(v) : undefined}
-          />
+          <AnimatedNumber value={value} formatter={formatter ? (v) => formatter(v) : undefined} />
         </Typography>
         {delta !== undefined && (
           <div className="flex items-center gap-2">

@@ -17,15 +17,15 @@ export const useLoaderStore = create<LoaderState>((set) => ({
   keys: {},
   add: (key = DEFAULT_KEY) =>
     set((s) => ({
-      keys: { ...s.keys, [key]: (s.keys[key] ?? 0) + 1 }
+      keys: { ...s.keys, [key]: (s.keys[key] ?? 0) + 1 },
     })),
   remove: (key = DEFAULT_KEY) =>
     set((s) => ({
       keys: {
         ...s.keys,
-        [key]: Math.max(0, (s.keys[key] ?? 1) - 1)
-      }
-    }))
+        [key]: Math.max(0, (s.keys[key] ?? 1) - 1),
+      },
+    })),
 }));
 
 // ----------------------------------------------------------------------

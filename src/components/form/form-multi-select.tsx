@@ -32,14 +32,13 @@ export function FormMultiSelect({
   searchable = false,
   searchPlaceholder,
   onlyDeselectAll = false,
-  allSelectedLabel = "all"
+  allSelectedLabel = "all",
 }: FormMultiSelectProps) {
   const { control } = useFormContext();
   const tForms = useTranslations("forms");
   const tRoot = useTranslations();
 
-  const tr = (key: string) =>
-    key.includes(".") ? tForms(key as never) : tRoot(key as never);
+  const tr = (key: string) => (key.includes(".") ? tForms(key as never) : tRoot(key as never));
 
   return (
     <Controller
@@ -49,7 +48,7 @@ export function FormMultiSelect({
         <Field data-invalid={fieldState.invalid} className={className}>
           {label && (
             <FieldLabel htmlFor={`form-multi-select-${name}`}>
-              <Typography variant='label2'>{tr(label)}</Typography>
+              <Typography variant="label2">{tr(label)}</Typography>
             </FieldLabel>
           )}
           <MultiSelect
@@ -59,11 +58,9 @@ export function FormMultiSelect({
             placeholder={placeholder ? tr(placeholder) : undefined}
             maxDisplay={maxDisplay}
             maxSelected={maxSelected}
-            className='w-full'
+            className="w-full"
             searchable={searchable}
-            searchPlaceholder={
-              searchPlaceholder ? tr(searchPlaceholder) : undefined
-            }
+            searchPlaceholder={searchPlaceholder ? tr(searchPlaceholder) : undefined}
             onlyDeselectAll={onlyDeselectAll}
             allSelectedLabel={allSelectedLabel}
           />

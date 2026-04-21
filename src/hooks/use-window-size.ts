@@ -23,8 +23,7 @@ export function useWindowSize(debounceMs = 150): WindowSize {
   const debouncedWidth = useDebounce(String(size.width), debounceMs);
 
   useEffect(() => {
-    const update = () =>
-      setSize({ width: window.innerWidth, height: window.innerHeight });
+    const update = () => setSize({ width: window.innerWidth, height: window.innerHeight });
 
     update();
     window.addEventListener("resize", update);

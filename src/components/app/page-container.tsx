@@ -36,7 +36,7 @@ export function PageContainer({
   actions,
   children,
   className,
-  maxWidth = "max-w-7xl"
+  maxWidth = "max-w-7xl",
 }: PageContainerProps) {
   return (
     <div className={cn("mx-auto w-full px-4 py-8 sm:px-6 lg:px-8", maxWidth, className)}>
@@ -47,7 +47,7 @@ export function PageContainer({
               <Typography
                 variant="subtitle1"
                 as="h1"
-                className="text-2xl font-bold tracking-tight text-foreground"
+                className="text-foreground text-2xl font-bold tracking-tight"
               >
                 {title}
               </Typography>
@@ -58,9 +58,7 @@ export function PageContainer({
               </Typography>
             )}
           </div>
-          {actions && (
-            <div className="flex shrink-0 items-center gap-2">{actions}</div>
-          )}
+          {actions && <div className="flex shrink-0 items-center gap-2">{actions}</div>}
         </div>
       )}
       {children}

@@ -22,15 +22,12 @@ export const formValidator = {
         error: "required",
       }),
 
-  optionalPositiveNumber: () =>
-    zod.number().nonnegative({ error: "min0" }).optional().nullable(),
+  optionalPositiveNumber: () => zod.number().nonnegative({ error: "min0" }).optional().nullable(),
 
   requiredMinNumber: (min: number) => zod.number().min(min, { error: "min" }),
 
   requiredString: (props?: InputProps) =>
-    zod
-      .string()
-      .min(1, { error: props?.message?.required_error ?? "required" }),
+    zod.string().min(1, { error: props?.message?.required_error ?? "required" }),
 
   optionalString: () => zod.string().optional().nullable(),
 
@@ -53,9 +50,7 @@ export const formValidator = {
       }),
 
   requiredPasswordRelaxed: (props?: InputProps) =>
-    zod
-      .string()
-      .min(1, { error: props?.message?.required_error ?? "required" }),
+    zod.string().min(1, { error: props?.message?.required_error ?? "required" }),
   requiredStringArray: (props?: InputProps) =>
     zod
       .array(zod.string(), {
@@ -86,10 +81,9 @@ export const formValidator = {
   requiredDate: (props?: InputProps) =>
     zod
       .union([zod.undefined(), zod.null(), zod.date()])
-      .refine(
-        (v) => v instanceof Date && !Number.isNaN((v as Date).getTime()),
-        { error: props?.message?.required_error ?? "invalidDate" },
-      ),
+      .refine((v) => v instanceof Date && !Number.isNaN((v as Date).getTime()), {
+        error: props?.message?.required_error ?? "invalidDate",
+      }),
 
   /** Optional range value from react-day-picker (not validated here). */
   optionalDateRange: () => zod.any().optional(),
@@ -101,7 +95,7 @@ export const formValidator = {
           value: string;
           label: string;
         } | null>()
-        .nullable(),
+        .nullable()
     ),
 
   numberWithLength: (len = 9, props?: InputProps) => {
@@ -121,10 +115,7 @@ export const formValidator = {
   },
 
   requiredEmail: () =>
-    zod
-      .string()
-      .min(1, { error: "emailrequired" })
-      .email({ error: "emailNotValid" }),
+    zod.string().min(1, { error: "emailrequired" }).email({ error: "emailNotValid" }),
 
   requiredPhoneNumber: (props?: InputProps) =>
     zod
@@ -147,12 +138,9 @@ export const formValidator = {
             ? (props?.message?.required_error ?? "required")
             : (props?.message?.invalid_type_error ?? "invalidPhoneNumber"),
       })
-      .refine(
-        (data) => (data.length > 0 ? props?.isValidPhoneNumber?.(data) : true),
-        {
-          error: props?.message?.invalid_type_error ?? "invalidPhoneNumber",
-        },
-      )
+      .refine((data) => (data.length > 0 ? props?.isValidPhoneNumber?.(data) : true), {
+        error: props?.message?.invalid_type_error ?? "invalidPhoneNumber",
+      })
       .optional()
       .nullable(),
 
@@ -172,16 +160,13 @@ export const formValidator = {
     }),
 
   requiredBoolean: (props?: InputProps) =>
-    zod
-      .boolean()
-      .refine((bool) => bool === true, {
-        error: props?.message?.required_error ?? "switchRequired",
-      }),
+    zod.boolean().refine((bool) => bool === true, {
+      error: props?.message?.required_error ?? "switchRequired",
+    }),
 
   singleFile: (props?: InputProps) =>
     zod.custom<File | string | null>().transform((data, ctx) => {
-      const hasFile =
-        data instanceof File || (typeof data === "string" && !!data.length);
+      const hasFile = data instanceof File || (typeof data === "string" && !!data.length);
 
       if (props?.required && !hasFile) {
         ctx.addIssue({
@@ -243,9 +228,7 @@ export const formValidator = {
 
   /** Named alias for requiredString — signals intent for FormSelect / FormCombobox fields. */
   requiredSelect: (props?: InputProps) =>
-    zod
-      .string()
-      .min(1, { error: props?.message?.required_error ?? "required" }),
+    zod.string().min(1, { error: props?.message?.required_error ?? "required" }),
 
   /** Array-based multi-select with configurable minimum selection count. */
   requiredMultiSelect: (min = 1, props?: InputProps) =>
@@ -257,19 +240,13 @@ export const formValidator = {
 
   /** Optional email — valid if provided, empty string / undefined / null is OK. */
   optionalEmail: () =>
-    zod
-      .string()
-      .email({ error: "emailNotValid" })
-      .or(zod.literal(""))
-      .optional()
-      .nullable(),
+    zod.string().email({ error: "emailNotValid" }).or(zod.literal("")).optional().nullable(),
 
   /**
    * Schema-level password confirmation helper.
    * Usage: schema.refine(...formValidator.confirmPassword("password", "confirmPassword"), { path: ["confirmPassword"] })
    */
   confirmPassword:
-    (passwordField: string, confirmField: string) =>
-    (data: Record<string, unknown>) =>
+    (passwordField: string, confirmField: string) => (data: Record<string, unknown>) =>
       data[passwordField] === data[confirmField],
 };

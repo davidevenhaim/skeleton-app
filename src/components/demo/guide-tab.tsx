@@ -7,7 +7,7 @@ import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger
+  AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -23,7 +23,7 @@ import {
   PRODUCT_GUIDE_LESS_SUITABLE,
   PRODUCT_GUIDE_PURPOSE_POINTS,
   PRODUCT_GUIDE_RESOURCES,
-  PRODUCT_GUIDE_START_STEPS
+  PRODUCT_GUIDE_START_STEPS,
 } from "@/components/demo/data";
 import AnimatedDivBreathing from "../ui/animations/animated-div-breathing";
 
@@ -32,10 +32,7 @@ export function DemoGuideTab() {
   const { copy } = useCopyToClipboard();
   const [lastCopied, setLastCopied] = React.useState<string | null>(null);
   const resourcesById = React.useMemo(
-    () =>
-      new Map(
-        PRODUCT_GUIDE_RESOURCES.map((resource) => [resource.id, resource])
-      ),
+    () => new Map(PRODUCT_GUIDE_RESOURCES.map((resource) => [resource.id, resource])),
     []
   );
 
@@ -61,31 +58,28 @@ export function DemoGuideTab() {
           <Link
             key={`${stepId}-${resource.id}`}
             href={resource.href}
-            target='_blank'
-            rel='noreferrer'
-            className='block rounded-xl border border-border/60 bg-muted/30 p-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:bg-accent/40'
+            target="_blank"
+            rel="noreferrer"
+            className="border-border/60 bg-muted/30 hover:border-primary/30 hover:bg-accent/40 block rounded-xl border p-3 transition-all duration-200 hover:-translate-y-0.5"
           >
-            <div className='flex items-center justify-between gap-3'>
-              <div className='flex min-w-0 items-center gap-2'>
-                <Iconify
-                  icon={resource.icon}
-                  className='size-4 shrink-0 text-muted-foreground'
-                />
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex min-w-0 items-center gap-2">
+                <Iconify icon={resource.icon} className="text-muted-foreground size-4 shrink-0" />
                 <Typography
-                  variant='label1'
-                  as='h4'
-                  className='truncate text-sm font-medium text-foreground'
+                  variant="label1"
+                  as="h4"
+                  className="text-foreground truncate text-sm font-medium"
                 >
                   {tProductGuide(`resources.items.${resource.id}.title`)}
                 </Typography>
               </div>
               <Typography
-                variant='label2'
-                as='span'
-                className='inline-flex shrink-0 items-center gap-1 text-sm font-medium text-primary'
+                variant="label2"
+                as="span"
+                className="text-primary inline-flex shrink-0 items-center gap-1 text-sm font-medium"
               >
                 {tProductGuide("actions.openLink")}
-                <Iconify icon='lucide:arrow-up-right' className='size-3.5' />
+                <Iconify icon="lucide:arrow-up-right" className="size-3.5" />
               </Typography>
             </div>
           </Link>
@@ -102,28 +96,28 @@ export function DemoGuideTab() {
         return (
           <div
             key={copyKey}
-            className='space-y-2 rounded-xl border border-dashed border-border/70 bg-muted/40 p-3'
+            className="border-border/70 bg-muted/40 space-y-2 rounded-xl border border-dashed p-3"
           >
             <Typography
-              variant='caption2'
-              as='span'
-              className='block text-xs font-medium uppercase tracking-wide text-muted-foreground'
+              variant="caption2"
+              as="span"
+              className="text-muted-foreground block text-xs font-medium tracking-wide uppercase"
             >
               {tProductGuide("actions.commandLabel")}
             </Typography>
-            <code className='block break-all rounded-md bg-background px-2 py-1.5 text-xs text-foreground'>
+            <code className="bg-background text-foreground block rounded-md px-2 py-1.5 text-xs break-all">
               {command}
             </code>
             <Button
-              type='button'
-              size='sm'
-              variant='outline'
-              className='w-full'
+              type="button"
+              size="sm"
+              variant="outline"
+              className="w-full"
               onClick={() => handleCopy(copyKey, command)}
             >
               <Iconify
                 icon={lastCopied === copyKey ? "lucide:check" : "lucide:copy"}
-                className='size-4'
+                className="size-4"
               />
               {lastCopied === copyKey
                 ? tProductGuide("actions.copied")
@@ -136,67 +130,61 @@ export function DemoGuideTab() {
   );
 
   return (
-    <TabsContent value='guide' className='space-y-10'>
+    <TabsContent value="guide" className="space-y-10">
       <AnimatedDivBreathing>
-        <section className='relative overflow-hidden rounded-2xl border bg-gradient-to-br from-primary/10 via-background to-background p-8 shadow-sm md:p-10 rtl:bg-gradient-to-bl'>
-          <div className='pointer-events-none absolute inset-y-0 end-0 w-1/2 bg-gradient-to-l from-primary/5 to-transparent rtl:bg-gradient-to-r' />
-          <div className='relative max-w-4xl space-y-4'>
-            <Badge variant='secondary' className='text-xs font-medium'>
+        <section className="from-primary/10 via-background to-background relative overflow-hidden rounded-2xl border bg-gradient-to-br p-8 shadow-sm md:p-10 rtl:bg-gradient-to-bl">
+          <div className="from-primary/5 pointer-events-none absolute inset-y-0 end-0 w-1/2 bg-gradient-to-l to-transparent rtl:bg-gradient-to-r" />
+          <div className="relative max-w-4xl space-y-4">
+            <Badge variant="secondary" className="text-xs font-medium">
               {tProductGuide("eyebrow")}
             </Badge>
             <Typography
-              variant='h2'
-              as='h1'
-              className='text-4xl font-bold tracking-tight text-foreground md:text-5xl'
+              variant="h2"
+              as="h1"
+              className="text-foreground text-4xl font-bold tracking-tight md:text-5xl"
             >
               {tProductGuide("title")}
             </Typography>
-            <Typography
-              variant='body2'
-              className='text-lg leading-relaxed text-muted-foreground'
-            >
+            <Typography variant="body2" className="text-muted-foreground text-lg leading-relaxed">
               {tProductGuide("subtitle")}
             </Typography>
           </div>
         </section>
       </AnimatedDivBreathing>
 
-      <section className='space-y-6'>
-        <div className='max-w-4xl space-y-2'>
+      <section className="space-y-6">
+        <div className="max-w-4xl space-y-2">
           <Typography
-            variant='subtitle1'
-            as='h2'
-            className='text-2xl font-semibold tracking-tight text-foreground'
+            variant="subtitle1"
+            as="h2"
+            className="text-foreground text-2xl font-semibold tracking-tight"
           >
             {tProductGuide("purpose.title")}
           </Typography>
-          <Typography variant='caption1' className='text-muted-foreground'>
+          <Typography variant="caption1" className="text-muted-foreground">
             {tProductGuide("purpose.description")}
           </Typography>
         </div>
-        <div className='grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3'>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {PRODUCT_GUIDE_PURPOSE_POINTS.map((item) => (
-            <Card key={item.id} className='border-border/70'>
-              <CardContent className='space-y-3 p-5'>
+            <Card key={item.id} className="border-border/70">
+              <CardContent className="space-y-3 p-5">
                 <div
                   className={cn(
-                    "flex size-10 items-center justify-center rounded-xl bg-muted",
+                    "bg-muted flex size-10 items-center justify-center rounded-xl",
                     item.color
                   )}
                 >
-                  <Iconify icon={item.icon} className='size-5' />
+                  <Iconify icon={item.icon} className="size-5" />
                 </div>
                 <Typography
-                  variant='subtitle2'
-                  as='h3'
-                  className='text-lg font-semibold text-foreground'
+                  variant="subtitle2"
+                  as="h3"
+                  className="text-foreground text-lg font-semibold"
                 >
                   {tProductGuide(`purpose.points.${item.id}.title`)}
                 </Typography>
-                <Typography
-                  variant='caption1'
-                  className='text-muted-foreground'
-                >
+                <Typography variant="caption1" className="text-muted-foreground">
                   {tProductGuide(`purpose.points.${item.id}.description`)}
                 </Typography>
               </CardContent>
@@ -205,47 +193,44 @@ export function DemoGuideTab() {
         </div>
       </section>
 
-      <section className='grid grid-cols-1 gap-6 lg:grid-cols-2'>
-        <Card className='border-border/70'>
-          <CardContent className='space-y-5 p-6'>
-            <div className='space-y-2'>
+      <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <Card className="border-border/70">
+          <CardContent className="space-y-5 p-6">
+            <div className="space-y-2">
               <Typography
-                variant='subtitle1'
-                as='h2'
-                className='text-2xl font-semibold tracking-tight text-foreground'
+                variant="subtitle1"
+                as="h2"
+                className="text-foreground text-2xl font-semibold tracking-tight"
               >
                 {tProductGuide("goodFit.title")}
               </Typography>
-              <Typography variant='caption1' className='text-muted-foreground'>
+              <Typography variant="caption1" className="text-muted-foreground">
                 {tProductGuide("goodFit.description")}
               </Typography>
             </div>
-            <div className='space-y-3'>
+            <div className="space-y-3">
               {PRODUCT_GUIDE_GOOD_FIT.map((item) => (
                 <div
                   key={item.id}
-                  className='flex items-start gap-3 rounded-xl border border-border/60 bg-background p-4'
+                  className="border-border/60 bg-background flex items-start gap-3 rounded-xl border p-4"
                 >
                   <div
                     className={cn(
-                      "mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg bg-muted",
+                      "bg-muted mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg",
                       item.color
                     )}
                   >
-                    <Iconify icon={item.icon} className='size-4' />
+                    <Iconify icon={item.icon} className="size-4" />
                   </div>
-                  <div className='space-y-1'>
+                  <div className="space-y-1">
                     <Typography
-                      variant='label1'
-                      as='h3'
-                      className='text-base font-medium text-foreground'
+                      variant="label1"
+                      as="h3"
+                      className="text-foreground text-base font-medium"
                     >
                       {tProductGuide(`goodFit.items.${item.id}.title`)}
                     </Typography>
-                    <Typography
-                      variant='caption1'
-                      className='text-muted-foreground'
-                    >
+                    <Typography variant="caption1" className="text-muted-foreground">
                       {tProductGuide(`goodFit.items.${item.id}.description`)}
                     </Typography>
                   </div>
@@ -255,49 +240,44 @@ export function DemoGuideTab() {
           </CardContent>
         </Card>
 
-        <Card className='border-border/70'>
-          <CardContent className='space-y-5 p-6'>
-            <div className='space-y-2'>
+        <Card className="border-border/70">
+          <CardContent className="space-y-5 p-6">
+            <div className="space-y-2">
               <Typography
-                variant='subtitle1'
-                as='h2'
-                className='text-2xl font-semibold tracking-tight text-foreground'
+                variant="subtitle1"
+                as="h2"
+                className="text-foreground text-2xl font-semibold tracking-tight"
               >
                 {tProductGuide("lessSuitable.title")}
               </Typography>
-              <Typography variant='caption1' className='text-muted-foreground'>
+              <Typography variant="caption1" className="text-muted-foreground">
                 {tProductGuide("lessSuitable.description")}
               </Typography>
             </div>
-            <div className='space-y-3'>
+            <div className="space-y-3">
               {PRODUCT_GUIDE_LESS_SUITABLE.map((item) => (
                 <div
                   key={item.id}
-                  className='flex items-start gap-3 rounded-xl border border-border/60 bg-background p-4'
+                  className="border-border/60 bg-background flex items-start gap-3 rounded-xl border p-4"
                 >
                   <div
                     className={cn(
-                      "mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg bg-muted",
+                      "bg-muted mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg",
                       item.color
                     )}
                   >
-                    <Iconify icon={item.icon} className='size-4' />
+                    <Iconify icon={item.icon} className="size-4" />
                   </div>
-                  <div className='space-y-1'>
+                  <div className="space-y-1">
                     <Typography
-                      variant='label1'
-                      as='h3'
-                      className='text-base font-medium text-foreground'
+                      variant="label1"
+                      as="h3"
+                      className="text-foreground text-base font-medium"
                     >
                       {tProductGuide(`lessSuitable.items.${item.id}.title`)}
                     </Typography>
-                    <Typography
-                      variant='caption1'
-                      className='text-muted-foreground'
-                    >
-                      {tProductGuide(
-                        `lessSuitable.items.${item.id}.description`
-                      )}
+                    <Typography variant="caption1" className="text-muted-foreground">
+                      {tProductGuide(`lessSuitable.items.${item.id}.description`)}
                     </Typography>
                   </div>
                 </div>
@@ -307,76 +287,63 @@ export function DemoGuideTab() {
         </Card>
       </section>
 
-      <section className='space-y-6'>
-        <div className='max-w-4xl space-y-2'>
+      <section className="space-y-6">
+        <div className="max-w-4xl space-y-2">
           <Typography
-            variant='subtitle1'
-            as='h2'
-            className='text-2xl font-semibold tracking-tight text-foreground'
+            variant="subtitle1"
+            as="h2"
+            className="text-foreground text-2xl font-semibold tracking-tight"
           >
             {tProductGuide("howToUse.title")}
           </Typography>
-          <Typography variant='caption1' className='text-muted-foreground'>
+          <Typography variant="caption1" className="text-muted-foreground">
             {tProductGuide("howToUse.description")}
           </Typography>
         </div>
-        <div className='grid grid-cols-1 items-start gap-4 md:grid-cols-2'>
+        <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
           {PRODUCT_GUIDE_START_STEPS.map((step, index) => (
-            <Card key={step.id} className='border-border/70 self-start'>
-              <CardContent className='flex min-h-[23rem] flex-col p-5'>
-                <div className='flex flex-1 flex-col gap-4'>
-                  <Badge
-                    variant='outline'
-                    className='w-fit text-xs font-medium'
-                  >
+            <Card key={step.id} className="border-border/70 self-start">
+              <CardContent className="flex min-h-[23rem] flex-col p-5">
+                <div className="flex flex-1 flex-col gap-4">
+                  <Badge variant="outline" className="w-fit text-xs font-medium">
                     {tProductGuide("howToUse.stepLabel", { step: index + 1 })}
                   </Badge>
                   <div
                     className={cn(
-                      "flex size-10 items-center justify-center rounded-xl bg-muted",
+                      "bg-muted flex size-10 items-center justify-center rounded-xl",
                       step.color
                     )}
                   >
-                    <Iconify icon={step.icon} className='size-5' />
+                    <Iconify icon={step.icon} className="size-5" />
                   </div>
-                  <div className='space-y-3'>
+                  <div className="space-y-3">
                     <Typography
-                      variant='subtitle2'
-                      as='h3'
-                      className='text-lg font-semibold text-foreground'
+                      variant="subtitle2"
+                      as="h3"
+                      className="text-foreground text-lg font-semibold"
                     >
                       {tProductGuide(`howToUse.steps.${step.id}.title`)}
                     </Typography>
-                    <Typography
-                      variant='caption1'
-                      className='text-muted-foreground'
-                    >
+                    <Typography variant="caption1" className="text-muted-foreground">
                       {tProductGuide(`howToUse.steps.${step.id}.description`)}
                     </Typography>
                   </div>
 
-                  <Accordion
-                    type='single'
-                    collapsible
-                    className='mt-auto w-full'
-                  >
+                  <Accordion type="single" collapsible className="mt-auto w-full">
                     <AccordionItem
                       value={`${step.id}-details`}
-                      className='rounded-xl border border-border/60 bg-background px-3'
+                      className="border-border/60 bg-background rounded-xl border px-3"
                     >
-                      <AccordionTrigger className='py-3 text-sm no-underline hover:no-underline'>
+                      <AccordionTrigger className="py-3 text-sm no-underline hover:no-underline">
                         {tProductGuide("actions.howToAccordion")}
                       </AccordionTrigger>
-                      <AccordionContent className='space-y-3 pt-1'>
-                        {(step.id === "openProject" ||
-                          step.id === "startProject") && (
+                      <AccordionContent className="space-y-3 pt-1">
+                        {(step.id === "openProject" || step.id === "startProject") && (
                           <Typography
-                            variant='caption2'
-                            className='rounded-xl border border-primary/15 bg-primary/5 px-3 py-2 text-sm font-semibold text-foreground'
+                            variant="caption2"
+                            className="border-primary/15 bg-primary/5 text-foreground rounded-xl border px-3 py-2 text-sm font-semibold"
                           >
-                            {tProductGuide(
-                              `howToUse.steps.${step.id}.commandNote`
-                            )}
+                            {tProductGuide(`howToUse.steps.${step.id}.commandNote`)}
                           </Typography>
                         )}
 
@@ -385,29 +352,26 @@ export function DemoGuideTab() {
 
                         {step.id === "startProject" ? (
                           <Typography
-                            variant='caption2'
-                            className='rounded-xl border border-primary/15 bg-primary/5 px-3 py-2 text-sm text-muted-foreground'
+                            variant="caption2"
+                            className="border-primary/15 bg-primary/5 text-muted-foreground rounded-xl border px-3 py-2 text-sm"
                           >
-                            {tProductGuide.rich(
-                              "howToUse.steps.startProject.note",
-                              {
-                                code: (chunks) => (
-                                  <code className='rounded bg-background px-1.5 py-0.5 text-xs text-foreground'>
-                                    {chunks}
-                                  </code>
-                                ),
-                                link: (chunks) => (
-                                  <Link
-                                    href='http://localhost:3000'
-                                    target='_blank'
-                                    rel='noreferrer'
-                                    className='font-medium text-primary underline underline-offset-4'
-                                  >
-                                    {chunks}
-                                  </Link>
-                                )
-                              }
-                            )}
+                            {tProductGuide.rich("howToUse.steps.startProject.note", {
+                              code: (chunks) => (
+                                <code className="bg-background text-foreground rounded px-1.5 py-0.5 text-xs">
+                                  {chunks}
+                                </code>
+                              ),
+                              link: (chunks) => (
+                                <Link
+                                  href="http://localhost:3000"
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="text-primary font-medium underline underline-offset-4"
+                                >
+                                  {chunks}
+                                </Link>
+                              ),
+                            })}
                           </Typography>
                         ) : null}
                       </AccordionContent>
@@ -420,62 +384,59 @@ export function DemoGuideTab() {
         </div>
       </section>
 
-      <section className='space-y-6'>
-        <div className='max-w-4xl space-y-2'>
+      <section className="space-y-6">
+        <div className="max-w-4xl space-y-2">
           <Typography
-            variant='subtitle1'
-            as='h2'
-            className='text-2xl font-semibold tracking-tight text-foreground'
+            variant="subtitle1"
+            as="h2"
+            className="text-foreground text-2xl font-semibold tracking-tight"
           >
             {tProductGuide("builtWith.title")}
           </Typography>
-          <Typography variant='caption1' className='text-muted-foreground'>
+          <Typography variant="caption1" className="text-muted-foreground">
             {tProductGuide("builtWith.description")}
           </Typography>
         </div>
-        <div className='grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3'>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {PRODUCT_GUIDE_CREDITS.map((item) => (
-            <Card key={item.id} className='border-border/70'>
-              <CardContent className='space-y-4 p-5'>
-                <div className='flex items-start gap-3'>
+            <Card key={item.id} className="border-border/70">
+              <CardContent className="space-y-4 p-5">
+                <div className="flex items-start gap-3">
                   <div
                     className={cn(
-                      "flex size-10 shrink-0 items-center justify-center rounded-xl bg-muted",
+                      "bg-muted flex size-10 shrink-0 items-center justify-center rounded-xl",
                       item.color
                     )}
                   >
-                    <Iconify icon={item.icon} className='size-5' />
+                    <Iconify icon={item.icon} className="size-5" />
                   </div>
-                  <div className='space-y-1'>
+                  <div className="space-y-1">
                     <Typography
-                      variant='subtitle2'
-                      as='h3'
-                      className='text-lg font-semibold text-foreground'
+                      variant="subtitle2"
+                      as="h3"
+                      className="text-foreground text-lg font-semibold"
                     >
                       {tProductGuide(`builtWith.items.${item.id}.name`)}
                     </Typography>
-                    <Typography
-                      variant='caption1'
-                      className='text-muted-foreground'
-                    >
+                    <Typography variant="caption1" className="text-muted-foreground">
                       {tProductGuide(`builtWith.items.${item.id}.description`)}
                     </Typography>
                   </div>
                 </div>
                 <Link
                   href={item.href}
-                  target='_blank'
-                  rel='noreferrer'
-                  className='inline-flex items-center gap-2 text-sm font-medium text-primary'
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-primary inline-flex items-center gap-2 text-sm font-medium"
                 >
                   <Typography
-                    variant='caption2'
-                    as='span'
-                    className='text-sm font-medium text-primary'
+                    variant="caption2"
+                    as="span"
+                    className="text-primary text-sm font-medium"
                   >
                     {tProductGuide("builtWith.linkLabel")}
                   </Typography>
-                  <Iconify icon='lucide:arrow-up-right' className='size-4' />
+                  <Iconify icon="lucide:arrow-up-right" className="size-4" />
                 </Link>
               </CardContent>
             </Card>

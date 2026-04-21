@@ -25,10 +25,7 @@ interface FormattedInputProps extends Omit<
   formatter: FormatterFn;
 }
 
-export const FormattedInput = React.forwardRef<
-  HTMLInputElement,
-  FormattedInputProps
->(
+export const FormattedInput = React.forwardRef<HTMLInputElement, FormattedInputProps>(
   (
     {
       name,
@@ -65,11 +62,11 @@ export const FormattedInput = React.forwardRef<
             <div className={cn("w-full", className)}>
               {label && (
                 <Label htmlFor={name} className={cn("mb-1", labelClassName)}>
-                  <Typography variant='caption1' as='span'>
+                  <Typography variant="caption1" as="span">
                     {t(label)}
                   </Typography>
                   {required && (
-                    <Typography variant='caption2' as='span' color='destructive' className='ms-1'>
+                    <Typography variant="caption2" as="span" color="destructive" className="ms-1">
                       *
                     </Typography>
                   )}
@@ -78,13 +75,11 @@ export const FormattedInput = React.forwardRef<
               <Input
                 ref={ref}
                 id={name}
-                type='text'
-                inputMode='decimal'
+                type="text"
+                inputMode="decimal"
                 aria-invalid={!!(error || fieldError)}
                 className={cn(
-                  error || fieldError
-                    ? "border-destructive focus-visible:ring-destructive"
-                    : ""
+                  error || fieldError ? "border-destructive focus-visible:ring-destructive" : ""
                 )}
                 value={displayValue}
                 placeholder={placeholder ? t(placeholder) : ""}
@@ -93,14 +88,12 @@ export const FormattedInput = React.forwardRef<
                 {...props}
               />
               {(error || fieldError) && (
-                <Typography variant='caption2' as='p' color='destructive' className='mt-1'>
-                  {fieldError?.message
-                    ? formatFormError(t, fieldError.message)
-                    : helperText}
+                <Typography variant="caption2" as="p" color="destructive" className="mt-1">
+                  {fieldError?.message ? formatFormError(t, fieldError.message) : helperText}
                 </Typography>
               )}
               {!error && !fieldError && helperText && (
-                <Typography variant='caption2' as='p' color='muted' className='mt-1'>
+                <Typography variant="caption2" as="p" color="muted" className="mt-1">
                   {helperText}
                 </Typography>
               )}

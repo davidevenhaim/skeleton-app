@@ -8,11 +8,7 @@ import { formatFormError } from "./utils/format-form-error";
 import { format } from "date-fns";
 import Iconify from "@/components/ui/iconify";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Typography } from "@/components/ui/typography";
@@ -83,10 +79,7 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
           return (
             <div className={cn("w-full", className)}>
               {label && (
-                <Label
-                  htmlFor={name}
-                  className={cn("mb-1", labelClassName)}
-                >
+                <Label htmlFor={name} className={cn("mb-1", labelClassName)}>
                   <Typography variant="caption1" as="span">
                     {t(label)}
                   </Typography>
@@ -108,9 +101,7 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
                     className={cn(
                       "w-full justify-start text-start font-normal",
                       !value && "text-muted-foreground",
-                      error || fieldError
-                        ? "border-destructive focus-visible:ring-destructive"
-                        : ""
+                      error || fieldError ? "border-destructive focus-visible:ring-destructive" : ""
                     )}
                   >
                     <Iconify icon="lucide:calendar" className="me-2 size-4" />
@@ -145,9 +136,7 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
               </Popover>
               {(error || fieldError) && (
                 <Typography variant="caption2" as="p" color="destructive" className="mt-1">
-                  {fieldError?.message
-                    ? formatFormError(t, fieldError.message)
-                    : helperText}
+                  {fieldError?.message ? formatFormError(t, fieldError.message) : helperText}
                 </Typography>
               )}
               {!error && !fieldError && helperText && (

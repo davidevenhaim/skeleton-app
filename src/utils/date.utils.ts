@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { he, Locale, enUS } from "date-fns/locale";
 
-export enum DateFormating {
+export enum DateFormatting {
   /** e.g., 2025-03-27 */
   ISO_DATE = "yyyy-MM-dd",
 
@@ -39,7 +39,7 @@ export enum DateFormating {
   HUMANIZED = "eeee 'at' h:mm a",
 
   /** e.g., Thursday */
-  DAY_NAME = "EEEE"
+  DAY_NAME = "EEEE",
 }
 
 function getLocale(currentLang: string): Locale {
@@ -51,7 +51,7 @@ function getLocale(currentLang: string): Locale {
 
 export function formatDate(
   date: Date,
-  formatString: DateFormating,
+  formatString: DateFormatting,
   currentLang: string = "he"
 ): string {
   return format(date, formatString, { locale: getLocale(currentLang) });

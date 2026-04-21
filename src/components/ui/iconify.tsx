@@ -28,15 +28,10 @@ const colorClasses: Record<IconifyColor, string> = {
   primary: "text-primary",
   secondary: "text-secondary",
   white: "text-white",
-  black: "text-black"
+  black: "text-black",
 };
 
-export default function Iconify({
-  icon,
-  className,
-  color,
-  ...props
-}: IconifyProps) {
+export default function Iconify({ icon, className, color, ...props }: IconifyProps) {
   return (
     <Icon
       {...props}

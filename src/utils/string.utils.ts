@@ -44,8 +44,7 @@ export const getShortCode = (input: string, length: number = 3): string => {
   let hash = 2166136261;
   for (let i = 0; i < input.length; i++) {
     hash ^= input.charCodeAt(i);
-    hash +=
-      (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
+    hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
   }
   // Convert to base36 and take first 3 chars, uppercase
   return Math.abs(hash).toString(36).toUpperCase().slice(0, length);

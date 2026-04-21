@@ -8,7 +8,7 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow
+  TableRow,
 } from "@/components/ui/table";
 import { Pagination } from "@/components/ui/pagination";
 import { SearchInput } from "@/components/ui/search-input";
@@ -86,7 +86,7 @@ export function DataTable<T extends object>({
   className,
   getRowKey,
   tableContainerClassName,
-  emptyState
+  emptyState,
 }: DataTableProps<T>) {
   const t = useTranslations();
   const [query, setQuery] = React.useState("");
@@ -120,7 +120,9 @@ export function DataTable<T extends object>({
     return data.filter((row) =>
       keys.some((k) => {
         const val = getNestedValue(row, String(k));
-        return String(val ?? "").toLowerCase().includes(q);
+        return String(val ?? "")
+          .toLowerCase()
+          .includes(q);
       })
     );
   }, [data, query, columns, searchKeys]);
@@ -156,28 +158,28 @@ export function DataTable<T extends object>({
     <div className={cn("flex flex-col gap-3", className)}>
       {searchable && (
         <SearchInput
-          onSearch={(q) => { setQuery(q); setPage(1); }}
+          onSearch={(q) => {
+            setQuery(q);
+            setPage(1);
+          }}
           placeholder={searchPlaceholder}
         />
       )}
 
       <div className="rounded-md border">
         <Table containerClassName={cn("overflow-auto", tableContainerClassName)}>
-          <TableHeader className="sticky top-0 z-10 bg-background">
+          <TableHeader className="bg-background sticky top-0 z-10">
             <TableRow>
               {columns.map((col) => (
                 <TableHead
                   key={String(col.key)}
-                  className={cn(
-                    col.sortable && "cursor-pointer select-none",
-                    col.headerClassName
-                  )}
+                  className={cn(col.sortable && "cursor-pointer select-none", col.headerClassName)}
                   onClick={col.sortable ? () => handleSort(String(col.key)) : undefined}
                 >
                   <Typography
                     variant="label2"
                     as="span"
-                    className="flex items-center gap-1 text-sm font-medium text-foreground"
+                    className="text-foreground flex items-center gap-1 text-sm font-medium"
                   >
                     {col.header}
                     {col.sortable && (
@@ -186,10 +188,10 @@ export function DataTable<T extends object>({
                           sortKey === String(col.key) && sortDir === "asc"
                             ? "lucide:chevron-up"
                             : sortKey === String(col.key) && sortDir === "desc"
-                            ? "lucide:chevron-down"
-                            : "lucide:chevrons-up-down"
+                              ? "lucide:chevron-down"
+                              : "lucide:chevrons-up-down"
                         }
-                        className="size-3.5 text-muted-foreground"
+                        className="text-muted-foreground size-3.5"
                       />
                     )}
                   </Typography>
@@ -202,7 +204,7 @@ export function DataTable<T extends object>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center text-muted-foreground"
+                  className="text-muted-foreground h-24 text-center"
                 >
                   {emptyState ?? (
                     <Typography variant="caption2" as="span" color="muted">
@@ -221,10 +223,7 @@ export function DataTable<T extends object>({
                   }
                 >
                   {columns.map((col) => (
-                    <TableCell
-                      key={String(col.key)}
-                      className={col.cellClassName}
-                    >
+                    <TableCell key={String(col.key)} className={col.cellClassName}>
                       {col.cell
                         ? col.cell(row)
                         : String(getNestedValue(row, String(col.key)) ?? "")}
@@ -242,11 +241,7 @@ export function DataTable<T extends object>({
           <Typography variant="caption2" as="span" color="muted">
             {t("resultsCount", { count: sorted.length })}
           </Typography>
-          <Pagination
-            currentPage={page}
-            totalPages={totalPages}
-            onPageChange={setPage}
-          />
+          <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
         </div>
       )}
     </div>

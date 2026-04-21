@@ -8,7 +8,7 @@ import {
   ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
-  type ChartConfig
+  type ChartConfig,
 } from "@/components/ui/chart";
 import { cn } from "@/lib/utils";
 
@@ -48,7 +48,7 @@ const AppPieChart = ({
   className,
   innerRadius = 0,
   outerRadius = 80,
-  showLegend = true
+  showLegend = true,
 }: AppPieChartProps) => {
   const chartConfig = data.reduce<ChartConfig>((acc, d) => {
     acc[d.name] = { label: d.name, color: d.color };
@@ -57,14 +57,11 @@ const AppPieChart = ({
 
   const legendPayload = data.map((d) => ({
     value: d.name,
-    color: d.color
+    color: d.color,
   }));
 
   return (
-    <ChartContainer
-      config={chartConfig}
-      className={cn("aspect-auto w-full min-w-0", className)}
-    >
+    <ChartContainer config={chartConfig} className={cn("aspect-auto w-full min-w-0", className)}>
       <RechartsPieChart>
         <ChartTooltip content={<ChartTooltipContent hideLabel />} />
         {showLegend && (

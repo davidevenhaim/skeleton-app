@@ -39,7 +39,7 @@ export function useMutation<TResult, TData = unknown>(
     Error,
     string,
     MutationArg<TData>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   >(url, mutator as any);
 
   return {
@@ -47,6 +47,6 @@ export function useMutation<TResult, TData = unknown>(
     isMutating,
     data,
     error,
-    reset
+    reset,
   };
 }

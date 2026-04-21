@@ -707,6 +707,7 @@
       "chooseFile": "Elegir archivo",
       "noFileChosen": "No se eligió ningún archivo",
       "notes": "Notas",
+      "message": "Mensaje",
       "category": "Categoría",
       "status": "Estado",
       "agree": "Acepto los términos de uso",
@@ -748,6 +749,7 @@
       "otp": "Ingresa el código",
       "upload": "Arrastra archivos aquí o haz clic para subirlos",
       "notes": "Escribe algo…",
+      "message": "Escribe tu mensaje aquí…",
       "search": "Buscar…",
       "formatUsd": "1,234.56",
       "formatEur": "1234.56",
@@ -765,6 +767,16 @@
       "acceptedTypes": "Tipos admitidos: {types}",
       "clearFiles": "Limpiar todo"
     }
+  },
+  "contact": {
+    "pageTitle": "Contáctenos",
+    "pageSubtitle": "¿Tienes una pregunta o comentario? Nos encantaría escucharte.",
+    "submit": "Enviar mensaje",
+    "successTitle": "¡Mensaje enviado!",
+    "successMessage": "Gracias por contactarnos.",
+    "successHeading": "Mensaje recibido",
+    "successDescription": "Nos pondremos en contacto contigo pronto.",
+    "sendAnother": "Enviar otro mensaje"
   },
   "errorBoundary": {
     "title": "Algo salió mal",

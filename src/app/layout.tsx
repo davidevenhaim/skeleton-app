@@ -1,21 +1,10 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { cookies } from "next/headers";
-import {
-  Cairo,
-  Geist_Mono,
-  Heebo,
-  Plus_Jakarta_Sans,
-  Space_Grotesk
-} from "next/font/google";
+import { Cairo, Geist_Mono, Heebo, Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import {
-  LOCALE_COOKIE,
-  getLocaleDirection,
-  isAppLocale,
-  type AppLocale
-} from "@/constants/locale";
+import { LOCALE_COOKIE, getLocaleDirection, isAppLocale, type AppLocale } from "@/constants/locale";
 import { CONFIG } from "@/lib/app-config";
 import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -28,33 +17,33 @@ const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-space-grotesk",
   display: "swap",
-  weight: ["400", "500", "600", "700"]
+  weight: ["400", "500", "600", "700"],
 });
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-plus-jakarta",
   display: "swap",
-  weight: ["400", "500", "600", "700"]
+  weight: ["400", "500", "600", "700"],
 });
 
 const heebo = Heebo({
   subsets: ["latin", "hebrew"],
   variable: "--font-heebo",
   display: "swap",
-  weight: ["400", "500", "600", "700"]
+  weight: ["400", "500", "600", "700"],
 });
 
 const cairo = Cairo({
   subsets: ["latin", "arabic"],
   variable: "--font-cairo",
   display: "swap",
-  weight: ["400", "500", "600", "700"]
+  weight: ["400", "500", "600", "700"],
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
-  subsets: ["latin"]
+  subsets: ["latin"],
 });
 
 function localeFontClass(locale: AppLocale): string {
@@ -78,24 +67,24 @@ export const metadata: Metadata = {
   title: "Skeleton UI",
   description: ogDescription,
   icons: {
-    icon: "/logo.png"
+    icon: "/logo.png",
   },
   openGraph: {
     title: "Skeleton UI",
     description: ogDescription,
     type: "website",
-    images: [{ url: "/logo.png", alt: "Skeleton UI" }]
+    images: [{ url: "/logo.png", alt: "Skeleton UI" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Skeleton UI",
     description: ogDescription,
-    images: ["/logo.png"]
-  }
+    images: ["/logo.png"],
+  },
 };
 
 export default async function RootLayout({
-  children
+  children,
 }: Readonly<{
   children: ReactNode;
 }>) {
@@ -107,18 +96,14 @@ export default async function RootLayout({
 
   return (
     <html lang={htmlLang} dir={htmlDir}>
-      <body
-        className={`${fontVariableClasses(htmlLang)} ${localeFontClass(htmlLang)} antialiased`}
-      >
+      <body className={`${fontVariableClasses(htmlLang)} ${localeFontClass(htmlLang)} antialiased`}>
         <NextIntlClientProvider messages={messages}>
           <DirectionProvider dir={htmlDir}>
             <ThemeProvider>
               <TooltipProvider>
                 {children}
-                <Toaster
-                  position={htmlDir === "rtl" ? "top-left" : "top-right"}
-                />
-                <LoadingIndicator variant='overlay' loadingKey='axios' />
+                <Toaster position={htmlDir === "rtl" ? "top-left" : "top-right"} />
+                <LoadingIndicator variant="overlay" loadingKey="axios" />
               </TooltipProvider>
             </ThemeProvider>
           </DirectionProvider>

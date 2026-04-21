@@ -13,12 +13,7 @@ export type FormCheckboxProps = {
   className?: string;
 };
 
-export function FormCheckbox({
-  name,
-  label,
-  description,
-  className
-}: FormCheckboxProps) {
+export function FormCheckbox({ name, label, description, className }: FormCheckboxProps) {
   const { control } = useFormContext();
   const tForms = useTranslations("forms");
 
@@ -44,7 +39,7 @@ export function FormCheckbox({
             {label && (
               <label
                 htmlFor={`form-checkbox-${name}`}
-                className="text-sm font-medium leading-none cursor-pointer select-none peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+                className="cursor-pointer text-sm leading-none font-medium select-none peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
               >
                 {tForms(label as never)}
               </label>

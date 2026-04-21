@@ -710,6 +710,7 @@
       "chooseFile": "Choose file",
       "noFileChosen": "No file chosen",
       "notes": "Notes",
+      "message": "Message",
       "category": "Category",
       "status": "Status",
       "agree": "I agree to the terms of use",
@@ -751,6 +752,7 @@
       "otp": "Enter code",
       "upload": "Drag files here or click to upload",
       "notes": "Write something…",
+      "message": "Write your message here…",
       "search": "Search…",
       "formatUsd": "1,234.56",
       "formatEur": "1234.56",
@@ -768,6 +770,16 @@
       "acceptedTypes": "Supported types: {types}",
       "clearFiles": "Clear all"
     }
+  },
+  "contact": {
+    "pageTitle": "Contact Us",
+    "pageSubtitle": "Have a question or feedback? We'd love to hear from you.",
+    "submit": "Send message",
+    "successTitle": "Message sent!",
+    "successMessage": "Thanks for reaching out.",
+    "successHeading": "Message received",
+    "successDescription": "We'll be in touch soon.",
+    "sendAnother": "Send another message"
   },
   "errorBoundary": {
     "title": "Something went wrong",

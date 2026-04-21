@@ -10,7 +10,7 @@ const AnimatedDivBreathing = ({ className, children }: Props) => {
     <div
       className={className}
       style={{
-        animation: "breathing 4s ease-in-out infinite"
+        animation: "breathing 4s ease-in-out infinite",
       }}
     >
       <style jsx>{`

@@ -29,7 +29,7 @@ export function FormTextarea({
   maxLength,
   showCharCount = false,
   className,
-  required
+  required,
 }: FormTextareaProps) {
   const { control } = useFormContext();
   const t = useTranslations();
@@ -70,7 +70,7 @@ export function FormTextarea({
                   variant="caption2"
                   as="span"
                   className={cn(
-                    "absolute bottom-2 end-2 text-xs",
+                    "absolute end-2 bottom-2 text-xs",
                     charCount >= maxLength ? "text-destructive" : "text-muted-foreground"
                   )}
                 >

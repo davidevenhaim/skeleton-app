@@ -32,13 +32,13 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       if (this.props.fallback) return this.props.fallback;
 
       return (
-        <div className='flex min-h-[200px] flex-col items-center justify-center gap-4 p-8 text-center'>
-          <p className='text-lg font-semibold'>Something went wrong</p>
-          <p className='text-muted-foreground text-sm'>
+        <div className="flex min-h-[200px] flex-col items-center justify-center gap-4 p-8 text-center">
+          <p className="text-lg font-semibold">Something went wrong</p>
+          <p className="text-muted-foreground text-sm">
             An unexpected error occurred. Try refreshing the page.
           </p>
           <button
-            className='text-sm underline'
+            className="text-sm underline"
             onClick={() => {
               this.setState({ hasError: false, error: undefined });
               window.location.reload();

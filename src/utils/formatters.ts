@@ -16,12 +16,9 @@ const dollarFormatter: FormatterFn = {
     if (!num) return "";
     const parts = num.split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return parts.length > 1
-      ? `$${parts[0]}.${parts[1].slice(0, 2)}`
-      : `$${parts[0]}`;
+    return parts.length > 1 ? `$${parts[0]}.${parts[1].slice(0, 2)}` : `$${parts[0]}`;
   },
-  parse: (displayValue) =>
-    displayValue.replace(/[^0-9.]/g, "").replace(/,/g, "")
+  parse: (displayValue) => displayValue.replace(/[^0-9.]/g, "").replace(/,/g, ""),
 };
 
 /** Euro: €1.234,56 (European format) */
@@ -41,7 +38,7 @@ const euroFormatter: FormatterFn = {
     const int = (intPart ?? "").replace(/\./g, "");
     const dec = (decPart ?? "").slice(0, 2);
     return dec ? `${int}.${dec}` : int;
-  }
+  },
 };
 
 /** Percentage: 12.5% */
@@ -51,7 +48,7 @@ const percentFormatter: FormatterFn = {
     if (!num) return "";
     return `${num}%`;
   },
-  parse: (displayValue) => displayValue.replace(/[^0-9.]/g, "")
+  parse: (displayValue) => displayValue.replace(/[^0-9.]/g, ""),
 };
 
 /** Phone (US): (123) 456-7890 */
@@ -62,7 +59,7 @@ const phoneFormatter: FormatterFn = {
     if (num.length <= 6) return `(${num.slice(0, 3)}) ${num.slice(3)}`;
     return `(${num.slice(0, 3)}) ${num.slice(3, 6)}-${num.slice(6)}`;
   },
-  parse: (displayValue) => displayValue.replace(/\D/g, "")
+  parse: (displayValue) => displayValue.replace(/\D/g, ""),
 };
 
 /** SSN: 123-45-6789 */
@@ -73,7 +70,7 @@ const ssnFormatter: FormatterFn = {
     if (num.length <= 5) return `${num.slice(0, 3)}-${num.slice(3)}`;
     return `${num.slice(0, 3)}-${num.slice(3, 5)}-${num.slice(5)}`;
   },
-  parse: (displayValue) => displayValue.replace(/\D/g, "")
+  parse: (displayValue) => displayValue.replace(/\D/g, ""),
 };
 
 /** Credit card: 1234 5678 9012 3456 */
@@ -82,7 +79,7 @@ const creditCardFormatter: FormatterFn = {
     const num = value.replace(/\D/g, "").slice(0, 16);
     return num.replace(/(\d{4})(?=\d)/g, "$1 ").trim();
   },
-  parse: (displayValue) => displayValue.replace(/\D/g, "")
+  parse: (displayValue) => displayValue.replace(/\D/g, ""),
 };
 
 export const formatBytes: FormatterFn = {
@@ -96,16 +93,13 @@ export const formatBytes: FormatterFn = {
     const units = ["B", "KB", "MB", "GB", "TB"];
     const base = 1024;
 
-    const unitIndex = Math.min(
-      Math.floor(Math.log(absBytes) / Math.log(base)),
-      units.length - 1
-    );
+    const unitIndex = Math.min(Math.floor(Math.log(absBytes) / Math.log(base)), units.length - 1);
 
     const output = bytes / Math.pow(base, unitIndex);
 
     return `${output.toFixed(decimals).replace(/\.0+$/, "")} ${units[unitIndex]}`;
   },
-  parse: (displayValue) => displayValue.replace(/\D/g, "")
+  parse: (displayValue) => displayValue.replace(/\D/g, ""),
 };
 
 /** Integer with commas: 1,234 */
@@ -115,7 +109,7 @@ const integerFormatter: FormatterFn = {
     if (!num) return "";
     return num.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   },
-  parse: (displayValue) => displayValue.replace(/[^0-9]/g, "")
+  parse: (displayValue) => displayValue.replace(/[^0-9]/g, ""),
 };
 
 export const inputFormatter = {
@@ -126,5 +120,5 @@ export const inputFormatter = {
   ssn: ssnFormatter,
   creditCard: creditCardFormatter,
   bytes: formatBytes,
-  integer: integerFormatter
+  integer: integerFormatter,
 };

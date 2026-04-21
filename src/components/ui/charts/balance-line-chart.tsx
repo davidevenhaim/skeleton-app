@@ -6,7 +6,7 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-  type ChartConfig
+  type ChartConfig,
 } from "@/components/ui/chart";
 import { cn } from "@/lib/utils";
 
@@ -24,8 +24,8 @@ type BalanceLineChartProps = {
 const chartConfig = {
   balance: {
     label: "Balance",
-    color: "var(--color-primary)"
-  }
+    color: "var(--color-primary)",
+  },
 } satisfies ChartConfig;
 
 const formatCurrencyTick = (value: number, locale: string) =>
@@ -34,7 +34,7 @@ const formatCurrencyTick = (value: number, locale: string) =>
     currency: "USD",
     notation: "compact",
     minimumFractionDigits: 0,
-    maximumFractionDigits: 1
+    maximumFractionDigits: 1,
   }).format(value);
 
 const formatCurrencyTooltip = (value: number, locale: string) =>
@@ -42,7 +42,7 @@ const formatCurrencyTooltip = (value: number, locale: string) =>
     style: "currency",
     currency: "USD",
     minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+    maximumFractionDigits: 2,
   }).format(value);
 
 const BalanceLineChart = ({ data, locale, className }: BalanceLineChartProps) => {
@@ -53,7 +53,7 @@ const BalanceLineChart = ({ data, locale, className }: BalanceLineChartProps) =>
       config={chartConfig}
       className={cn(
         /* ChartContainer defaults (aspect-video + justify-center) shrink width and clip the X range */
-        "aspect-auto w-full min-w-0 self-stretch justify-stretch [&_.recharts-responsive-container]:!w-full [&_.recharts-responsive-container]:!max-w-full [&_.recharts-wrapper]:max-w-none",
+        "aspect-auto w-full min-w-0 justify-stretch self-stretch [&_.recharts-responsive-container]:!w-full [&_.recharts-responsive-container]:!max-w-full [&_.recharts-wrapper]:max-w-none",
         className
       )}
     >

@@ -51,7 +51,7 @@ Only write raw custom zod validation when the project helpers do not cover the u
 For displaying paginated, searchable, sortable data — use the `DataTable` component.
 
 ```tsx
-import { DataTable } from "@/components/ui/data-table"
+import { DataTable } from "@/components/ui/data-table";
 ```
 
 `DataTable` handles sorting, client-side search, and pagination internally. Do not build a custom table with manual sort/filter/pagination state.

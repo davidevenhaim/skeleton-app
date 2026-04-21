@@ -4,11 +4,11 @@
 
 The project has exactly three Zustand stores:
 
-| Store | File | Purpose |
-|-------|------|---------|
-| `useAuthStore` | `src/store/auth.store.ts` | user, token, isAuthenticated, logout |
-| `useLoaderStore` | `src/store/loader.store.ts` | global HTTP loading state |
-| `useThemeStore` | `src/store/theme.store.ts` | light/dark theme |
+| Store            | File                        | Purpose                              |
+| ---------------- | --------------------------- | ------------------------------------ |
+| `useAuthStore`   | `src/store/auth.store.ts`   | user, token, isAuthenticated, logout |
+| `useLoaderStore` | `src/store/loader.store.ts` | global HTTP loading state            |
+| `useThemeStore`  | `src/store/theme.store.ts`  | light/dark theme                     |
 
 ## Rules
 
@@ -21,8 +21,8 @@ Do not put server-fetched data into a store — use `useFetch` (SWR handles cach
 ## Using the Auth Store
 
 ```ts
-const { user, isAuthenticated, logout } = useAuthStore()
-const { isAdmin, hasRole } = usePermissions()  // preferred for role checks
+const { user, isAuthenticated, logout } = useAuthStore();
+const { isAdmin, hasRole } = usePermissions(); // preferred for role checks
 ```
 
 Do not read `user.role` directly — use `usePermissions()` instead. It provides a clean API (`isAdmin`, `hasRole(["admin", "editor"])`) that is easier to reason about and refactor later.
@@ -34,10 +34,10 @@ The loader store is wired to the axios interceptors automatically. You do not ne
 Only call it directly for non-axios async operations:
 
 ```ts
-const { add, remove } = useLoaderStore()
-add("exportPdf")
+const { add, remove } = useLoaderStore();
+add("exportPdf");
 // ... async work
-remove("exportPdf")
+remove("exportPdf");
 ```
 
 Check loading state in UI with `useIsLoading()` (any request) or `useIsLoading("exportPdf")` (specific key).

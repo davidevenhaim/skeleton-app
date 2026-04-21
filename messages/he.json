@@ -711,6 +711,7 @@
       "chooseFile": "בחר קובץ",
       "noFileChosen": "לא נבחר קובץ",
       "notes": "הערות",
+      "message": "הודעה",
       "category": "קטגוריה",
       "status": "סטטוס",
       "agree": "אני מסכים לתנאי השימוש",
@@ -752,6 +753,7 @@
       "otp": "הזן קוד",
       "upload": "גרור קבצים לכאן או לחץ להעלאה",
       "notes": "כתוב משהו…",
+      "message": "כתבו את ההודעה שלכם כאן…",
       "search": "חיפוש…",
       "formatUsd": "1,234.56",
       "formatEur": "1234.56",
@@ -769,6 +771,16 @@
       "acceptedTypes": "סוגים נתמכים: {types}",
       "clearFiles": "נקה הכול"
     }
+  },
+  "contact": {
+    "pageTitle": "צרו קשר",
+    "pageSubtitle": "יש לכם שאלה או משוב? נשמח לשמוע מכם.",
+    "submit": "שליחת הודעה",
+    "successTitle": "ההודעה נשלחה!",
+    "successMessage": "תודה שפנית אלינו.",
+    "successHeading": "ההודעה התקבלה",
+    "successDescription": "ניצור איתך קשר בהקדם.",
+    "sendAnother": "שלח הודעה נוספת"
   },
   "errorBoundary": {
     "title": "משהו השתבש",

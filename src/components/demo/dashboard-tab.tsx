@@ -50,7 +50,7 @@ export function DemoDashboardTab() {
       key: "role",
       header: tDemo("table.role"),
       sortable: true,
-      cell: (row) => <Badge variant='secondary'>{translateRole(row.role)}</Badge>
+      cell: (row) => <Badge variant="secondary">{translateRole(row.role)}</Badge>,
     },
     {
       key: "status",
@@ -68,41 +68,41 @@ export function DemoDashboardTab() {
         >
           {translateStatus(row.status)}
         </Badge>
-      )
-    }
+      ),
+    },
   ];
 
   const pieData = [
     { name: translateRole("Admin"), value: 3, color: "var(--color-chart-1)" },
     { name: translateRole("Editor"), value: 4, color: "var(--color-chart-2)" },
-    { name: translateRole("Viewer"), value: 5, color: "var(--color-chart-3)" }
+    { name: translateRole("Viewer"), value: 5, color: "var(--color-chart-3)" },
   ];
 
   return (
-    <TabsContent value='dashboard' className='space-y-10'>
+    <TabsContent value="dashboard" className="space-y-10">
       <section>
         <Typography
-          variant='subtitle2'
-          as='h2'
-          className='mb-4 text-lg font-semibold text-foreground'
+          variant="subtitle2"
+          as="h2"
+          className="text-foreground mb-4 text-lg font-semibold"
         >
           {tDemo("dashboard.statsAndCharts")}
         </Typography>
-        <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4'>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <StatCard
             title={tDemo("dashboard.totalRevenue")}
             value={67000}
             formatter={(v) => `$${v.toLocaleString(chartLocale)}`}
             delta={14.2}
             deltaLabel={tDemo("dashboard.vsLastQuarter")}
-            icon='lucide:dollar-sign'
+            icon="lucide:dollar-sign"
           />
           <StatCard
             title={tDemo("dashboard.activeUsers")}
             value={TABLE_USERS.filter((user) => user.status === "Active").length}
             delta={8.1}
             deltaLabel={tDemo("dashboard.vsLastMonth")}
-            icon='lucide:users'
+            icon="lucide:users"
           />
           <StatCard
             title={tDemo("dashboard.conversions")}
@@ -110,118 +110,92 @@ export function DemoDashboardTab() {
             formatter={(v) => `${v.toFixed(2)}%`}
             delta={-1.3}
             deltaLabel={tDemo("dashboard.vsLastMonth")}
-            icon='lucide:percent'
+            icon="lucide:percent"
           />
           <StatCard
             title={tDemo("dashboard.windowWidth")}
             value={width}
             formatter={(v) => `${v}px`}
-            icon='lucide:monitor'
+            icon="lucide:monitor"
           />
         </div>
 
-        <div className='mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2'>
+        <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
           <Card>
             <CardHeader>
               <CardTitle>{tDemo("dashboard.balanceOverTime")}</CardTitle>
             </CardHeader>
-            <CardContent className='pb-4'>
-              <BalanceLineChart
-                data={BALANCE_DATA}
-                locale={chartLocale}
-                className='h-48'
-              />
+            <CardContent className="pb-4">
+              <BalanceLineChart data={BALANCE_DATA} locale={chartLocale} className="h-48" />
             </CardContent>
           </Card>
           <Card>
             <CardHeader>
               <CardTitle>{tDemo("dashboard.quarterlyRevenueVsExpenses")}</CardTitle>
             </CardHeader>
-            <CardContent className='pb-4'>
+            <CardContent className="pb-4">
               <AppBarChart
                 data={BAR_DATA}
-                xAxisKey='month'
+                xAxisKey="month"
                 series={[
                   {
                     key: "revenue",
                     label: tDemo("dashboard.revenue"),
-                    color: "var(--color-chart-1)"
+                    color: "var(--color-chart-1)",
                   },
                   {
                     key: "expenses",
                     label: tDemo("dashboard.expenses"),
-                    color: "var(--color-chart-2)"
-                  }
+                    color: "var(--color-chart-2)",
+                  },
                 ]}
                 showLegend
-                className='h-48'
+                className="h-48"
               />
             </CardContent>
           </Card>
         </div>
 
-        <div className='mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3'>
-          <Card className='col-span-1'>
+        <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
+          <Card className="col-span-1">
             <CardHeader>
               <CardTitle>{tDemo("dashboard.userRoles")}</CardTitle>
             </CardHeader>
             <CardContent>
-              <AppPieChart
-                data={pieData}
-                innerRadius={45}
-                showLegend
-                className='h-48'
-              />
+              <AppPieChart data={pieData} innerRadius={45} showLegend className="h-48" />
             </CardContent>
           </Card>
-          <Card className='col-span-2'>
+          <Card className="col-span-2">
             <CardHeader>
               <CardTitle>{tDemo("dashboard.animatedNumbers")}</CardTitle>
-              <CardDescription>
-                {tDemo("dashboard.animatedNumbersDescription")}
-              </CardDescription>
+              <CardDescription>{tDemo("dashboard.animatedNumbersDescription")}</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className='flex flex-wrap gap-8'>
-                <div className='text-center'>
-                  <div className='text-3xl font-bold text-primary'>
-                    <AnimatedNumber
-                      value={98.6}
-                      formatter={(v) => `${v.toFixed(1)}%`}
-                    />
+              <div className="flex flex-wrap gap-8">
+                <div className="text-center">
+                  <div className="text-primary text-3xl font-bold">
+                    <AnimatedNumber value={98.6} formatter={(v) => `${v.toFixed(1)}%`} />
                   </div>
-                  <Typography
-                    variant='caption2'
-                    className='mt-1 text-sm text-muted-foreground'
-                  >
+                  <Typography variant="caption2" className="text-muted-foreground mt-1 text-sm">
                     {tDemo("dashboard.uptime")}
                   </Typography>
                 </div>
-                <div className='text-center'>
-                  <div className='text-3xl font-bold text-primary'>
+                <div className="text-center">
+                  <div className="text-primary text-3xl font-bold">
                     <AnimatedNumber
                       value={12500}
                       formatter={(v) => v.toLocaleString(chartLocale)}
                     />
                   </div>
-                  <Typography
-                    variant='caption2'
-                    className='mt-1 text-sm text-muted-foreground'
-                  >
+                  <Typography variant="caption2" className="text-muted-foreground mt-1 text-sm">
                     {tDemo("dashboard.requestsPerDay")}
                   </Typography>
                 </div>
-                <div className='text-center'>
-                  <div className='text-3xl font-bold text-primary'>
-                    <AnimatedNumber
-                      value={4.9}
-                      formatter={(v) => `${v.toFixed(1)} ⭐`}
-                    />
+                <div className="text-center">
+                  <div className="text-primary text-3xl font-bold">
+                    <AnimatedNumber value={4.9} formatter={(v) => `${v.toFixed(1)} ⭐`} />
                   </div>
-                  <Typography
-                    variant='caption2'
-                    className='mt-1 text-sm text-muted-foreground'
-                  >
+                  <Typography variant="caption2" className="text-muted-foreground mt-1 text-sm">
                     {tDemo("dashboard.rating")}
                   </Typography>
                 </div>
@@ -233,14 +207,14 @@ export function DemoDashboardTab() {
 
       <section>
         <Typography
-          variant='subtitle2'
-          as='h2'
-          className='mb-4 text-lg font-semibold text-foreground'
+          variant="subtitle2"
+          as="h2"
+          className="text-foreground mb-4 text-lg font-semibold"
         >
           {tDemo("dashboard.dataTable")}
         </Typography>
         <Card>
-          <CardContent className='pt-6'>
+          <CardContent className="pt-6">
             <DataTable<DemoUser>
               data={TABLE_USERS}
               columns={tableColumns}
@@ -248,7 +222,7 @@ export function DemoDashboardTab() {
               searchPlaceholder={tDemo("dashboard.searchUsers")}
               pageSize={5}
               getRowKey={(row) => row.id}
-              tableContainerClassName='h-[320px]'
+              tableContainerClassName="h-[320px]"
             />
           </CardContent>
         </Card>

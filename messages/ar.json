@@ -711,6 +711,7 @@
       "chooseFile": "اختر ملفًا",
       "noFileChosen": "لم يتم اختيار ملف",
       "notes": "ملاحظات",
+      "message": "رسالة",
       "category": "الفئة",
       "status": "الحالة",
       "agree": "أوافق على شروط الاستخدام",
@@ -752,6 +753,7 @@
       "otp": "أدخل الرمز",
       "upload": "اسحب الملفات إلى هنا أو اضغط للرفع",
       "notes": "اكتب شيئًا…",
+      "message": "اكتب رسالتك هنا…",
       "search": "بحث…",
       "formatUsd": "1,234.56",
       "formatEur": "1234.56",
@@ -769,6 +771,16 @@
       "acceptedTypes": "الأنواع المدعومة: {types}",
       "clearFiles": "مسح الكل"
     }
+  },
+  "contact": {
+    "pageTitle": "اتصل بنا",
+    "pageSubtitle": "هل لديك سؤال أو ملاحظة؟ يسعدنا سماعك.",
+    "submit": "إرسال الرسالة",
+    "successTitle": "تم إرسال الرسالة!",
+    "successMessage": "شكرًا للتواصل معنا.",
+    "successHeading": "تم استلام رسالتك",
+    "successDescription": "سنتواصل معك قريبًا.",
+    "sendAnother": "إرسال رسالة أخرى"
   },
   "errorBoundary": {
     "title": "حدث خطأ ما",

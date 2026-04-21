@@ -31,8 +31,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   // Restore from localStorage on init (SSR-safe)
   user: (typeof window !== "undefined" ? getStorage(USER_KEY) : null) as User | null,
   token: (typeof window !== "undefined" ? getStorage(TOKEN_KEY) : null) as string | null,
-  isAuthenticated:
-    typeof window !== "undefined" ? !!getStorage(TOKEN_KEY) : false,
+  isAuthenticated: typeof window !== "undefined" ? !!getStorage(TOKEN_KEY) : false,
 
   setUser: (user) => {
     if (user) setStorage(USER_KEY, user);
@@ -50,5 +49,5 @@ export const useAuthStore = create<AuthState>((set) => ({
     removeStorage(USER_KEY);
     removeStorage(TOKEN_KEY);
     set({ user: null, token: null, isAuthenticated: false });
-  }
+  },
 }));

@@ -23,7 +23,7 @@ const Logo = ({
   ...props
 }: Props & Omit<ImageProps, "src" | "alt" | "className">) => {
   const AppLogo = (
-    <div className='flex items-center gap-2'>
+    <div className="flex items-center gap-2">
       <Image
         src={LOGO_URL}
         height={size}
@@ -33,7 +33,7 @@ const Logo = ({
         {...props}
       />
       {withText && (
-        <Typography variant='h6' as='p' className='font-bold text-primary'>
+        <Typography variant="h6" as="p" className="text-primary font-bold">
           Underwritly
         </Typography>
       )}
@@ -43,7 +43,7 @@ const Logo = ({
   return (
     <>
       {clickable ? (
-        <Link href={WEB_ROUTES.HOME} className='cursor-pointer'>
+        <Link href={WEB_ROUTES.HOME} className="cursor-pointer">
           {AppLogo}
         </Link>
       ) : (

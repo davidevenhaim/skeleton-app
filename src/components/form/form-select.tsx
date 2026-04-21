@@ -10,7 +10,7 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
 } from "@/components/ui/select";
 
 export type FormSelectProps = {
@@ -32,7 +32,7 @@ export function FormSelect({
   options,
   className,
   searchable = false,
-  searchPlaceholder
+  searchPlaceholder,
 }: FormSelectProps) {
   const { control } = useFormContext();
   const tForms = useTranslations("forms");
@@ -40,8 +40,7 @@ export function FormSelect({
   void searchable;
   void searchPlaceholder;
 
-  const tr = (key: string) =>
-    key.includes(".") ? tForms(key as never) : tRoot(key as never);
+  const tr = (key: string) => (key.includes(".") ? tForms(key as never) : tRoot(key as never));
 
   return (
     <Controller
@@ -51,7 +50,7 @@ export function FormSelect({
         <Field data-invalid={fieldState.invalid} className={className}>
           {label && (
             <FieldLabel htmlFor={`form-select-${name}`}>
-              <Typography variant='label2'>{tr(label)}</Typography>
+              <Typography variant="label2">{tr(label)}</Typography>
             </FieldLabel>
           )}
           <Select
@@ -59,7 +58,7 @@ export function FormSelect({
             value={typeof field.value === "string" ? field.value : undefined}
           >
             <SelectTrigger
-              className='w-full'
+              className="w-full"
               id={`form-select-${name}`}
               aria-invalid={fieldState.invalid}
             >

@@ -54,6 +54,7 @@ All API requests go through the Next.js proxy route at `src/app/api/proxy/[...pa
 The `apiClient` base URL is `/api/proxy` on the client, which forwards to `CONFIG.serverUrl`.
 
 This means:
+
 - `useFetch("/users")` → proxies to `{CONFIG.serverUrl}/users`
 - CORS is handled server-side — do not configure CORS headers client-side
 - Cookies and Authorization headers are forwarded automatically
@@ -71,5 +72,5 @@ toastPromise(trigger({ method: "POST", data }), {
   loading: t("saving"),
   success: t("saved"),
   error: t("saveFailed"),
-})
+});
 ```

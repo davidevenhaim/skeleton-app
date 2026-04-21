@@ -22,7 +22,7 @@ export function FormSwitch({
   description,
   className,
   size = "default",
-  color = "default"
+  color = "default",
 }: FormSwitchProps) {
   const { control } = useFormContext();
   const tForms = useTranslations("forms");
@@ -39,7 +39,11 @@ export function FormSwitch({
         >
           <div className="flex flex-1 flex-col gap-1">
             {label && (
-              <Typography variant="label2" as="span" className="text-sm font-medium leading-none select-none">
+              <Typography
+                variant="label2"
+                as="span"
+                className="text-sm leading-none font-medium select-none"
+              >
                 {tForms(label as never)}
               </Typography>
             )}

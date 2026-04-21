@@ -10,7 +10,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
-  CommandList
+  CommandList,
 } from "@/components/ui/command";
 import { Field, FieldLabel, FieldError } from "@/components/form/field";
 import { Typography } from "@/components/ui/typography";
@@ -35,15 +35,14 @@ export function FormCombobox({
   searchPlaceholder,
   emptyLabel,
   options,
-  className
+  className,
 }: FormComboboxProps) {
   const { control } = useFormContext();
   const tForms = useTranslations("forms");
   const tRoot = useTranslations();
   const [open, setOpen] = React.useState(false);
 
-  const tr = (key: string) =>
-    key.includes(".") ? tForms(key as never) : tRoot(key as never);
+  const tr = (key: string) => (key.includes(".") ? tForms(key as never) : tRoot(key as never));
 
   return (
     <Controller
@@ -68,7 +67,7 @@ export function FormCombobox({
                   aria-expanded={open}
                   aria-invalid={fieldState.invalid}
                   className={cn(
-                    "font-sans border-input data-[placeholder]:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 flex h-9 w-full items-center justify-between rounded-md border bg-transparent px-3 py-2 text-sm text-start shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50",
+                    "border-input data-[placeholder]:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 flex h-9 w-full items-center justify-between rounded-md border bg-transparent px-3 py-2 text-start font-sans text-sm shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50",
                     !selected && "text-muted-foreground",
                     fieldState.invalid && "border-destructive ring-destructive/20"
                   )}
@@ -76,7 +75,9 @@ export function FormCombobox({
                   <Typography variant="caption1" as="span" className="truncate text-sm">
                     {selected
                       ? tr(selected.label)
-                      : (placeholder ? tr(placeholder) : tRoot("select"))}
+                      : placeholder
+                        ? tr(placeholder)
+                        : tRoot("select")}
                   </Typography>
                   <Iconify
                     icon="lucide:chevrons-up-down"
@@ -84,18 +85,13 @@ export function FormCombobox({
                   />
                 </button>
               </PopoverTrigger>
-              <PopoverContent
-                className="w-[var(--radix-popover-trigger-width)] p-0"
-                align="start"
-              >
+              <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" align="start">
                 <Command>
                   <CommandInput
                     placeholder={searchPlaceholder ? tr(searchPlaceholder) : tRoot("search")}
                   />
                   <CommandList>
-                    <CommandEmpty>
-                      {emptyLabel ? tr(emptyLabel) : tRoot("noResults")}
-                    </CommandEmpty>
+                    <CommandEmpty>{emptyLabel ? tr(emptyLabel) : tRoot("noResults")}</CommandEmpty>
                     <CommandGroup>
                       {options.map((option) => (
                         <CommandItem
@@ -110,9 +106,7 @@ export function FormCombobox({
                             icon="lucide:check"
                             className={cn(
                               "size-4",
-                              field.value === option.value
-                                ? "opacity-100"
-                                : "opacity-0"
+                              field.value === option.value ? "opacity-100" : "opacity-0"
                             )}
                           />
                           {tr(option.label)}

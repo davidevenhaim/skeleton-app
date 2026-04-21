@@ -21,9 +21,9 @@ const getProxyBaseUrl = (): string => {
 export const apiClient: AxiosInstance = axios.create({
   baseURL: getProxyBaseUrl(),
   headers: {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   },
-  withCredentials: true
+  withCredentials: true,
 });
 
 // ----------------------------------------------------------------------
@@ -56,14 +56,11 @@ apiClient.interceptors.response.use(
 
       const status = error.response?.status ?? 0;
       const message =
-        error.response?.data?.message ??
-        error.message ??
-        "An unexpected error occurred";
+        error.response?.data?.message ?? error.message ?? "An unexpected error occurred";
 
       if (status >= 400) {
         import("@/lib/toast").then(({ toastError }) => {
-          const title =
-            status >= 500 ? "Server error" : "Request failed";
+          const title = status >= 500 ? "Server error" : "Request failed";
           toastError(title, message);
         });
       }
