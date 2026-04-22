@@ -14,7 +14,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { TabsContent } from "@/components/ui/tabs";
 import { Typography } from "@/components/ui/typography";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { cn } from "@/lib/utils";
@@ -103,7 +102,7 @@ export function DemoTokenUsageTab() {
   );
 
   return (
-    <TabsContent value="token-usage" dir="ltr" className="space-y-6">
+    <div dir="ltr" className="space-y-6">
       <Card>
         <CardHeader className="space-y-2">
           <CardTitle className="text-2xl">{t("title")}</CardTitle>
@@ -287,6 +286,6 @@ export function DemoTokenUsageTab() {
           </div>
         </CardContent>
       </Card>
-    </TabsContent>
+    </div>
   );
 }

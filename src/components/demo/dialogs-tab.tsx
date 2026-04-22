@@ -30,7 +30,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { TabsContent } from "@/components/ui/tabs";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Typography } from "@/components/ui/typography";
 import Iconify from "@/components/ui/iconify";
@@ -47,7 +46,7 @@ export function DemoDialogsTab() {
   const { seconds, isRunning, start } = useCountdown(30);
 
   return (
-    <TabsContent value="dialogs" className="space-y-6">
+    <div className="space-y-6">
       <Card>
         <CardHeader>
           <CardTitle>{tDemo("dialogs.toastsAndDialogs")}</CardTitle>
@@ -282,7 +281,7 @@ export function DemoDialogsTab() {
           </CardContent>
         </Card>
       </div>
-    </TabsContent>
+    </div>
   );
 }
 

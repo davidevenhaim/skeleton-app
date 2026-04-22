@@ -1,3 +1,5 @@
+"use client";
+
 import { LocaleDialog } from "@/components/app";
 import { Button } from "@/components/ui/button";
 import Iconify from "@/components/ui/iconify";

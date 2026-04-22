@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
+import Actions from "../demo/layout/actions";
 
 // ----------------------------------------------------------------------
 
@@ -9,8 +10,6 @@ export type PageContainerProps = {
   title?: React.ReactNode;
   /** Optional subtitle or breadcrumb below the title */
   subtitle?: React.ReactNode;
-  /** Slot for action buttons rendered to the right of the title */
-  actions?: React.ReactNode;
   /** Page body content */
   children: React.ReactNode;
   className?: string;
@@ -33,14 +32,13 @@ export type PageContainerProps = {
 export function PageContainer({
   title,
   subtitle,
-  actions,
   children,
   className,
   maxWidth = "max-w-7xl",
 }: PageContainerProps) {
   return (
     <div className={cn("mx-auto w-full px-4 py-8 sm:px-6 lg:px-8", maxWidth, className)}>
-      {(title || actions) && (
+      {title && (
         <div className="mb-6 flex items-start justify-between gap-4">
           <div className="flex flex-col gap-1">
             {title && (
@@ -58,7 +56,9 @@ export function PageContainer({
               </Typography>
             )}
           </div>
-          {actions && <div className="flex shrink-0 items-center gap-2">{actions}</div>}
+          <div className="flex shrink-0 items-center gap-2">
+            <Actions />
+          </div>
         </div>
       )}
       {children}

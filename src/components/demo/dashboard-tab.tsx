@@ -8,7 +8,6 @@ import BalanceLineChart from "@/components/ui/charts/balance-line-chart";
 import AppPieChart from "@/components/ui/charts/pie-chart";
 import StatCard from "@/components/ui/charts/stat-card";
 import { DataTable, type ColumnDef } from "@/components/ui/data-table";
-import { TabsContent } from "@/components/ui/tabs";
 import AnimatedNumber from "@/components/ui/animations/animated-number";
 import { Typography } from "@/components/ui/typography";
 import { useWindowSize } from "@/hooks/use-window-size";
@@ -79,7 +78,7 @@ export function DemoDashboardTab() {
   ];
 
   return (
-    <TabsContent value="dashboard" className="space-y-10">
+    <div className="space-y-10">
       <section>
         <Typography
           variant="subtitle2"
@@ -227,6 +226,6 @@ export function DemoDashboardTab() {
           </CardContent>
         </Card>
       </section>
-    </TabsContent>
+    </div>
   );
 }

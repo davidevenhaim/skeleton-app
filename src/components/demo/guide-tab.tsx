@@ -13,11 +13,15 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Iconify from "@/components/ui/iconify";
-import { TabsContent } from "@/components/ui/tabs";
 import { Typography } from "@/components/ui/typography";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { cn } from "@/lib/utils";
 import {
+  GUIDE_CORE_FILES,
+  GUIDE_FEATURE_STEPS,
+  GUIDE_IGNORE_FILES,
+  GUIDE_MISTAKES,
+  GUIDE_OPTIONAL_FILES,
   PRODUCT_GUIDE_CREDITS,
   PRODUCT_GUIDE_GOOD_FIT,
   PRODUCT_GUIDE_LESS_SUITABLE,
@@ -130,7 +134,8 @@ export function DemoGuideTab() {
   );
 
   return (
-    <TabsContent value="guide" className="space-y-10">
+    <div className="space-y-10">
+      {/* 1. Hero */}
       <AnimatedDivBreathing>
         <section className="from-primary/10 via-background to-background relative overflow-hidden rounded-2xl border bg-gradient-to-br p-8 shadow-sm md:p-10 rtl:bg-gradient-to-bl">
           <div className="from-primary/5 pointer-events-none absolute inset-y-0 end-0 w-1/2 bg-gradient-to-l to-transparent rtl:bg-gradient-to-r" />
@@ -152,6 +157,45 @@ export function DemoGuideTab() {
         </section>
       </AnimatedDivBreathing>
 
+      {/* 2. For the vibe coder */}
+      <section className="space-y-4">
+        <div className="max-w-5xl space-y-2">
+          <Typography
+            variant="subtitle1"
+            as="h2"
+            className="text-foreground text-2xl font-semibold tracking-tight"
+          >
+            {tProductGuide("vibeCoder.title")}
+          </Typography>
+          <Typography variant="body2" className="text-muted-foreground leading-relaxed">
+            {tProductGuide("vibeCoder.body")}
+          </Typography>
+        </div>
+        <Card className="border-border/70">
+          <CardContent className="space-y-4 p-6">
+            <div className="flex items-start gap-3">
+              <div className="bg-muted mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg text-indigo-500">
+                <Iconify icon="lucide:bot" className="size-4" />
+              </div>
+              <Typography variant="caption1" className="text-muted-foreground leading-relaxed">
+                {tProductGuide("vibeCoder.claudeNote")}
+              </Typography>
+            </div>
+            <div className="border-border/50 space-y-2.5 border-t pt-4">
+              {(["bullet1", "bullet2", "bullet3"] as const).map((key) => (
+                <div key={key} className="flex items-start gap-2.5">
+                  <Iconify icon="lucide:check" className="text-primary mt-0.5 size-4 shrink-0" />
+                  <Typography variant="caption1" className="text-foreground">
+                    {tProductGuide(`vibeCoder.${key}`)}
+                  </Typography>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* 3. Why */}
       <section className="space-y-6">
         <div className="max-w-4xl space-y-2">
           <Typography
@@ -193,6 +237,7 @@ export function DemoGuideTab() {
         </div>
       </section>
 
+      {/* 4. When */}
       <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Card className="border-border/70">
           <CardContent className="space-y-5 p-6">
@@ -287,6 +332,7 @@ export function DemoGuideTab() {
         </Card>
       </section>
 
+      {/* 5. Start here */}
       <section className="space-y-6">
         <div className="max-w-4xl space-y-2">
           <Typography
@@ -384,6 +430,185 @@ export function DemoGuideTab() {
         </div>
       </section>
 
+      {/* 6. What you can safely ignore */}
+      <section className="space-y-6">
+        <div className="max-w-4xl space-y-2">
+          <Typography
+            variant="subtitle1"
+            as="h2"
+            className="text-foreground text-2xl font-semibold tracking-tight"
+          >
+            {tProductGuide("ignoreAtFirst.title")}
+          </Typography>
+          <Typography variant="caption1" className="text-muted-foreground">
+            {tProductGuide("ignoreAtFirst.description")}
+          </Typography>
+        </div>
+        <Card className="border-border/70">
+          <CardContent className="p-0">
+            <div className="divide-border/60 divide-y">
+              {GUIDE_IGNORE_FILES.map((item, index) => (
+                <div
+                  key={index}
+                  className="grid grid-cols-1 gap-1 p-4 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]"
+                >
+                  <code className="text-foreground self-start rounded bg-transparent px-0 text-sm font-medium">
+                    {item.file}
+                  </code>
+                  <Typography variant="caption1" className="text-muted-foreground">
+                    {item.reason}
+                  </Typography>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+        <div className="border-border/60 bg-muted/30 flex items-start gap-3 rounded-xl border p-4">
+          <Iconify icon="lucide:triangle-alert" className="mt-0.5 size-4 shrink-0 text-amber-500" />
+          <Typography variant="caption1" className="text-muted-foreground">
+            {tProductGuide("ignoreAtFirst.doNotRemove")}
+          </Typography>
+        </div>
+      </section>
+
+      {/* 7. How to add a new feature */}
+      <section className="space-y-6">
+        <div className="max-w-5xl space-y-0">
+          <Typography
+            variant="subtitle1"
+            as="h2"
+            className="text-foreground text-2xl font-semibold tracking-tight"
+          >
+            {tProductGuide("addFeature.title")}
+            <Typography variant="caption1" className="text-muted-foreground">
+              {tProductGuide("addFeature.note")}
+            </Typography>
+          </Typography>
+          <Typography variant="caption1" className="text-muted-foreground font-medium">
+            {tProductGuide("addFeature.description")}
+          </Typography>
+        </div>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {GUIDE_FEATURE_STEPS.map((item) => (
+            <div
+              key={item.step}
+              className="border-border/60 bg-background flex items-start gap-3 rounded-xl border p-4"
+            >
+              <div className="bg-primary/10 text-primary flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-bold">
+                {item.step}
+              </div>
+              <div className="space-y-1">
+                <Typography variant="label1" className="text-foreground text-sm font-medium">
+                  {item.label}
+                </Typography>
+                <code className="text-muted-foreground block text-xs">{item.where}</code>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 8. Core vs Optional */}
+      <section className="space-y-6">
+        <div className="max-w-4xl space-y-1">
+          <Typography
+            variant="subtitle1"
+            as="h2"
+            className="text-foreground text-2xl font-semibold tracking-tight"
+          >
+            {tProductGuide("coreVsOptional.title")}
+          </Typography>
+        </div>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <Card className="border-border/70">
+            <CardContent className="space-y-4 p-5">
+              <div className="flex items-center gap-2">
+                <Iconify icon="lucide:shield" className="text-primary size-4" />
+                <Typography variant="subtitle2" as="h3" className="text-foreground font-semibold">
+                  {tProductGuide("coreVsOptional.coreTitle")}
+                </Typography>
+              </div>
+              <Typography variant="caption1" className="text-muted-foreground">
+                {tProductGuide("coreVsOptional.coreDescription")}
+              </Typography>
+              <div className="divide-border/60 divide-y">
+                {GUIDE_CORE_FILES.map((item, index) => (
+                  <div key={index} className="space-y-0.5 py-3 first:pt-0 last:pb-0">
+                    <code className="text-foreground text-xs font-medium">{item.file}</code>
+                    <Typography variant="caption2" className="text-muted-foreground block text-xs">
+                      {item.why}
+                    </Typography>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-border/70">
+            <CardContent className="space-y-4 p-5">
+              <div className="flex items-center gap-2">
+                <Iconify icon="lucide:trash-2" className="text-muted-foreground size-4" />
+                <Typography variant="subtitle2" as="h3" className="text-foreground font-semibold">
+                  {tProductGuide("coreVsOptional.optionalTitle")}
+                </Typography>
+              </div>
+              <Typography variant="caption1" className="text-muted-foreground">
+                {tProductGuide("coreVsOptional.optionalDescription")}
+              </Typography>
+              <div className="divide-border/60 divide-y">
+                {GUIDE_OPTIONAL_FILES.map((item, index) => (
+                  <div key={index} className="space-y-0.5 py-3 first:pt-0 last:pb-0">
+                    <code className="text-foreground text-xs font-medium">{item.file}</code>
+                    <Typography variant="caption2" className="text-muted-foreground block text-xs">
+                      {item.notes}
+                    </Typography>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* 9. Common mistakes */}
+      <section className="space-y-6">
+        <div className="max-w-4xl space-y-2">
+          <Typography
+            variant="subtitle1"
+            as="h2"
+            className="text-foreground text-2xl font-semibold tracking-tight"
+          >
+            {tProductGuide("mistakes.title")}
+          </Typography>
+          <Typography variant="caption1" className="text-muted-foreground">
+            {tProductGuide("mistakes.description")}
+          </Typography>
+        </div>
+        <Card className="border-border/70">
+          <CardContent className="p-0">
+            <div className="divide-border/60 divide-y">
+              {GUIDE_MISTAKES.map((item, index) => (
+                <div key={index} className="grid grid-cols-1 gap-3 p-4 md:grid-cols-2">
+                  <div className="flex items-start gap-2">
+                    <Iconify icon="lucide:x" className="text-destructive mt-0.5 size-4 shrink-0" />
+                    <Typography variant="caption1" className="text-foreground text-sm">
+                      {item.mistake}
+                    </Typography>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <Iconify icon="lucide:check" className="text-primary mt-0.5 size-4 shrink-0" />
+                    <Typography variant="caption1" className="text-muted-foreground text-sm">
+                      {item.fix}
+                    </Typography>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* 10. Built with */}
       <section className="space-y-6">
         <div className="max-w-4xl space-y-2">
           <Typography
@@ -443,6 +668,6 @@ export function DemoGuideTab() {
           ))}
         </div>
       </section>
-    </TabsContent>
+    </div>
   );
 }

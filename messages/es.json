@@ -85,6 +85,10 @@
           "handoff": {
             "title": "Permitir que un desarrollador continúe después de ti",
             "description": "Un desarrollador humano podrá leer el código, mejorarlo y seguir construyendo sin empezar de nuevo."
+          },
+          "aiReady": {
+            "title": "Contexto listo para AI",
+            "description": "CLAUDE.md y .claude/rules/ le dan a tu asistente de AI el contexto completo del proyecto para que siga los patrones correctos sin que tengas que explicarlo cada vez."
           }
         }
       },
@@ -246,6 +250,36 @@
             "description": "Una plataforma de despliegue que funciona especialmente bien con proyectos de Next.js."
           }
         }
+      },
+      "vibeCoder": {
+        "title": "Para el desarrollador vibe",
+        "body": "Este starter está construido para creadores de productos, fundadores y diseñadores que quieren lanzar cosas reales con herramientas de AI como Claude Code o Cursor — sin ralentizarse por configuraciones, código inconsistente o deriva arquitectónica.",
+        "claudeNote": "CLAUDE.md le dice a tu asistente de AI exactamente cómo funciona el proyecto — qué patrones usar, qué archivos crear, dónde poner las cosas — para que no tengas que explicarlo en cada prompt.",
+        "bullet1": "Formularios, llamadas a API, rutas, traducciones y gestión de estado ya siguen patrones consistentes",
+        "bullet2": "Los asistentes de AI saben cómo extender el proyecto correctamente sin que se les diga cada vez",
+        "bullet3": "Cada nueva función que añadas se verá y se comportará como el resto del código"
+      },
+      "ignoreAtFirst": {
+        "title": "Qué puedes ignorar al principio",
+        "description": "Este repositorio tiene muchos archivos. La mayoría son infraestructura que nunca tocas, o funciones opcionales que puedes eliminar.",
+        "doNotRemove": "No elimines: src/app/api/proxy/, src/lib/, src/constants/, src/components/form/, ni messages/en.json — esos son fundamentales."
+      },
+      "addFeature": {
+        "title": "Cómo añadir una nueva función",
+        "note": "La AI sabrá cómo hacerlo por ti, esto es solo una explicación manual.",
+        "description": "El formulario de contacto en src/features/contact/ es el ejemplo canónico. Sigue los mismos pasos para cualquier nueva función.",
+        "stepLabel": "Paso {step}"
+      },
+      "coreVsOptional": {
+        "title": "Core vs Opcional",
+        "coreTitle": "Core — no eliminar",
+        "coreDescription": "Infraestructura fundamental. No elimines estos archivos.",
+        "optionalTitle": "Opcional — seguro de eliminar",
+        "optionalDescription": "Seguro de eliminar o adaptar cuando construyas tu aplicación real."
+      },
+      "mistakes": {
+        "title": "Errores comunes que este starter te ayuda a evitar",
+        "description": "Estos son los errores que suelen cometer las herramientas de AI en bases de código no estructuradas. Las convenciones aquí previenen la mayoría."
       }
     },
     "guide": {

@@ -1,4 +1,3 @@
-export { DemoTabs } from "./demo-tabs";
 export { DemoGuideTab } from "./guide-tab";
 export { DemoDashboardTab } from "./dashboard-tab";
 export { DemoFormsTab } from "./forms-tab";

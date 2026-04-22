@@ -214,6 +214,7 @@ export const PRODUCT_GUIDE_PURPOSE_POINTS: ProductGuideItem[] = [
   { id: "organized", icon: "lucide:folders", color: "text-sky-500" },
   { id: "conventions", icon: "lucide:badge-check", color: "text-teal-500" },
   { id: "handoff", icon: "lucide:users-round", color: "text-violet-500" },
+  { id: "aiReady", icon: "lucide:bot", color: "text-indigo-500" },
 ];
 
 export const PRODUCT_GUIDE_GOOD_FIT: ProductGuideItem[] = [
@@ -297,6 +298,190 @@ export const PRODUCT_GUIDE_RESOURCES: ProductGuideLink[] = [
     color: "",
     href: PNPM_INSTALL_URL,
     command: PNPM_INSTALL_COMMAND,
+  },
+];
+
+export type GuideIgnoreFile = { file: string; reason: string };
+export type GuideFeatureStep = { step: number; label: string; where: string };
+export type GuideCoreFile = { file: string; why: string };
+export type GuideOptionalFile = { file: string; notes: string };
+export type GuideMistake = { mistake: string; fix: string };
+
+export const GUIDE_IGNORE_FILES: GuideIgnoreFile[] = [
+  {
+    file: "src/components/demo/",
+    reason: "Home page showcase only. Delete when you build your real app's home page.",
+  },
+  {
+    file: "src/components/ui/charts/",
+    reason: "Chart components. Remove if your app has no dashboards.",
+  },
+  {
+    file: "src/components/ui/animations/",
+    reason: "Lottie + CSS animations. Remove if unused.",
+  },
+  {
+    file: "MEMORY.md, .claude/rules/",
+    reason: "Claude Code memory system. Ignore if you're not using Claude Code.",
+  },
+  {
+    file: "components.json",
+    reason: "Only relevant when adding new shadcn/ui components via the shadcn CLI.",
+  },
+  {
+    file: "pnpm-workspace.yaml",
+    reason: "pnpm install config. Ignore unless troubleshooting package installs.",
+  },
+  {
+    file: "src/store/auth.store.ts",
+    reason: "Auth placeholder — stores user and token. Replace with your real auth logic when you add login.",
+  },
+  {
+    file: "messages/he.json, es.json, ar.json",
+    reason: "Remove locales your app doesn't need. Only en.json is required.",
+  },
+];
+
+export const GUIDE_FEATURE_STEPS: GuideFeatureStep[] = [
+  {
+    step: 1,
+    label: "Add a web route constant",
+    where: "src/constants/web-routes.constants.ts",
+  },
+  {
+    step: 2,
+    label: "Add an API route constant",
+    where: "src/constants/api-routes.constants.ts",
+  },
+  {
+    step: 3,
+    label: "Add translations",
+    where: "messages/en.json (+ all other locale files)",
+  },
+  {
+    step: 4,
+    label: "Add types",
+    where: "src/features/your-feature/types/",
+  },
+  {
+    step: 5,
+    label: "Write a Zod schema",
+    where: "src/features/your-feature/validation/",
+  },
+  {
+    step: 6,
+    label: "Build the form or UI component",
+    where: "src/features/your-feature/components/",
+  },
+  {
+    step: 7,
+    label: "Add a page",
+    where: "src/app/your-feature/page.tsx",
+  },
+];
+
+export const GUIDE_CORE_FILES: GuideCoreFile[] = [
+  {
+    file: "src/app/api/proxy/",
+    why: "All API calls go through this Next.js proxy route. Remove it and all data fetching breaks.",
+  },
+  {
+    file: "src/constants/",
+    why: "Centralized web and API route strings. Every component imports from here.",
+  },
+  {
+    file: "src/lib/",
+    why: "API client, SWR fetcher, toast helpers, typed CONFIG, cn() — used everywhere.",
+  },
+  {
+    file: "src/components/form/",
+    why: "Shared form field components and formValidator helpers. Used by every form.",
+  },
+  {
+    file: "messages/en.json",
+    why: "Required translation file. The app will not build without it.",
+  },
+  {
+    file: "src/store/loader.store.ts",
+    why: "Wired into the API client interceptors. Required for loading state to work.",
+  },
+  {
+    file: "src/hooks/use-fetch.ts, use-mutation.ts",
+    why: "Project-wide data fetching pattern. All components use these.",
+  },
+];
+
+export const GUIDE_OPTIONAL_FILES: GuideOptionalFile[] = [
+  {
+    file: "src/components/demo/",
+    notes: "Home page showcase only. Delete when you ship your real home page.",
+  },
+  {
+    file: "src/components/ui/charts/",
+    notes: "Recharts wrappers. Remove if you have no dashboards.",
+  },
+  {
+    file: "src/components/ui/animations/",
+    notes: "Lottie + CSS animations. Remove if unused.",
+  },
+  {
+    file: "src/store/auth.store.ts",
+    notes: "Placeholder — stores user and token. Replace with your real auth.",
+  },
+  {
+    file: "messages/he.json, es.json, ar.json",
+    notes: "Keep only the locales your app needs.",
+  },
+  {
+    file: "src/features/contact/",
+    notes: "Example feature. Use it as a template, then delete or adapt it.",
+  },
+];
+
+export const GUIDE_MISTAKES: GuideMistake[] = [
+  {
+    mistake: 'Hardcoding page URLs (href="/contact")',
+    fix: "Add to WEB_ROUTES and import the constant",
+  },
+  {
+    mistake: 'Hardcoding API endpoints ("/users" inline)',
+    fix: "Add to API_ROUTES and import the constant",
+  },
+  {
+    mistake: "Skipping translations (<p>Submit</p>)",
+    fix: "Add the key to messages/en.json and use useTranslations()",
+  },
+  {
+    mistake: "Reading process.env in a component",
+    fix: "Use CONFIG from @/lib/app-config",
+  },
+  {
+    mistake: "Calling fetch or axios directly",
+    fix: "Use useFetch for reads, useMutation for writes",
+  },
+  {
+    mistake: "Using raw <input> in a form",
+    fix: "Use TextInput, FormTextarea, or another shared field component",
+  },
+  {
+    mistake: "Calling toast() or sonner directly",
+    fix: "Use toastSuccess, toastError, etc. from @/lib/toast",
+  },
+  {
+    mistake: "Storing server-fetched data in Zustand",
+    fix: "Let SWR cache it via useFetch",
+  },
+  {
+    mistake: "Creating a Zustand store for local UI state",
+    fix: "Use useState or useBoolean",
+  },
+  {
+    mistake: "Scattering feature files across the codebase",
+    fix: "Group types, validation, and components under src/features/your-feature/",
+  },
+  {
+    mistake: "Calling toastError in a catch block",
+    fix: "The API client fires it automatically — calling it twice shows two toasts",
   },
 ];
 

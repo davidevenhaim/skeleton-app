@@ -118,7 +118,7 @@ export function DemoTypographyTab() {
   }, []);
 
   return (
-    <TabsContent value="typography" className="space-y-6">
+    <div className="space-y-6">
       <Card className="overflow-hidden">
         <CardHeader className="border-border/60 bg-muted/20 space-y-4 border-b pb-6">
           <div className="space-y-2">
@@ -650,7 +650,7 @@ export function DemoTypographyTab() {
           </section>
         </CardContent>
       </Card>
-    </TabsContent>
+    </div>
   );
 }
 

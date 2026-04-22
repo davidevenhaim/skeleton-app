@@ -4,7 +4,6 @@ import enMessages from "../../../messages/en.json";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Iconify from "@/components/ui/iconify";
-import { TabsContent } from "@/components/ui/tabs";
 import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 
@@ -187,7 +186,7 @@ const GETTING_STARTED = [
 
 export function DemoTechnicalGuideTab() {
   return (
-    <TabsContent value="technical-guide" dir="ltr" className="space-y-12">
+    <div dir="ltr" className="space-y-12">
       <div className="from-primary/10 via-background to-primary/5 relative overflow-hidden rounded-xl border bg-gradient-to-br p-8 md:p-12">
         <div className="bg-primary/5 pointer-events-none absolute -top-16 -right-16 size-64 rounded-full blur-3xl" />
         <div className="bg-primary/8 pointer-events-none absolute -bottom-16 -left-8 size-48 rounded-full blur-2xl" />
@@ -402,6 +401,6 @@ export function DemoTechnicalGuideTab() {
           </Card>
         </div>
       </section>
-    </TabsContent>
+    </div>
   );
 }

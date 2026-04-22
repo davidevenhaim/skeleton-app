@@ -23,7 +23,6 @@ import { formValidator } from "@/components/form/utils/form-validator";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Iconify from "@/components/ui/iconify";
-import { TabsContent } from "@/components/ui/tabs";
 import { Typography } from "@/components/ui/typography";
 import { toastSuccess } from "@/lib/toast";
 import { inputFormatter } from "@/utils/formatters";
@@ -153,7 +152,7 @@ export function DemoFormsTab() {
   };
 
   return (
-    <TabsContent value="forms" className="space-y-6">
+    <div className="space-y-6">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Form form={formattedForm} onSubmit={onSubmitFormatted} className="contents">
           <Card className="lg:col-span-2">
@@ -385,6 +384,6 @@ export function DemoFormsTab() {
           </Card>
         </Form>
       </div>
-    </TabsContent>
+    </div>
   );
 }

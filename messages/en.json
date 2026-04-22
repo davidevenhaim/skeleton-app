@@ -85,6 +85,10 @@
           "handoff": {
             "title": "Let a developer continue after you",
             "description": "A human developer can read the code, improve it, and keep building without starting over."
+          },
+          "aiReady": {
+            "title": "AI-ready context",
+            "description": "CLAUDE.md and .claude/rules/ give your AI assistant complete project context so it follows the right patterns without being told each time."
           }
         }
       },
@@ -250,6 +254,36 @@
             "description": "A deployment platform that works especially well with Next.js projects."
           }
         }
+      },
+      "vibeCoder": {
+        "title": "For the vibe coder",
+        "body": "This starter is built for product builders, founders, and designers who want to ship real products with AI tools like Claude Code or Cursor — without getting slowed down by setup choices, inconsistent code, or architectural drift.",
+        "claudeNote": "CLAUDE.md tells your AI assistant exactly how the project works — which patterns to use, which files to create, where to put things — so you don't have to explain it on every prompt.",
+        "bullet1": "Forms, API calls, routing, translations, and state management already follow consistent patterns",
+        "bullet2": "AI assistants know how to extend the project correctly without being told each time",
+        "bullet3": "Every new feature you add will look and behave like the rest of the codebase"
+      },
+      "ignoreAtFirst": {
+        "title": "What you can safely ignore at first",
+        "description": "This repo has many files. Most are infrastructure you never touch, or optional features you can delete.",
+        "doNotRemove": "Do not remove: src/app/api/proxy/, src/lib/, src/constants/, src/components/form/, or messages/en.json — those are load-bearing."
+      },
+      "addFeature": {
+        "title": "How to add a new feature",
+        "note": "The AI will know how to do it for you, this is just a manual explaination.",
+        "description": "The contact form at src/features/contact/ is the canonical example. Follow the same steps for any new feature.",
+        "stepLabel": "Step {step}"
+      },
+      "coreVsOptional": {
+        "title": "Core vs Optional",
+        "coreTitle": "Core — do not delete",
+        "coreDescription": "Load-bearing infrastructure. Do not remove these files.",
+        "optionalTitle": "Optional — safe to remove",
+        "optionalDescription": "Safe to delete or adapt when building your real app."
+      },
+      "mistakes": {
+        "title": "Common mistakes this starter helps you avoid",
+        "description": "These are the mistakes AI tools tend to make in unstructured codebases. The conventions here prevent most of them."
       }
     },
     "guide": {

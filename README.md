@@ -15,7 +15,7 @@ A **production-ready Next.js 16 starter kit and GitHub template.** Every common 
 
 ## For the vibe coder
 
-This starter is built for product builders, founders, and designers who want to ship real things with AI tools like Claude Code or Cursor — without getting slowed down by setup choices, inconsistent code, or architectural drift.
+This starter is built for product builders, founders, and designers who want to ship real products with AI tools like Claude Code or Cursor — without getting slowed down by setup choices, inconsistent code, or architectural drift.
 
 You do not need to understand every file before you start. Most of the infrastructure is already in place. `CLAUDE.md` tells your AI assistant exactly how the project works — which patterns to use, which files to create, where to put things — so you don't have to explain it on every prompt.
 
@@ -58,7 +58,9 @@ This repo has many files. Most are either infrastructure you never touch or opti
 
 ### Local
 
-Run `pnpm dev` and open [http://localhost:3000](http://localhost:3000). The home page is a full interactive showcase with a **Guide tab** covering every component, hook, and rule in the project.
+Run `pnpm dev` and open [http://localhost:3000](http://localhost:3000) — it redirects to `/demo/guide`.
+
+The demo section uses route-per-tab navigation (`/demo/guide`, `/demo/forms`, `/demo/dashboard`, etc.) with a shared layout at `src/app/demo/layout.tsx`. Each tab is its own Next.js page. Active tab state comes from the pathname — no duplicated local state. Tab config lives in `src/constants/demo-tabs.constants.ts`.
 
 ---
 
@@ -262,6 +264,7 @@ skeleton-app/
 
 ## How to add a new feature
 
+The AI will know how to do it for you, this is just a manual explaination.
 The contact form at `src/features/contact/` is the canonical example. Follow the same steps for any new feature.
 
 **1. Add a web route constant** (`src/constants/web-routes.constants.ts`)
