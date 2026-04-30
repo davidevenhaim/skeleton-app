@@ -438,6 +438,15 @@ export const GUIDE_OPTIONAL_FILES: GuideOptionalFile[] = [
   },
 ];
 
+export type GuideTroubleshootingItem = { id: string; command?: string };
+
+export const GUIDE_TROUBLESHOOTING: GuideTroubleshootingItem[] = [
+  { id: "pnpmNotFound" },
+  { id: "portInUse", command: "pnpm dev -- --port 3001" },
+  { id: "moduleNotFound" },
+  { id: "envError" },
+];
+
 export const GUIDE_MISTAKES: GuideMistake[] = [
   {
     mistake: 'Hardcoding page URLs (href="/contact")',

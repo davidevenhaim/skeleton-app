@@ -1,8 +1,21 @@
 "use client";
 
 import enMessages from "../../../messages/en.json";
+import { useTranslations } from "next-intl";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  GUIDE_CORE_FILES,
+  GUIDE_FEATURE_STEPS,
+  GUIDE_MISTAKES,
+  GUIDE_OPTIONAL_FILES,
+} from "@/components/demo/data";
 import Iconify from "@/components/ui/iconify";
 import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
@@ -185,6 +198,8 @@ const GETTING_STARTED = [
 ];
 
 export function DemoTechnicalGuideTab() {
+  const tProductGuide = useTranslations("demo.productGuide");
+
   return (
     <div dir="ltr" className="space-y-12">
       <div className="from-primary/10 via-background to-primary/5 relative overflow-hidden rounded-xl border bg-gradient-to-br p-8 md:p-12">
@@ -400,6 +415,182 @@ export function DemoTechnicalGuideTab() {
             </CardContent>
           </Card>
         </div>
+      </section>
+
+      <section>
+        <Accordion type="single" collapsible>
+          <AccordionItem
+            value="dev-reference"
+            className="border-border/70 bg-muted/45 dark:bg-muted/20 hover:border-primary/25 rounded-2xl border px-4 transition-colors"
+          >
+            <AccordionTrigger className="cursor-pointer -mx-2 rounded-xl px-2 py-5 no-underline hover:bg-accent/55 dark:hover:bg-accent/20 hover:no-underline">
+              <div className="flex items-center gap-2">
+                <Iconify icon="lucide:code-2" className="text-muted-foreground size-4" />
+                <Typography variant="subtitle1" as="span" className="text-foreground font-semibold">
+                  {tProductGuide("devReference")}
+                </Typography>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="space-y-10 pb-6 pt-2">
+              <section className="space-y-6">
+                <div className="max-w-5xl space-y-0">
+                  <Typography
+                    variant="subtitle1"
+                    as="h2"
+                    className="text-foreground text-2xl font-semibold tracking-tight"
+                  >
+                    {tProductGuide("addFeature.title")}
+                    <Typography variant="caption1" className="text-muted-foreground">
+                      {tProductGuide("addFeature.note")}
+                    </Typography>
+                  </Typography>
+                  <Typography variant="caption1" className="text-muted-foreground font-medium">
+                    {tProductGuide("addFeature.description")}
+                  </Typography>
+                </div>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {GUIDE_FEATURE_STEPS.map((item) => (
+                    <div
+                      key={item.step}
+                      className="border-border/60 bg-background flex items-start gap-3 rounded-xl border p-4"
+                    >
+                      <div className="bg-primary/10 text-primary flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-bold">
+                        {item.step}
+                      </div>
+                      <div className="space-y-1">
+                        <Typography variant="label1" className="text-foreground text-sm font-medium">
+                          {item.label}
+                        </Typography>
+                        <code className="text-muted-foreground block text-xs">{item.where}</code>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section className="space-y-6">
+                <div className="max-w-4xl space-y-1">
+                  <Typography
+                    variant="subtitle1"
+                    as="h2"
+                    className="text-foreground text-2xl font-semibold tracking-tight"
+                  >
+                    {tProductGuide("coreVsOptional.title")}
+                  </Typography>
+                </div>
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                  <Card className="border-border/70">
+                    <CardContent className="space-y-4 p-5">
+                      <div className="flex items-center gap-2">
+                        <Iconify icon="lucide:shield" className="text-primary size-4" />
+                        <Typography
+                          variant="subtitle2"
+                          as="h3"
+                          className="text-foreground font-semibold"
+                        >
+                          {tProductGuide("coreVsOptional.coreTitle")}
+                        </Typography>
+                      </div>
+                      <Typography variant="caption1" className="text-muted-foreground">
+                        {tProductGuide("coreVsOptional.coreDescription")}
+                      </Typography>
+                      <div className="divide-border/60 divide-y">
+                        {GUIDE_CORE_FILES.map((item, index) => (
+                          <div key={index} className="space-y-0.5 py-3 first:pt-0 last:pb-0">
+                            <code className="text-foreground text-xs font-medium">{item.file}</code>
+                            <Typography
+                              variant="caption2"
+                              className="text-muted-foreground block text-xs"
+                            >
+                              {item.why}
+                            </Typography>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="border-border/70">
+                    <CardContent className="space-y-4 p-5">
+                      <div className="flex items-center gap-2">
+                        <Iconify icon="lucide:trash-2" className="text-muted-foreground size-4" />
+                        <Typography
+                          variant="subtitle2"
+                          as="h3"
+                          className="text-foreground font-semibold"
+                        >
+                          {tProductGuide("coreVsOptional.optionalTitle")}
+                        </Typography>
+                      </div>
+                      <Typography variant="caption1" className="text-muted-foreground">
+                        {tProductGuide("coreVsOptional.optionalDescription")}
+                      </Typography>
+                      <div className="divide-border/60 divide-y">
+                        {GUIDE_OPTIONAL_FILES.map((item, index) => (
+                          <div key={index} className="space-y-0.5 py-3 first:pt-0 last:pb-0">
+                            <code className="text-foreground text-xs font-medium">{item.file}</code>
+                            <Typography
+                              variant="caption2"
+                              className="text-muted-foreground block text-xs"
+                            >
+                              {item.notes}
+                            </Typography>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </section>
+
+              <section className="space-y-6">
+                <div className="max-w-4xl space-y-2">
+                  <Typography
+                    variant="subtitle1"
+                    as="h2"
+                    className="text-foreground text-2xl font-semibold tracking-tight"
+                  >
+                    {tProductGuide("mistakes.title")}
+                  </Typography>
+                  <Typography variant="caption1" className="text-muted-foreground">
+                    {tProductGuide("mistakes.description")}
+                  </Typography>
+                </div>
+                <Card className="border-border/70">
+                  <CardContent className="p-0">
+                    <div className="divide-border/60 divide-y">
+                      {GUIDE_MISTAKES.map((item, index) => (
+                        <div key={index} className="grid grid-cols-1 gap-3 p-4 md:grid-cols-2">
+                          <div className="flex items-start gap-2">
+                            <Iconify
+                              icon="lucide:x"
+                              className="text-destructive mt-0.5 size-4 shrink-0"
+                            />
+                            <Typography variant="caption1" className="text-foreground text-sm">
+                              {item.mistake}
+                            </Typography>
+                          </div>
+                          <div className="flex items-start gap-2">
+                            <Iconify
+                              icon="lucide:check"
+                              className="text-primary mt-0.5 size-4 shrink-0"
+                            />
+                            <Typography
+                              variant="caption1"
+                              className="text-muted-foreground text-sm"
+                            >
+                              {item.fix}
+                            </Typography>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </section>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </section>
     </div>
   );

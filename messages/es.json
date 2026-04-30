@@ -137,9 +137,42 @@
         }
       },
       "howToUse": {
-        "title": "Cómo usarlo",
-        "description": "No necesitas entender cada detalle técnico para empezar. Puedes avanzar paso a paso y dejar que la AI construya dentro de la estructura que ya existe.",
+        "title": "Cómo ejecutarlo en tu computadora",
+        "description": "Sigue estos 4 pasos en orden. No necesitas entenderlo todo — solo copia y pega los comandos que se muestran.",
         "stepLabel": "Paso {step}",
+        "terminalCallout": {
+          "title": "Necesitarás una ventana de Terminal para los comandos",
+          "body": "Una Terminal (también llamada Línea de comandos) te permite dar instrucciones directamente a tu computadora. No te preocupes — solo tienes que copiar y pegar lo que se muestra.",
+          "mac": "En Mac: presiona Cmd + Space, escribe \"Terminal\", presiona Enter",
+          "windows": "En Windows: presiona la tecla Windows, escribe \"cmd\" o \"PowerShell\", presiona Enter"
+        },
+        "success": {
+          "title": "¡Funcionó! Tu app está corriendo.",
+          "body": "Si se abrió una página en http://localhost:3000 — ¡listo! Tu app ya está corriendo en tu propia computadora. Puedes empezar a explorar o construir de inmediato.",
+          "openLink": "Abrir http://localhost:3000"
+        },
+        "troubleshooting": {
+          "title": "¿Algo no funcionó?",
+          "description": "Aquí están los problemas más comunes y exactamente cómo solucionarlos.",
+          "items": {
+            "pnpmNotFound": {
+              "problem": "\"command not found: pnpm\" o \"pnpm no se reconoce\"",
+              "fix": "Node.js todavía no está instalado. Vuelve al Paso 1 e instálalo. Después de instalarlo, cierra tu terminal completamente, vuelve a abrirla e intenta de nuevo."
+            },
+            "portInUse": {
+              "problem": "\"Port 3000 is already in use\" o \"EADDRINUSE\"",
+              "fix": "Otra app está usando ese espacio. Cierra otros programas en ejecución y vuelve a intentar pnpm dev. O usa un puerto diferente con este comando:"
+            },
+            "moduleNotFound": {
+              "problem": "\"Cannot find module\" o errores durante la instalación",
+              "fix": "Ejecuta pnpm install de nuevo (Paso 3), luego vuelve a intentar pnpm dev. Si sigue fallando, elimina la carpeta node_modules y ejecuta pnpm install una vez más."
+            },
+            "envError": {
+              "problem": "La app se abre pero muestra un error de configuración",
+              "fix": "Abre el archivo .env.local en tu editor. La línea NEXT_PUBLIC_SERVER_URL puede estar vacía para pruebas locales — guarda el archivo, detén el servidor con Ctrl+C y ejecuta pnpm dev de nuevo."
+            }
+          }
+        },
         "steps": {
           "installTools": {
             "title": "Instala Git, Node.js, pnpm y un IDE",
@@ -151,13 +184,13 @@
           },
           "openProject": {
             "title": "Abre el proyecto en tu editor e instala las dependencias",
-            "description": "Abre la carpeta del proyecto en tu editor y luego ejecuta el comando de instalación para dejar todo listo localmente.",
-            "commandNote": "Importante: ejecuta este comando solo cuando la terminal ya esté abierta dentro de la carpeta del proyecto (`cd` a la carpeta del proyecto primero)."
+            "description": "Abre la carpeta del proyecto en tu editor y luego ejecuta el comando de instalación para dejar todo listo.",
+            "commandNote": "Consejo: VS Code y Cursor tienen una terminal integrada. Ábrela desde el menú: View → Terminal. Estará automáticamente dentro de tu carpeta de proyecto."
           },
           "startProject": {
-            "title": "Copia el archivo de entorno e inicia la app",
-            "description": "Crea tu archivo de entorno local, ejecuta el servidor de desarrollo y normalmente el sitio se abrirá en localhost:3000.",
-            "commandNote": "Importante: ejecuta estos comandos solo cuando la terminal ya esté abierta dentro de la carpeta del proyecto (`cd` a la carpeta del proyecto primero).",
+            "title": "Copia el archivo de configuración e inicia la app",
+            "description": "Crea tu archivo de configuración local, inicia el servidor y la app se abrirá en tu navegador en localhost:3000.",
+            "commandNote": "El primer comando copia tu archivo de configuración (.env.local). No necesitas cambiar nada dentro de él para pruebas locales — solo cópialo y continúa.",
             "note": "Después de <code>pnpm dev</code>, una vez que el proyecto esté corriendo, puedes abrirlo en el navegador de tu computadora en <link>http://localhost:3000</link>."
           }
         }
@@ -280,7 +313,8 @@
       "mistakes": {
         "title": "Errores comunes que este starter te ayuda a evitar",
         "description": "Estos son los errores que suelen cometer las herramientas de AI en bases de código no estructuradas. Las convenciones aquí previenen la mayoría."
-      }
+      },
+      "devReference": "Referencia para desarrolladores (omite si no eres programador)"
     },
     "guide": {
       "heroDescription": "Una base lista para usar para crear sitios web y aplicaciones de forma ordenada, clara y escalable. Es especialmente útil para trabajar con herramientas de AI, para que incluso usuarios no técnicos puedan construir más rápido sin terminar con código desordenado que luego sea difícil de mantener.",

@@ -137,9 +137,42 @@
         }
       },
       "howToUse": {
-        "title": "How to use it",
-        "description": "You do not need to understand every technical detail to get started. You can move step by step and let AI build inside the structure that already exists.",
+        "title": "How to get it running on your computer",
+        "description": "Follow these 4 steps in order. You don't need to understand everything — just copy and paste the commands shown.",
         "stepLabel": "Step {step}",
+        "terminalCallout": {
+          "title": "You'll need a Terminal window for the commands below",
+          "body": "A Terminal (also called Command Line or Command Prompt) lets you type instructions directly to your computer. Don't worry — you only need to copy and paste what's shown.",
+          "mac": "On Mac: press Cmd + Space, type \"Terminal\", press Enter",
+          "windows": "On Windows: press the Windows key, type \"cmd\" or \"PowerShell\", press Enter"
+        },
+        "success": {
+          "title": "It worked! Your app is running.",
+          "body": "If a webpage appeared at http://localhost:3000 — you're done! Your app is now running on your own computer. You can start exploring or building right away.",
+          "openLink": "Open http://localhost:3000"
+        },
+        "troubleshooting": {
+          "title": "Something didn't work?",
+          "description": "Here are the most common problems people run into, and exactly how to fix each one.",
+          "items": {
+            "pnpmNotFound": {
+              "problem": "\"command not found: pnpm\" or \"pnpm is not recognized\"",
+              "fix": "Node.js is not installed yet. Go back to Step 1 and install it. After installing, close your terminal completely, reopen it, and try the command again."
+            },
+            "portInUse": {
+              "problem": "\"Port 3000 is already in use\" or \"EADDRINUSE\"",
+              "fix": "Another app is using that slot. Close other running programs, then try pnpm dev again. Or use a different port with this command:"
+            },
+            "moduleNotFound": {
+              "problem": "\"Cannot find module\" or errors during install",
+              "fix": "Run pnpm install again (Step 3), then try pnpm dev again. If it still fails, delete the node_modules folder and run pnpm install one more time."
+            },
+            "envError": {
+              "problem": "App opens but shows a settings or config error",
+              "fix": "Open the .env.local file in your editor. The NEXT_PUBLIC_SERVER_URL line can be left blank for local testing — save the file, stop the server with Ctrl+C, and run pnpm dev again."
+            }
+          }
+        },
         "steps": {
           "installTools": {
             "title": "Install Git, Node.js, pnpm, and an IDE",
@@ -150,15 +183,15 @@
             "description": "Open the GitHub repository, then choose the `Use this template` option so you start with a fresh project with all the necessary files."
           },
           "openProject": {
-            "title": "Open the project in your IDE and install dependencies",
-            "description": "Open the project folder in your editor, then run the install command so everything is ready locally.",
-            "commandNote": "Important: run this command only after the terminal is opened inside the project folder (`cd` into the project folder first)."
+            "title": "Open the project in your editor and install dependencies",
+            "description": "Open the project folder in your editor, then run the install command so everything is ready on your computer.",
+            "commandNote": "Tip: VS Code and Cursor have a built-in terminal. Open it from the menu: View → Terminal. It will automatically be inside your project folder."
           },
           "startProject": {
-            "title": "Copy the environment file and start the app",
-            "description": "Create your local environment file, run the development server, and the website will normally open on localhost:3000.",
-            "commandNote": "Important: run these commands only after the terminal is opened inside the project folder (`cd` into it first).",
-            "note": "After <code>pnpm dev</code>, once the project is running, you can open it in your computer's browser at <link>http://localhost:3000</link>."
+            "title": "Copy the settings file and start the app",
+            "description": "Create your local settings file, start the app, and it will open in your browser at localhost:3000.",
+            "commandNote": "The first command copies your settings file (.env.local). You don't need to change anything inside it for local testing — just copy it and continue.",
+            "note": "After <code>pnpm dev</code>, once the project is running, you can open it in your browser at <link>http://localhost:3000</link>."
           }
         }
       },
@@ -284,7 +317,8 @@
       "mistakes": {
         "title": "Common mistakes this starter helps you avoid",
         "description": "These are the mistakes AI tools tend to make in unstructured codebases. The conventions here prevent most of them."
-      }
+      },
+      "devReference": "Developer reference (skip if you're not a programmer)"
     },
     "guide": {
       "heroDescription": "A ready-to-use foundation for building websites and apps in a clean, organized, and scalable way. Especially useful for working with AI tools, so even non-technical users can build faster without ending up with messy code that developers struggle to maintain later.",
