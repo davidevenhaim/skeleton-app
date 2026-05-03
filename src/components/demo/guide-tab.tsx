@@ -18,6 +18,7 @@ import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { cn } from "@/lib/utils";
 import {
   GUIDE_IGNORE_FILES,
+  GUIDE_PREREQUISITES,
   GUIDE_TROUBLESHOOTING,
   PRODUCT_GUIDE_CREDITS,
   PRODUCT_GUIDE_GOOD_FIT,
@@ -170,7 +171,7 @@ export function DemoGuideTab() {
         </div>
 
         {/* Terminal callout */}
-        <div className="border-sky-200 bg-sky-50 dark:border-sky-900 dark:bg-sky-950/30 flex items-start gap-3 rounded-xl border p-4">
+        <div className="flex items-start gap-3 rounded-xl border border-sky-200 bg-sky-50 p-4 dark:border-sky-900 dark:bg-sky-950/30">
           <Iconify icon="lucide:terminal" className="mt-0.5 size-5 shrink-0 text-sky-500" />
           <div className="space-y-2">
             <Typography variant="label1" className="text-foreground text-sm font-semibold">
@@ -180,12 +181,183 @@ export function DemoGuideTab() {
               {tProductGuide("howToUse.terminalCallout.body")}
             </Typography>
             <div className="space-y-0.5 pt-0.5">
-              <Typography variant="caption2" className="text-muted-foreground text-xs block">
+              <Typography variant="caption2" className="text-muted-foreground block text-xs">
                 {tProductGuide("howToUse.terminalCallout.mac")}
               </Typography>
-              <Typography variant="caption2" className="text-muted-foreground text-xs block">
+              <Typography variant="caption2" className="text-muted-foreground block text-xs">
                 {tProductGuide("howToUse.terminalCallout.windows")}
               </Typography>
+            </div>
+          </div>
+        </div>
+
+        {/* Prerequisites */}
+        <div className="space-y-4">
+          <div className="space-y-1">
+            <Typography variant="subtitle2" as="h3" className="text-foreground font-semibold">
+              {tProductGuide("howToUse.prerequisites.title")}
+            </Typography>
+            <Typography variant="caption1" className="text-muted-foreground">
+              {tProductGuide("howToUse.prerequisites.description")}
+            </Typography>
+          </div>
+
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            {GUIDE_PREREQUISITES.map((prereq) => {
+              const resource = resourcesById.get(prereq.resourceId);
+              return (
+                <Card key={prereq.id} className="border-border/70">
+                  <CardContent className="flex flex-col gap-3 p-4">
+                    <div className="flex items-center gap-2">
+                      <Iconify icon={prereq.icon} className="size-5 shrink-0" />
+                      <Typography variant="subtitle2" className="text-foreground font-semibold">
+                        {tProductGuide(`howToUse.prerequisites.items.${prereq.id}.name`)}
+                      </Typography>
+                    </div>
+                    <Typography variant="caption2" className="text-muted-foreground text-xs">
+                      {tProductGuide(`howToUse.prerequisites.items.${prereq.id}.description`)}
+                    </Typography>
+
+                    <div className="space-y-1.5">
+                      <Typography
+                        variant="caption2"
+                        className="text-muted-foreground block text-xs font-medium tracking-wide uppercase"
+                      >
+                        {tProductGuide("howToUse.prerequisites.checkLabel")}
+                      </Typography>
+                      {renderCommandBlocks(`prereq-${prereq.id}`, [prereq.checkCommand])}
+                    </div>
+
+                    <div className="flex items-center gap-1.5">
+                      <Typography
+                        variant="caption2"
+                        className="text-muted-foreground shrink-0 text-xs"
+                      >
+                        {tProductGuide("howToUse.prerequisites.expectedLabel")}
+                      </Typography>
+                      <code className="bg-muted text-foreground rounded px-1.5 py-0.5 text-xs">
+                        {prereq.expectedOutput}
+                      </code>
+                    </div>
+
+                    {resource && (
+                      <Link
+                        href={resource.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="border-border/60 bg-muted/30 hover:border-primary/30 hover:bg-accent/40 mt-auto block rounded-xl border p-3 transition-all duration-200 hover:-translate-y-0.5"
+                      >
+                        <div className="flex items-center justify-between gap-3">
+                          <Typography variant="caption2" className="text-muted-foreground text-xs">
+                            {tProductGuide("howToUse.prerequisites.installLabel")}
+                          </Typography>
+                          <Typography
+                            variant="label2"
+                            as="span"
+                            className="text-primary inline-flex shrink-0 items-center gap-1 text-xs font-medium"
+                          >
+                            {tProductGuide(`resources.items.${prereq.resourceId}.title`)}
+                            <Iconify icon="lucide:arrow-up-right" className="size-3" />
+                          </Typography>
+                        </div>
+                      </Link>
+                    )}
+
+                    {prereq.installCommand && (
+                      <div className="space-y-1.5">
+                        <Typography
+                          variant="caption2"
+                          className="text-muted-foreground block text-xs font-medium tracking-wide uppercase"
+                        >
+                          {tProductGuide("howToUse.prerequisites.installCommandLabel")}
+                        </Typography>
+                        {renderCommandBlocks(`prereq-install-${prereq.id}`, [
+                          prereq.installCommand,
+                        ])}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+
+          {/* Editor choice */}
+          <div className="border-border/70 rounded-xl border p-4">
+            <div className="mb-3 space-y-0.5">
+              <Typography variant="subtitle2" className="text-foreground text-sm font-semibold">
+                {tProductGuide("howToUse.prerequisites.editorTitle")}
+              </Typography>
+              <Typography variant="caption2" className="text-muted-foreground text-xs">
+                {tProductGuide("howToUse.prerequisites.editorDescription")}
+              </Typography>
+            </div>
+            <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3">
+              {[resourcesById.get("vscode")].map(
+                (resource) =>
+                  resource && (
+                    <Link
+                      key={resource.id}
+                      href={resource.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="border-border/60 bg-muted/30 hover:border-primary/30 hover:bg-accent/40 block rounded-xl border p-3 transition-all duration-200 hover:-translate-y-0.5"
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex min-w-0 items-center gap-2">
+                          <Iconify
+                            icon={resource.icon}
+                            className="text-muted-foreground size-4 shrink-0"
+                          />
+                          <Typography
+                            variant="label1"
+                            as="h4"
+                            className="text-foreground truncate text-sm font-medium"
+                          >
+                            {tProductGuide(`resources.items.${resource.id}.title`)}
+                          </Typography>
+                        </div>
+                        <Iconify
+                          icon="lucide:arrow-up-right"
+                          className="text-primary size-3.5 shrink-0"
+                        />
+                      </div>
+                    </Link>
+                  )
+              )}
+              <p className="text-muted-foreground text-center text-xs font-medium">— or —</p>
+              {[resourcesById.get("cursor")].map(
+                (resource) =>
+                  resource && (
+                    <Link
+                      key={resource.id}
+                      href={resource.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="border-border/60 bg-muted/30 hover:border-primary/30 hover:bg-accent/40 block rounded-xl border p-3 transition-all duration-200 hover:-translate-y-0.5"
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex min-w-0 items-center gap-2">
+                          <Iconify
+                            icon={resource.icon}
+                            className="text-muted-foreground size-4 shrink-0"
+                          />
+                          <Typography
+                            variant="label1"
+                            as="h4"
+                            className="text-foreground truncate text-sm font-medium"
+                          >
+                            {tProductGuide(`resources.items.${resource.id}.title`)}
+                          </Typography>
+                        </div>
+                        <Iconify
+                          icon="lucide:arrow-up-right"
+                          className="text-primary size-3.5 shrink-0"
+                        />
+                      </div>
+                    </Link>
+                  )
+              )}
             </div>
           </div>
         </div>
@@ -223,7 +395,7 @@ export function DemoGuideTab() {
                     value={`${step.id}-details`}
                     className="border-border/60 bg-muted/45 dark:bg-muted/25 hover:border-border rounded-xl border px-2 transition-colors"
                   >
-                    <AccordionTrigger className="cursor-pointer rounded-lg px-2 py-3 text-sm no-underline hover:bg-accent/60 dark:hover:bg-accent/25 hover:no-underline">
+                    <AccordionTrigger className="hover:bg-accent/60 dark:hover:bg-accent/25 cursor-pointer rounded-lg px-2 py-3 text-sm no-underline hover:no-underline">
                       {tProductGuide("actions.howToAccordion")}
                     </AccordionTrigger>
                     <AccordionContent className="space-y-3 pt-1">
@@ -236,31 +408,28 @@ export function DemoGuideTab() {
                         </Typography>
                       )}
 
-                      {step.id === "installTools" ? (
+                      {step.id === "cloneProject" && (
+                        <Typography
+                          variant="caption2"
+                          className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-800 dark:border-amber-900 dark:bg-amber-950/30 dark:text-amber-200"
+                        >
+                          {tProductGuide("howToUse.steps.cloneProject.githubNote")}
+                        </Typography>
+                      )}
+
+                      {step.id === "cloneProject" && (
+                        <Typography
+                          variant="caption2"
+                          className="border-primary/15 bg-primary/5 text-foreground rounded-xl border px-3 py-2 text-sm font-semibold"
+                        >
+                          {tProductGuide("howToUse.steps.cloneProject.commandNote")}
+                        </Typography>
+                      )}
+
+                      {step.resourceIds && step.resourceIds.length > 0 && (
                         <div className="space-y-2">
-                          {renderResourceLinks(step.id, ["git", "node"])}
-                          <div className="space-y-2 pt-1">
-                            <div className="relative flex items-center gap-2">
-                              <div className="border-border/40 flex-1 border-t" />
-                              <span className="text-muted-foreground bg-background shrink-0 text-xs">
-                                choose one editor
-                              </span>
-                              <div className="border-border/40 flex-1 border-t" />
-                            </div>
-                            {renderResourceLinks(step.id, ["vscode"])}
-                            <p className="text-muted-foreground py-0.5 text-center text-xs">
-                              — or —
-                            </p>
-                            {renderResourceLinks(step.id, ["cursor"])}
-                          </div>
+                          {renderResourceLinks(step.id, step.resourceIds)}
                         </div>
-                      ) : (
-                        step.resourceIds &&
-                        step.resourceIds.length > 0 && (
-                          <div className="space-y-2">
-                            {renderResourceLinks(step.id, step.resourceIds)}
-                          </div>
-                        )
                       )}
 
                       {renderCommandBlocks(step.id, step.commands)}
@@ -298,11 +467,8 @@ export function DemoGuideTab() {
         </div>
 
         {/* Success card */}
-        <div className="border-emerald-200 bg-emerald-50 dark:border-emerald-900 dark:bg-emerald-950/30 flex items-start gap-3 rounded-xl border p-4">
-          <Iconify
-            icon="lucide:circle-check"
-            className="mt-0.5 size-5 shrink-0 text-emerald-500"
-          />
+        <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-900 dark:bg-emerald-950/30">
+          <Iconify icon="lucide:circle-check" className="mt-0.5 size-5 shrink-0 text-emerald-500" />
           <div className="flex-1 space-y-2">
             <Typography variant="label1" className="text-foreground text-sm font-semibold">
               {tProductGuide("howToUse.success.title")}
@@ -330,7 +496,7 @@ export function DemoGuideTab() {
             value="troubleshooting"
             className="border-border/70 bg-muted/45 dark:bg-muted/20 hover:border-primary/25 rounded-2xl border px-4 transition-colors"
           >
-            <AccordionTrigger className="cursor-pointer -mx-2 rounded-xl px-2 py-5 no-underline hover:bg-accent/55 dark:hover:bg-accent/20 hover:no-underline">
+            <AccordionTrigger className="hover:bg-accent/55 dark:hover:bg-accent/20 -mx-2 cursor-pointer rounded-xl px-2 py-5 no-underline hover:no-underline">
               <div className="flex items-center gap-2">
                 <Iconify
                   icon="lucide:triangle-alert"
@@ -341,7 +507,7 @@ export function DemoGuideTab() {
                 </Typography>
               </div>
             </AccordionTrigger>
-            <AccordionContent className="space-y-4 pb-6 pt-2">
+            <AccordionContent className="space-y-4 pt-2 pb-6">
               <Typography variant="caption1" className="text-muted-foreground max-w-4xl">
                 {tProductGuide("howToUse.troubleshooting.description")}
               </Typography>
@@ -368,12 +534,17 @@ export function DemoGuideTab() {
                               icon="lucide:circle-check"
                               className="text-primary mt-0.5 size-4 shrink-0"
                             />
-                            <Typography variant="caption1" className="text-muted-foreground text-sm">
+                            <Typography
+                              variant="caption1"
+                              className="text-muted-foreground text-sm"
+                            >
                               {tProductGuide(`howToUse.troubleshooting.items.${item.id}.fix`)}
                             </Typography>
                           </div>
                           {item.command && (
-                            <div>{renderCommandBlocks(`troubleshoot-${item.id}`, [item.command])}</div>
+                            <div>
+                              {renderCommandBlocks(`troubleshoot-${item.id}`, [item.command])}
+                            </div>
                           )}
                         </div>
                       </div>
@@ -568,7 +739,7 @@ export function DemoGuideTab() {
             value="ignore-at-first"
             className="border-border/70 bg-muted/45 dark:bg-muted/20 hover:border-primary/25 rounded-2xl border px-4 transition-colors"
           >
-            <AccordionTrigger className="cursor-pointer -mx-2 rounded-xl px-2 py-5 no-underline hover:bg-accent/55 dark:hover:bg-accent/20 hover:no-underline">
+            <AccordionTrigger className="hover:bg-accent/55 dark:hover:bg-accent/20 -mx-2 cursor-pointer rounded-xl px-2 py-5 no-underline hover:no-underline">
               <div className="flex items-center gap-2">
                 <Iconify icon="lucide:folder-open" className="text-muted-foreground size-4" />
                 <Typography variant="subtitle1" as="span" className="text-foreground font-semibold">
@@ -576,7 +747,7 @@ export function DemoGuideTab() {
                 </Typography>
               </div>
             </AccordionTrigger>
-            <AccordionContent className="space-y-4 pb-6 pt-2">
+            <AccordionContent className="space-y-4 pt-2 pb-6">
               <Typography variant="caption1" className="text-muted-foreground max-w-4xl">
                 {tProductGuide("ignoreAtFirst.description")}
               </Typography>

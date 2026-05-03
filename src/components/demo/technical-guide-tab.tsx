@@ -173,30 +173,6 @@ const TECH_STACK = [
   { layer: GUIDE.quickReference.layers.icons, tech: "Iconify" },
 ];
 
-const GETTING_STARTED = [
-  {
-    step: "1",
-    icon: "lucide:git-fork",
-    title: GUIDE.gettingStarted.steps.template.title,
-    description: GUIDE.gettingStarted.steps.template.description,
-    code: "git clone …/skeleton-app my-app",
-  },
-  {
-    step: "2",
-    icon: "lucide:package",
-    title: GUIDE.gettingStarted.steps.install.title,
-    description: GUIDE.gettingStarted.steps.install.description,
-    code: "pnpm install && cp .env.example .env.local",
-  },
-  {
-    step: "3",
-    icon: "lucide:rocket",
-    title: GUIDE.gettingStarted.steps.build.title,
-    description: GUIDE.gettingStarted.steps.build.description,
-    code: "pnpm dev",
-  },
-];
-
 export function DemoTechnicalGuideTab() {
   const tProductGuide = useTranslations("demo.productGuide");
 
@@ -423,7 +399,7 @@ export function DemoTechnicalGuideTab() {
             value="dev-reference"
             className="border-border/70 bg-muted/45 dark:bg-muted/20 hover:border-primary/25 rounded-2xl border px-4 transition-colors"
           >
-            <AccordionTrigger className="cursor-pointer -mx-2 rounded-xl px-2 py-5 no-underline hover:bg-accent/55 dark:hover:bg-accent/20 hover:no-underline">
+            <AccordionTrigger className="hover:bg-accent/55 dark:hover:bg-accent/20 -mx-2 cursor-pointer rounded-xl px-2 py-5 no-underline hover:no-underline">
               <div className="flex items-center gap-2">
                 <Iconify icon="lucide:code-2" className="text-muted-foreground size-4" />
                 <Typography variant="subtitle1" as="span" className="text-foreground font-semibold">
@@ -431,7 +407,7 @@ export function DemoTechnicalGuideTab() {
                 </Typography>
               </div>
             </AccordionTrigger>
-            <AccordionContent className="space-y-10 pb-6 pt-2">
+            <AccordionContent className="space-y-10 pt-2 pb-6">
               <section className="space-y-6">
                 <div className="max-w-5xl space-y-0">
                   <Typography
@@ -458,7 +434,10 @@ export function DemoTechnicalGuideTab() {
                         {item.step}
                       </div>
                       <div className="space-y-1">
-                        <Typography variant="label1" className="text-foreground text-sm font-medium">
+                        <Typography
+                          variant="label1"
+                          className="text-foreground text-sm font-medium"
+                        >
                           {item.label}
                         </Typography>
                         <code className="text-muted-foreground block text-xs">{item.where}</code>

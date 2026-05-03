@@ -138,8 +138,32 @@
       },
       "howToUse": {
         "title": "Cómo ejecutarlo en tu computadora",
-        "description": "Sigue estos 4 pasos en orden. No necesitas entenderlo todo — solo copia y pega los comandos que se muestran.",
+        "description": "Primero revisa los requisitos previos, luego sigue los 3 pasos.",
         "stepLabel": "Paso {step}",
+        "prerequisites": {
+          "title": "Antes de empezar — verifica qué ya tienes instalado",
+          "description": "Abre tu Terminal y ejecuta cada comando. Si ves un número de versión, ya lo tienes. Si ves un error, haz clic en el enlace de instalación.",
+          "checkLabel": "Ejecuta en Terminal para verificar:",
+          "expectedLabel": "Deberías ver algo como:",
+          "installLabel": "¿No está instalado?",
+          "installCommandLabel": "O instálalo rápido con:",
+          "items": {
+            "git": {
+              "name": "Git",
+              "description": "Necesario para descargar el proyecto a tu computadora."
+            },
+            "node": {
+              "name": "Node.js",
+              "description": "Necesario para ejecutar el proyecto localmente."
+            },
+            "pnpm": {
+              "name": "pnpm",
+              "description": "El gestor de paquetes que usa este proyecto."
+            }
+          },
+          "editorTitle": "Un editor de código — elige uno:",
+          "editorDescription": "Necesitas un editor para abrir y trabajar en los archivos del proyecto."
+        },
         "terminalCallout": {
           "title": "Necesitarás una ventana de Terminal para los comandos",
           "body": "Una Terminal (también llamada Línea de comandos) te permite dar instrucciones directamente a tu computadora. No te preocupes — solo tienes que copiar y pegar lo que se muestra.",
@@ -179,8 +203,10 @@
             "description": "Antes de empezar, asegúrate de que las herramientas principales estén instaladas en tu computadora. Puedes usar las páginas oficiales de instalación y, en el caso de pnpm, también instalarlo rápidamente con npm. Para el editor, tanto VS Code como Cursor son muy buenas opciones."
           },
           "cloneProject": {
-            "title": "Abre el proyecto en GitHub y crea tu propia copia",
-            "description": "Abre el repositorio en GitHub y luego elige la opción `Use this template` para empezar con un proyecto nuevo con todo lo necesario."
+            "title": "Crea tu propia copia en GitHub y descárgala",
+            "description": "Usa la plantilla de GitHub para crear tu propio repositorio, luego descárgalo a tu computadora con git clone.",
+            "githubNote": "Necesitas una cuenta gratuita de GitHub. ¿No tienes? Créala en github.com — tarda 2 minutos.",
+            "commandNote": "Después de crear tu repositorio en GitHub, haz clic en el botón verde 'Code', copia la URL y reemplaza <your-repository-url> en el comando de abajo."
           },
           "openProject": {
             "title": "Abre el proyecto en tu editor e instala las dependencias",

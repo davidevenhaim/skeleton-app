@@ -138,8 +138,26 @@
       },
       "howToUse": {
         "title": "How to get it running on your computer",
-        "description": "Follow these 4 steps in order. You don't need to understand everything — just copy and paste the commands shown.",
+        "description": "Check the prerequisites first, then follow the 3 steps below.",
         "stepLabel": "Step {step}",
+        "prerequisites": {
+          "title": "Before you start",
+          "description": "Open your Terminal and run each command below. If you see a version number, you already have it. If you get an error, click the install link.",
+          "checkLabel": "Run in Terminal to check:",
+          "expectedLabel": "You should see something like:",
+          "installLabel": "Not installed?",
+          "installCommandLabel": "Or install quickly with:",
+          "items": {
+            "git": {
+              "name": "Git",
+              "description": "Needed to download the project to your computer."
+            },
+            "node": { "name": "Node.js", "description": "Needed to run the project locally." },
+            "pnpm": { "name": "pnpm", "description": "The package manager this project uses." }
+          },
+          "editorTitle": "A code editor — choose one:",
+          "editorDescription": "You need an editor to open and work on the project files."
+        },
         "terminalCallout": {
           "title": "You'll need a Terminal window for the commands below",
           "body": "A Terminal (also called Command Line or Command Prompt) lets you type instructions directly to your computer. Don't worry — you only need to copy and paste what's shown.",
@@ -179,8 +197,10 @@
             "description": "Before you start, make sure the core tools are installed on your computer. You can use the official install pages, and for pnpm you can also install it quickly with npm. For the editor itself, VS Code and Cursor are both great options."
           },
           "cloneProject": {
-            "title": "Open the GitHub project and create your own copy",
-            "description": "Open the GitHub repository, then choose the `Use this template` option so you start with a fresh project with all the necessary files."
+            "title": "Create your own copy on GitHub and download it",
+            "description": "Use the GitHub template to create your own repository, then download it to your computer with git clone.",
+            "githubNote": "You need a free GitHub account. Don't have one? Create it at github.com — it takes 2 minutes.",
+            "commandNote": "After creating your repo on GitHub, click the green 'Code' button, copy the URL, and replace <your-repository-url> in the command below."
           },
           "openProject": {
             "title": "Open the project in your editor and install dependencies",

@@ -207,6 +207,41 @@ export const PNPM_INSTALL_COMMAND = "npm install -g pnpm";
 export const PROJECT_INSTALL_COMMAND = "pnpm install";
 export const ENV_SETUP_COMMAND = "cp .env.example .env.local";
 export const PROJECT_RUN_COMMAND = "pnpm dev";
+export const GIT_CLONE_COMMAND = "git clone <your-repository-url>";
+
+export type GuidePrerequisite = {
+  id: string;
+  icon: string;
+  checkCommand: string;
+  expectedOutput: string;
+  resourceId: string;
+  installCommand?: string;
+};
+
+export const GUIDE_PREREQUISITES: GuidePrerequisite[] = [
+  {
+    id: "git",
+    icon: "logos:git-icon",
+    checkCommand: "git --version",
+    expectedOutput: "git version 2.x.x",
+    resourceId: "git",
+  },
+  {
+    id: "node",
+    icon: "logos:nodejs-icon",
+    checkCommand: "node --version",
+    expectedOutput: "v20.x.x or higher",
+    resourceId: "node",
+  },
+  {
+    id: "pnpm",
+    icon: "logos:pnpm",
+    checkCommand: "pnpm --version",
+    expectedOutput: "9.x.x",
+    resourceId: "pnpm",
+    installCommand: PNPM_INSTALL_COMMAND,
+  },
+];
 
 export const PRODUCT_GUIDE_PURPOSE_POINTS: ProductGuideItem[] = [
   { id: "fast", icon: "lucide:zap", color: "text-amber-500" },
@@ -245,17 +280,11 @@ export const PRODUCT_GUIDE_LESS_SUITABLE: ProductGuideItem[] = [
 
 export const PRODUCT_GUIDE_START_STEPS: ProductGuideStep[] = [
   {
-    id: "installTools",
-    icon: "lucide:wrench",
-    color: "text-amber-500",
-    resourceIds: ["git", "node", "vscode", "cursor"],
-    commands: [PNPM_INSTALL_COMMAND],
-  },
-  {
     id: "cloneProject",
-    icon: "lucide:terminal-square",
+    icon: "lucide:git-fork",
     color: "text-foreground",
     resourceIds: ["github"],
+    commands: [GIT_CLONE_COMMAND],
   },
   {
     id: "openProject",
@@ -309,8 +338,14 @@ export type GuideMistake = { mistake: string; fix: string };
 
 export const GUIDE_IGNORE_FILES: GuideIgnoreFile[] = [
   {
-    file: "src/components/demo/",
-    reason: "Home page showcase only. Delete when you build your real app's home page.",
+    file: "src/app/demo/ + src/components/demo/",
+    reason:
+      "The entire demo section — the guide, dashboard, forms, and dialogs tabs. Delete both folders together when you build your real app.",
+  },
+  {
+    file: "src/app/contact/ + src/features/contact/",
+    reason:
+      "Example contact form feature. Study it to understand the pattern, then delete or replace it with your own feature.",
   },
   {
     file: "src/components/ui/charts/",
@@ -321,8 +356,9 @@ export const GUIDE_IGNORE_FILES: GuideIgnoreFile[] = [
     reason: "Lottie + CSS animations. Remove if unused.",
   },
   {
-    file: "MEMORY.md, .claude/rules/",
-    reason: "Claude Code memory system. Ignore if you're not using Claude Code.",
+    file: "MEMORY.md, .claude/",
+    reason:
+      "Claude Code memory and rules system. Ignore if you're not using Claude Code or Cursor.",
   },
   {
     file: "components.json",
@@ -334,7 +370,8 @@ export const GUIDE_IGNORE_FILES: GuideIgnoreFile[] = [
   },
   {
     file: "src/store/auth.store.ts",
-    reason: "Auth placeholder — stores user and token. Replace with your real auth logic when you add login.",
+    reason:
+      "Auth placeholder — stores user and token. Replace with your real auth logic when you add login.",
   },
   {
     file: "messages/he.json, es.json, ar.json",

@@ -41,6 +41,7 @@ export function FormCombobox({
   const tForms = useTranslations("forms");
   const tRoot = useTranslations();
   const [open, setOpen] = React.useState(false);
+  const listboxId = React.useId();
 
   const tr = (key: string) => (key.includes(".") ? tForms(key as never) : tRoot(key as never));
 
@@ -64,6 +65,7 @@ export function FormCombobox({
                   id={`form-combobox-${name}`}
                   type="button"
                   role="combobox"
+                  aria-controls={listboxId}
                   aria-expanded={open}
                   aria-invalid={fieldState.invalid}
                   className={cn(
@@ -90,7 +92,7 @@ export function FormCombobox({
                   <CommandInput
                     placeholder={searchPlaceholder ? tr(searchPlaceholder) : tRoot("search")}
                   />
-                  <CommandList>
+                  <CommandList id={listboxId}>
                     <CommandEmpty>{emptyLabel ? tr(emptyLabel) : tRoot("noResults")}</CommandEmpty>
                     <CommandGroup>
                       {options.map((option) => (

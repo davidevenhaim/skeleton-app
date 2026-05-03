@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 type AnimatedNumberProps = {
   value: number;
@@ -40,7 +40,9 @@ const AnimatedNumber = ({
   const startTimeRef = useRef<number | null>(null);
   /** Inline formatters from parents change identity every render; deps on them restart the animation forever. */
   const formatterRef = useRef(formatter);
-  formatterRef.current = formatter;
+  useLayoutEffect(() => {
+    formatterRef.current = formatter;
+  }, [formatter]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
