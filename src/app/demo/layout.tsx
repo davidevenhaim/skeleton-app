@@ -12,7 +12,7 @@ export default async function DemoLayout({ children }: { children: ReactNode }) 
   const t = await getTranslations("demo");
 
   return (
-    <PageContainer title={t("pageTitle")} subtitle={t("pageSubtitle")}>
+    <PageContainer title={t("pageTitle")}>
       <DemoTabNav />
       {children}
     </PageContainer>

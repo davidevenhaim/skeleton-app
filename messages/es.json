@@ -51,7 +51,6 @@
   "themeDarkMode": "Modo oscuro",
   "demo": {
     "pageTitle": "Aplicación Skeleton",
-    "pageSubtitle": "Un punto de partida listo que te ayuda a crear un mejor sitio web con AI: más rápido, más ordenado y de una forma que un desarrollador pueda entender y continuar.",
     "productGuide": {
       "eyebrow": "Construir con AI de forma ordenada",
       "title": "Construir con AI sin crear un caos",
@@ -410,14 +409,6 @@
             "description": "Una plataforma de despliegue que funciona especialmente bien con proyectos de Next.js."
           }
         }
-      },
-      "vibeCoder": {
-        "title": "Para el desarrollador vibe",
-        "body": "Este starter está construido para creadores de productos, fundadores y diseñadores que quieren lanzar cosas reales con herramientas de AI como Claude Code o Cursor — sin ralentizarse por configuraciones, código inconsistente o deriva arquitectónica.",
-        "claudeNote": "CLAUDE.md le dice a tu asistente de AI exactamente cómo funciona el proyecto — qué patrones usar, qué archivos crear, dónde poner las cosas — para que no tengas que explicarlo en cada prompt.",
-        "bullet1": "Formularios, llamadas a API, rutas, traducciones y gestión de estado ya siguen patrones consistentes",
-        "bullet2": "Los asistentes de AI saben cómo extender el proyecto correctamente sin que se les diga cada vez",
-        "bullet3": "Cada nueva función que añadas se verá y se comportará como el resto del código"
       },
       "ignoreAtFirst": {
         "title": "Qué puedes ignorar al principio",
@@ -965,7 +956,6 @@
   },
   "contact": {
     "pageTitle": "Contáctenos",
-    "pageSubtitle": "¿Tienes una pregunta o comentario? Nos encantaría escucharte.",
     "submit": "Enviar mensaje",
     "successTitle": "¡Mensaje enviado!",
     "successMessage": "Gracias por contactarnos.",

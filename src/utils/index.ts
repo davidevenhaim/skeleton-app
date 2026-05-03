@@ -1,4 +1,11 @@
-export { isEqual, merge, getRandomPastelColor, getIsImageValid } from "./general.utils";
+export {
+  isEqual,
+  merge,
+  getRandomPastelColor,
+  getIsImageValid,
+  sleep,
+  deepClone,
+} from "./general.utils";
 export {
   localStorageAvailable,
   localStorageGetItem,
@@ -6,7 +13,7 @@ export {
   localStorageRemoveItem,
 } from "./local-storage.utils";
 export { getMinMaxOfLength, clamp, formatNumber, randomInt } from "./number.utils";
-export { formatDate, DateFormatting } from "./date.utils";
+export { formatDate, formatRelativeTime, DateFormatting } from "./date.utils";
 export { inputFormatter, formatBytes } from "./formatters";
 export type { FormatterFn } from "./formatters";
 export {

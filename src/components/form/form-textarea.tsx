@@ -32,7 +32,7 @@ export function FormTextarea({
   required,
 }: FormTextareaProps) {
   const { control } = useFormContext();
-  const t = useTranslations();
+  const t = useTranslations("forms");
 
   return (
     <Controller

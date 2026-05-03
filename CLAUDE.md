@@ -62,6 +62,15 @@ Do not introduce unnecessary abstraction or custom patterns when an existing pro
 12. Never add new fields to a Zustand store unless the data needs to be shared across unrelated components.
     - Read `.claude/rules/stores.md` before touching any store
 
+13. Never use a raw `<button>` element in JSX.
+    - Always use `<Button>` from `@/components/ui/button`
+    - For inline/unstyled triggers use `variant="ghost"` or `size="none"` with className overrides
+    - Exception: inside class components that cannot import hooks — wrap in a functional sub-component instead
+
+14. Never use raw HTML text elements (`<p>`, `<h1>`–`<h6>`, `<span>` for text) in JSX.
+    - Always use `<Typography>` from `@/components/ui/typography`
+    - Pick the closest semantic variant (`h1`–`h6`, `subtitle1/2`, `body1/2`, `caption1/2`, `label1/2`, `overline`)
+
 ---
 
 ## Workflow Rules
@@ -88,6 +97,15 @@ Do not introduce unnecessary abstraction or custom patterns when an existing pro
 - Translation messages belong in `messages/`
 - App-level library code (API client, toast helpers, config) belongs in `src/lib`
 
+### Route Groups (Next.js App Router)
+
+Use route groups to share layouts without affecting URL paths. The folder name in parentheses is excluded from the URL:
+
+- `src/app/(auth)/` — pages that share an auth layout (login, signup, reset password). URL: `/login`, `/signup`
+- `src/app/(dashboard)/` — protected pages that share the main app shell. URL: `/dashboard`, `/settings`
+
+Each group gets its own `layout.tsx`. The root `src/app/layout.tsx` stays as the global shell (fonts, providers, theme).
+
 ---
 
 ## Rules by Topic
@@ -103,6 +121,9 @@ Read the relevant rule file when working in these areas:
 - UI / styling / layout → `.claude/rules/ui-patterns.md`
 - utilities / hooks → `.claude/rules/hooks-and-utils.md`
 - stores / state → `.claude/rules/stores.md`
+- error handling → `.claude/rules/error-handling.md`
+- auth / permissions → `.claude/rules/auth.md`
+- writing tests → `.claude/rules/testing.md`
 
 ---
 

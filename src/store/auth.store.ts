@@ -1,19 +1,13 @@
 import { create } from "zustand";
 import { getStorage, setStorage, removeStorage } from "@/hooks/use-local-storage";
+import type { User } from "@/types/auth.types";
 
 // ----------------------------------------------------------------------
 
+export type { User };
+
 const USER_KEY = "auth-user";
 const TOKEN_KEY = "auth-token";
-
-/** Minimal user shape — extend as needed for your project */
-export type User = {
-  id: string;
-  email: string;
-  name?: string;
-  avatarUrl?: string;
-  role?: string;
-};
 
 interface AuthState {
   user: User | null;

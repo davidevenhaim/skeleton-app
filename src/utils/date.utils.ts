@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, formatDistanceToNow } from "date-fns";
 import { he, Locale, enUS } from "date-fns/locale";
 
 export enum DateFormatting {
@@ -55,4 +55,9 @@ export function formatDate(
   currentLang: string = "he"
 ): string {
   return format(date, formatString, { locale: getLocale(currentLang) });
+}
+
+/** Returns a human-readable relative time string, e.g. "2 hours ago", "in 3 days". */
+export function formatRelativeTime(date: Date, currentLang = "en"): string {
+  return formatDistanceToNow(date, { addSuffix: true, locale: getLocale(currentLang) });
 }

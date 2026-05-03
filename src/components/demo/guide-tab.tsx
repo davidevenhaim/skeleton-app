@@ -17,6 +17,7 @@ import { Progress } from "@/components/ui/progress";
 import Iconify from "@/components/ui/iconify";
 import { TermTip } from "@/components/ui/term-tip";
 import { Typography } from "@/components/ui/typography";
+import { AppearIn } from "@/components/ui/animations/appear-in";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { useLocalStorage } from "@/hooks/use-local-storage";
 import { cn } from "@/lib/utils";
@@ -58,17 +59,11 @@ export function DemoGuideTab() {
   const tProductGuide = useTranslations("demo.productGuide");
 
   const checklistTermTipRich = React.useMemo(() => {
-    const map = {} as Record<
-      ChecklistTermTipKey,
-      (chunks: React.ReactNode) => React.ReactNode
-    >;
+    const map = {} as Record<ChecklistTermTipKey, (chunks: React.ReactNode) => React.ReactNode>;
     for (const key of CHECKLIST_TERM_TIP_KEYS) {
       map[key] = (chunks: React.ReactNode) => (
         <TermTip
-          term={
-            richChunksToPlainString(chunks) ||
-            tProductGuide(`checklist.vibeTerms.${key}.term`)
-          }
+          term={richChunksToPlainString(chunks) || tProductGuide(`checklist.vibeTerms.${key}.term`)}
           explanation={tProductGuide(`checklist.vibeTerms.${key}.explanation`)}
           className="text-inherit"
           side="top"
@@ -90,10 +85,7 @@ export function DemoGuideTab() {
     []
   );
 
-  const allChecklistItems = React.useMemo(
-    () => GUIDE_CHECKLIST_GROUPS.flatMap((g) => g.items),
-    []
-  );
+  const allChecklistItems = React.useMemo(() => GUIDE_CHECKLIST_GROUPS.flatMap((g) => g.items), []);
   const requiredTotal = allChecklistItems.filter((i) => i.required).length;
   const requiredDone = allChecklistItems.filter((i) => i.required && checked[i.id]).length;
   const progressPct = requiredTotal > 0 ? Math.round((requiredDone / requiredTotal) * 100) : 0;
@@ -161,15 +153,22 @@ export function DemoGuideTab() {
         <div
           key={item.id}
           className={cn(
-            "border-border/40 border-b last:border-0 transition-colors duration-150",
+            "border-border/40 border-b transition-colors duration-150 last:border-0",
             isChecked && "bg-muted/20"
           )}
         >
-          {/* Row header */}
-          <button
-            type="button"
+          {/* Row header — div not button because Checkbox (Radix) is already a <button> */}
+          <div
+            role="button"
+            tabIndex={0}
             className="hover:bg-muted/30 flex w-full cursor-pointer items-center gap-3 px-4 py-3.5 text-left transition-colors"
             onClick={() => setExpandedId((prev) => (prev === item.id ? null : item.id))}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setExpandedId((prev) => (prev === item.id ? null : item.id));
+              }
+            }}
           >
             <Checkbox
               checked={isChecked}
@@ -188,7 +187,7 @@ export function DemoGuideTab() {
               className={cn(
                 "flex-1 text-sm font-medium",
                 isChecked
-                  ? "text-muted-foreground line-through decoration-muted-foreground/40"
+                  ? "text-muted-foreground decoration-muted-foreground/40 line-through"
                   : "text-foreground"
               )}
             >
@@ -205,25 +204,23 @@ export function DemoGuideTab() {
               >
                 {item.required
                   ? tProductGuide("checklist.requiredBadge")
-                  : item.recommended
-                    ? tProductGuide("checklist.optionalBadge")
-                    : tProductGuide("checklist.bonusBadge")}
+                  : tProductGuide("checklist.bonusBadge")}
               </Badge>
               <Iconify
                 icon={isExpanded ? "lucide:chevron-up" : "lucide:chevron-down"}
                 className="text-muted-foreground size-4 shrink-0"
               />
             </div>
-          </button>
+          </div>
 
           {/* Expanded panel */}
           {isExpanded && (
-            <div className="border-border/30 bg-muted/10 space-y-3 border-t px-4 pb-4 pt-3">
-              <Typography variant="caption2" className="text-muted-foreground text-sm leading-relaxed">
-                {tProductGuide.rich(
-                  `checklist.items.${item.id}.description`,
-                  checklistTermTipRich
-                )}
+            <div className="border-border/30 bg-muted/10 space-y-3 border-t px-4 pt-3 pb-4">
+              <Typography
+                variant="caption2"
+                className="text-muted-foreground text-sm leading-relaxed"
+              >
+                {tProductGuide.rich(`checklist.items.${item.id}.description`, checklistTermTipRich)}
               </Typography>
 
               {/* Verify command */}
@@ -231,7 +228,7 @@ export function DemoGuideTab() {
                 <div className="space-y-1.5">
                   <Typography
                     variant="caption2"
-                    className="text-muted-foreground block text-xs font-medium uppercase tracking-wide"
+                    className="text-muted-foreground block text-xs font-medium tracking-wide uppercase"
                   >
                     {tProductGuide.rich("checklist.checkLabel", checklistTermTipRich)}
                   </Typography>
@@ -268,7 +265,7 @@ export function DemoGuideTab() {
                 <div className="space-y-1.5">
                   <Typography
                     variant="caption2"
-                    className="text-muted-foreground block text-xs font-medium uppercase tracking-wide"
+                    className="text-muted-foreground block text-xs font-medium tracking-wide uppercase"
                   >
                     {tProductGuide("checklist.installOptionsLabel")}
                   </Typography>
@@ -317,7 +314,7 @@ export function DemoGuideTab() {
                   {item.checkCommand && (
                     <Typography
                       variant="caption2"
-                      className="text-muted-foreground block text-xs font-medium uppercase tracking-wide"
+                      className="text-muted-foreground block text-xs font-medium tracking-wide uppercase"
                     >
                       {tProductGuide("checklist.notInstalledLabel")}
                     </Typography>
@@ -345,7 +342,7 @@ export function DemoGuideTab() {
                 <div className="space-y-1.5">
                   <Typography
                     variant="caption2"
-                    className="text-muted-foreground block text-xs font-medium uppercase tracking-wide"
+                    className="text-muted-foreground block text-xs font-medium tracking-wide uppercase"
                   >
                     {tProductGuide("checklist.installCommandLabel")}
                   </Typography>
@@ -374,7 +371,7 @@ export function DemoGuideTab() {
                 <div className="space-y-2">
                   <Typography
                     variant="caption2"
-                    className="text-muted-foreground block text-xs font-medium uppercase tracking-wide"
+                    className="text-muted-foreground block text-xs font-medium tracking-wide uppercase"
                   >
                     {tProductGuide.rich("checklist.commandLabel", checklistTermTipRich)}
                   </Typography>
@@ -486,9 +483,7 @@ export function DemoGuideTab() {
             variant="label1"
             className={cn(
               "shrink-0 text-sm font-bold tabular-nums",
-              allDone
-                ? "text-emerald-600 dark:text-emerald-400"
-                : "text-muted-foreground"
+              allDone ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground"
             )}
           >
             {tProductGuide("checklist.progress", {
@@ -501,10 +496,7 @@ export function DemoGuideTab() {
         {/* Progress bar */}
         <Progress
           value={progressPct}
-          className={cn(
-            "h-2.5",
-            allDone && "[&>[data-slot=progress-indicator]]:bg-emerald-500"
-          )}
+          className={cn("h-2.5", allDone && "[&>[data-slot=progress-indicator]]:bg-emerald-500")}
         />
 
         {/* All done banner */}
@@ -515,10 +507,7 @@ export function DemoGuideTab() {
               className="mt-0.5 size-5 shrink-0 text-emerald-500"
             />
             <div className="flex-1 space-y-1.5">
-              <Typography
-                variant="label1"
-                className="text-foreground text-sm font-semibold"
-              >
+              <Typography variant="label1" className="text-foreground text-sm font-semibold">
                 {tProductGuide("checklist.allDone")}
               </Typography>
               <Link
@@ -546,10 +535,7 @@ export function DemoGuideTab() {
               <Card key={group.id} className="border-border/70 overflow-hidden p-0">
                 <AccordionItem value={group.id} className="border-0">
                   <AccordionTrigger className="hover:bg-accent/40 border-border/40 bg-muted/40 data-[state=open]:border-border/40 flex cursor-pointer items-center gap-2 border-b px-4 py-2.5 hover:no-underline data-[state=open]:border-b">
-                    <Iconify
-                      icon={group.icon}
-                      className="text-muted-foreground size-4 shrink-0"
-                    />
+                    <Iconify icon={group.icon} className="text-muted-foreground size-4 shrink-0" />
                     <Typography
                       variant="subtitle2"
                       as="span"
@@ -582,19 +568,16 @@ export function DemoGuideTab() {
         {/* Bonus section */}
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <div className="h-px flex-1 bg-border/50" />
+            <div className="bg-border/50 h-px flex-1" />
             <Badge
               variant="outline"
               className="border-amber-300 bg-amber-50 text-amber-700 dark:border-amber-700 dark:bg-amber-950/30 dark:text-amber-300"
             >
               ⭐ {tProductGuide("checklist.bonusTitle")}
             </Badge>
-            <div className="h-px flex-1 bg-border/50" />
+            <div className="bg-border/50 h-px flex-1" />
           </div>
-          <Typography
-            variant="caption2"
-            className="text-muted-foreground text-center text-xs"
-          >
+          <Typography variant="caption2" className="text-muted-foreground text-center text-xs">
             {tProductGuide("checklist.bonusDescription")}
           </Typography>
           <Card className="border-border/70 overflow-hidden">
@@ -616,11 +599,7 @@ export function DemoGuideTab() {
                   icon="lucide:triangle-alert"
                   className="text-muted-foreground size-4 shrink-0"
                 />
-                <Typography
-                  variant="subtitle1"
-                  as="span"
-                  className="text-foreground font-semibold"
-                >
+                <Typography variant="subtitle1" as="span" className="text-foreground font-semibold">
                   {tProductGuide("howToUse.troubleshooting.title")}
                 </Typography>
               </div>
@@ -643,9 +622,7 @@ export function DemoGuideTab() {
                             variant="caption1"
                             className="text-foreground text-sm font-medium"
                           >
-                            {tProductGuide(
-                              `howToUse.troubleshooting.items.${item.id}.problem`
-                            )}
+                            {tProductGuide(`howToUse.troubleshooting.items.${item.id}.problem`)}
                           </Typography>
                         </div>
                         <div className="space-y-2">
@@ -658,16 +635,12 @@ export function DemoGuideTab() {
                               variant="caption1"
                               className="text-muted-foreground text-sm"
                             >
-                              {tProductGuide(
-                                `howToUse.troubleshooting.items.${item.id}.fix`
-                              )}
+                              {tProductGuide(`howToUse.troubleshooting.items.${item.id}.fix`)}
                             </Typography>
                           </div>
                           {item.command && (
                             <div>
-                              {renderCommandBlocks(`troubleshoot-${item.id}`, [
-                                item.command,
-                              ])}
+                              {renderCommandBlocks(`troubleshoot-${item.id}`, [item.command])}
                             </div>
                           )}
                         </div>
@@ -681,48 +654,7 @@ export function DemoGuideTab() {
         </Accordion>
       </section>
 
-      {/* 4. For the vibe coder */}
-      <section className="space-y-4">
-        <div className="max-w-5xl space-y-2">
-          <Typography
-            variant="subtitle1"
-            as="h2"
-            className="text-foreground text-2xl font-semibold tracking-tight"
-          >
-            {tProductGuide("vibeCoder.title")}
-          </Typography>
-          <Typography variant="body2" className="text-muted-foreground leading-relaxed">
-            {tProductGuide("vibeCoder.body")}
-          </Typography>
-        </div>
-        <Card className="border-border/70">
-          <CardContent className="space-y-4 p-6">
-            <div className="flex items-start gap-3">
-              <div className="bg-muted mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg text-indigo-500">
-                <Iconify icon="lucide:bot" className="size-4" />
-              </div>
-              <Typography variant="caption1" className="text-muted-foreground leading-relaxed">
-                {tProductGuide("vibeCoder.claudeNote")}
-              </Typography>
-            </div>
-            <div className="border-border/50 space-y-2.5 border-t pt-4">
-              {(["bullet1", "bullet2", "bullet3"] as const).map((key) => (
-                <div key={key} className="flex items-start gap-2.5">
-                  <Iconify
-                    icon="lucide:check"
-                    className="text-primary mt-0.5 size-4 shrink-0"
-                  />
-                  <Typography variant="caption1" className="text-foreground">
-                    {tProductGuide(`vibeCoder.${key}`)}
-                  </Typography>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* 5. Why */}
+      {/* 4. Why */}
       <section className="space-y-6">
         <div className="max-w-4xl space-y-2">
           <Typography
@@ -737,34 +669,36 @@ export function DemoGuideTab() {
           </Typography>
         </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {PRODUCT_GUIDE_PURPOSE_POINTS.map((item) => (
-            <Card key={item.id} className="border-border/70">
-              <CardContent className="space-y-3 p-5">
-                <div
-                  className={cn(
-                    "bg-muted flex size-10 items-center justify-center rounded-xl",
-                    item.color
-                  )}
-                >
-                  <Iconify icon={item.icon} className="size-5" />
-                </div>
-                <Typography
-                  variant="subtitle2"
-                  as="h3"
-                  className="text-foreground text-lg font-semibold"
-                >
-                  {tProductGuide(`purpose.points.${item.id}.title`)}
-                </Typography>
-                <Typography variant="caption1" className="text-muted-foreground">
-                  {tProductGuide(`purpose.points.${item.id}.description`)}
-                </Typography>
-              </CardContent>
-            </Card>
+          {PRODUCT_GUIDE_PURPOSE_POINTS.map((item, index) => (
+            <AppearIn key={item.id} delay={index * 75}>
+              <Card className="border-border/70 h-full">
+                <CardContent className="space-y-3 p-5">
+                  <div
+                    className={cn(
+                      "bg-muted flex size-10 items-center justify-center rounded-xl",
+                      item.color
+                    )}
+                  >
+                    <Iconify icon={item.icon} className="size-5" />
+                  </div>
+                  <Typography
+                    variant="subtitle2"
+                    as="h3"
+                    className="text-foreground text-lg font-semibold"
+                  >
+                    {tProductGuide(`purpose.points.${item.id}.title`)}
+                  </Typography>
+                  <Typography variant="caption1" className="text-muted-foreground">
+                    {tProductGuide(`purpose.points.${item.id}.description`)}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </AppearIn>
           ))}
         </div>
       </section>
 
-      {/* 6. When */}
+      {/* 5. When */}
       <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Card className="border-border/70">
           <CardContent className="space-y-5 p-6">
@@ -859,7 +793,7 @@ export function DemoGuideTab() {
         </Card>
       </section>
 
-      {/* 7. What you can safely ignore */}
+      {/* 6. What you can safely ignore */}
       <section>
         <Accordion type="single" collapsible>
           <AccordionItem
@@ -868,15 +802,8 @@ export function DemoGuideTab() {
           >
             <AccordionTrigger className="hover:bg-accent/55 dark:hover:bg-accent/20 -mx-2 cursor-pointer rounded-xl px-2 py-5 no-underline hover:no-underline">
               <div className="flex items-center gap-2">
-                <Iconify
-                  icon="lucide:folder-open"
-                  className="text-muted-foreground size-4"
-                />
-                <Typography
-                  variant="subtitle1"
-                  as="span"
-                  className="text-foreground font-semibold"
-                >
+                <Iconify icon="lucide:folder-open" className="text-muted-foreground size-4" />
+                <Typography variant="subtitle1" as="span" className="text-foreground font-semibold">
                   {tProductGuide("ignoreAtFirst.title")}
                 </Typography>
               </div>
@@ -918,7 +845,7 @@ export function DemoGuideTab() {
         </Accordion>
       </section>
 
-      {/* 8. Built with */}
+      {/* 7. Built with */}
       <section className="space-y-6">
         <div className="max-w-4xl space-y-2">
           <Typography
@@ -933,48 +860,50 @@ export function DemoGuideTab() {
           </Typography>
         </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {PRODUCT_GUIDE_CREDITS.map((item) => (
-            <Card key={item.id} className="border-border/70">
-              <CardContent className="space-y-4 p-5">
-                <div className="flex items-start gap-3">
-                  <div
-                    className={cn(
-                      "bg-muted flex size-10 shrink-0 items-center justify-center rounded-xl",
-                      item.color
-                    )}
-                  >
-                    <Iconify icon={item.icon} className="size-5" />
-                  </div>
-                  <div className="space-y-1">
-                    <Typography
-                      variant="subtitle2"
-                      as="h3"
-                      className="text-foreground text-lg font-semibold"
+          {PRODUCT_GUIDE_CREDITS.map((item, index) => (
+            <AppearIn key={item.id} delay={index * 60}>
+              <Card className="border-border/70 h-full">
+                <CardContent className="space-y-4 p-5">
+                  <div className="flex items-start gap-3">
+                    <div
+                      className={cn(
+                        "bg-muted flex size-10 shrink-0 items-center justify-center rounded-xl",
+                        item.color
+                      )}
                     >
-                      {tProductGuide(`builtWith.items.${item.id}.name`)}
-                    </Typography>
-                    <Typography variant="caption1" className="text-muted-foreground">
-                      {tProductGuide(`builtWith.items.${item.id}.description`)}
-                    </Typography>
+                      <Iconify icon={item.icon} className="size-5" />
+                    </div>
+                    <div className="space-y-1">
+                      <Typography
+                        variant="subtitle2"
+                        as="h3"
+                        className="text-foreground text-lg font-semibold"
+                      >
+                        {tProductGuide(`builtWith.items.${item.id}.name`)}
+                      </Typography>
+                      <Typography variant="caption1" className="text-muted-foreground">
+                        {tProductGuide(`builtWith.items.${item.id}.description`)}
+                      </Typography>
+                    </div>
                   </div>
-                </div>
-                <Link
-                  href={item.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-primary inline-flex items-center gap-2 text-sm font-medium"
-                >
-                  <Typography
-                    variant="caption2"
-                    as="span"
-                    className="text-primary text-sm font-medium"
+                  <Link
+                    href={item.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-primary inline-flex items-center gap-2 text-sm font-medium"
                   >
-                    {tProductGuide("builtWith.linkLabel")}
-                  </Typography>
-                  <Iconify icon="lucide:arrow-up-right" className="size-4" />
-                </Link>
-              </CardContent>
-            </Card>
+                    <Typography
+                      variant="caption2"
+                      as="span"
+                      className="text-primary text-sm font-medium"
+                    >
+                      {tProductGuide("builtWith.linkLabel")}
+                    </Typography>
+                    <Iconify icon="lucide:arrow-up-right" className="size-4" />
+                  </Link>
+                </CardContent>
+              </Card>
+            </AppearIn>
           ))}
         </div>
       </section>

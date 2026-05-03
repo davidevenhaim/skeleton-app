@@ -22,3 +22,14 @@ export const CONFIG: AppConfig = {
   isProd: process.env.NODE_ENV === "production",
   isDev: process.env.NODE_ENV === "development",
 };
+
+// Warn in development if required env vars are not set.
+// Never throws — a missing var is better than a crashed page.
+if (process.env.NODE_ENV === "development") {
+  const required: Array<keyof AppConfig> = ["appName", "serverUrl", "siteUrl"];
+  for (const key of required) {
+    if (!CONFIG[key]) {
+      console.warn(`[config] Missing env var for "${key}". Check .env.local.`);
+    }
+  }
+}

@@ -8,7 +8,7 @@ export default function ContactPage() {
   const t = useTranslations("contact");
 
   return (
-    <PageContainer title={t("pageTitle")} subtitle={t("pageSubtitle")}>
+    <PageContainer title={t("pageTitle")}>
       <div className="max-w-lg">
         <ContactForm />
       </div>

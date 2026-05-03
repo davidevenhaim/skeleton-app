@@ -11,6 +11,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { DirectionProvider } from "@/components/app/direction-provider";
 import { ThemeProvider } from "@/components/app/theme-provider";
 import { LoadingIndicator } from "@/components/ui/loading-indicator";
+import { ErrorBoundary } from "@/components/app/error-boundary";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -101,7 +102,7 @@ export default async function RootLayout({
           <DirectionProvider dir={htmlDir}>
             <ThemeProvider>
               <TooltipProvider>
-                {children}
+                <ErrorBoundary>{children}</ErrorBoundary>
                 <Toaster position={htmlDir === "rtl" ? "top-left" : "top-right"} />
                 <LoadingIndicator variant="overlay" loadingKey="axios" />
               </TooltipProvider>

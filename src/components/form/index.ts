@@ -11,6 +11,8 @@ export { FormSwitch } from "./form-switch";
 export { FormTextarea } from "./form-textarea";
 export { FormCombobox } from "./form-combobox";
 export { FormSlider } from "./form-slider";
+export { FormRadioGroup } from "./form-radio-group";
+export type { FormRadioGroupProps, RadioOption } from "./form-radio-group";
 
 export {
   Field,

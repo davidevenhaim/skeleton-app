@@ -79,8 +79,8 @@ export function ContactForm() {
       />
       <FormTextarea
         name="message"
-        label="forms.labels.message"
-        placeholder="forms.placeholders.message"
+        label="labels.message"
+        placeholder="placeholders.message"
         rows={5}
         showCharCount
         maxLength={1000}

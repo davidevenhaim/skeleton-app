@@ -14,6 +14,26 @@ export function isEqual(a: any, b: any): boolean {
     return a === b;
   }
 
+  if (a instanceof Date && b instanceof Date) {
+    return a.getTime() === b.getTime();
+  }
+
+  if (a instanceof Map && b instanceof Map) {
+    if (a.size !== b.size) return false;
+    for (const [key, val] of a) {
+      if (!b.has(key) || !isEqual(val, b.get(key))) return false;
+    }
+    return true;
+  }
+
+  if (a instanceof Set && b instanceof Set) {
+    if (a.size !== b.size) return false;
+    for (const val of a) {
+      if (!b.has(val)) return false;
+    }
+    return true;
+  }
+
   if (Array.isArray(a) && Array.isArray(b)) {
     if (a.length !== b.length) {
       return false;
@@ -67,6 +87,15 @@ export function getRandomPastelColor(): string {
   const b = makePastel().toString(16).padStart(2, "0");
 
   return `#${r}${g}${b}`;
+}
+
+/** Promise-based delay. */
+export const sleep = (ms: number): Promise<void> =>
+  new Promise((resolve) => setTimeout(resolve, ms));
+
+/** Deep clone any serializable value using structuredClone. */
+export function deepClone<T>(value: T): T {
+  return structuredClone(value);
 }
 
 export function getIsImageValid(url: string): Promise<boolean> {

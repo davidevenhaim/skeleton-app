@@ -17,7 +17,9 @@ export { useScrollPosition } from "./use-scroll-position";
 export { useKeyPress } from "./use-key-press";
 export { usePermissions } from "./use-permissions";
 export { useAsync } from "./use-async";
+export { usePaginatedFetch } from "./use-paginated-fetch";
 
 export type { UseBooleanReturn } from "./use-boolean";
 export type { UseDebounceReturn } from "./use-debounce";
 export type { UseLocalStorageReturn } from "./use-local-storage";
+export type { UsePaginatedFetchReturn } from "./use-paginated-fetch";

@@ -51,7 +51,6 @@
   "themeDarkMode": "Dark mode",
   "demo": {
     "pageTitle": "Skeleton App",
-    "pageSubtitle": "A ready-made starting point that helps you build a better website with AI — faster, more organized, and in a way that a developer can understand and continue from.",
     "productGuide": {
       "eyebrow": "Build with AI in a structured way",
       "title": "Build with AI without creating a mess",
@@ -281,7 +280,7 @@
           },
           "codeEditor": {
             "term": "code editor",
-            "explanation": "The app where you open and edit the project files — like Google Docs, but for code. VS Code and Cursor are both free. Cursor also has AI built in, so you can chat with it while you build."
+            "explanation": "The app where you open and edit the project files — like Google Docs, but for code. VS Code and Cursor are both free and has AI built in, so you can chat with it while you build."
           },
           "github": {
             "term": "GitHub",
@@ -416,14 +415,6 @@
             "description": "A deployment platform that works especially well with Next.js projects."
           }
         }
-      },
-      "vibeCoder": {
-        "title": "For the vibe coder",
-        "body": "This starter is built for product builders, founders, and designers who want to ship real products with AI tools like Claude Code or Cursor without getting slowed down by setup choices, inconsistent code, or architectural drift.",
-        "claudeNote": "CLAUDE.md tells your AI assistant exactly how the project works — which patterns to use, which files to create, where to put things — so you don't have to explain it on every prompt.",
-        "bullet1": "Forms, API calls, routing, translations, and state management already follow consistent patterns",
-        "bullet2": "AI assistants know how to extend the project correctly without being told each time",
-        "bullet3": "Every new feature you add will look and behave like the rest of the codebase"
       },
       "ignoreAtFirst": {
         "title": "What you can safely ignore at first",
@@ -883,7 +874,8 @@
       "max": "Value is too high",
       "minLength": "Too short",
       "maxLength": "Too long",
-      "minLen": "Invalid length",
+      "minLen": "Too few characters",
+      "maxLen": "Too many characters",
       "pattern": "Invalid format",
       "invalid": "Invalid value",
       "invalidDate": "Invalid date",
@@ -985,7 +977,6 @@
   },
   "contact": {
     "pageTitle": "Contact Us",
-    "pageSubtitle": "Have a question or feedback? We'd love to hear from you.",
     "submit": "Send message",
     "successTitle": "Message sent!",
     "successMessage": "Thanks for reaching out.",
@@ -997,5 +988,10 @@
     "title": "Something went wrong",
     "description": "An unexpected error occurred. Try refreshing the page.",
     "refresh": "Refresh page"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist or has been moved.",
+    "back": "Go to home"
   }
 }

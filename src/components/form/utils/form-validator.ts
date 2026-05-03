@@ -111,7 +111,7 @@ export const formValidator = {
     return zod
       .string()
       .min(min, { error: props?.message?.required_error ?? "minLen" })
-      .max(max, { error: props?.message?.required_error ?? "minLen" });
+      .max(max, { error: props?.message?.required_error ?? "maxLen" });
   },
 
   requiredEmail: () =>

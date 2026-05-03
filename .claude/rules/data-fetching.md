@@ -74,3 +74,36 @@ toastPromise(trigger({ method: "POST", data }), {
   error: t("saveFailed"),
 });
 ```
+
+## Paginated Data
+
+Use `usePaginatedFetch` for lists that need page/pageSize controls. It wraps `useFetch` and manages pagination state internally:
+
+```ts
+const { data, isLoading, page, pageSize, nextPage, prevPage, setPage } = usePaginatedFetch<
+  Paginated<User>
+>(API_ROUTES.USERS.LIST);
+```
+
+The hook appends `?page=N&pageSize=N` automatically. Use `data.items` for the list and `data.total` for pagination UI.
+
+Do not implement manual page state with `useState` + `useFetch` — use `usePaginatedFetch` instead.
+
+## Optimistic Updates
+
+For immediate UI feedback before the server responds, use SWR's `mutate` from `useFetch`:
+
+```ts
+const { data, mutate } = useFetch<User[]>(API_ROUTES.USERS.LIST);
+const { trigger } = useMutation(API_ROUTES.USERS.LIST);
+
+const addUser = async (newUser: User) => {
+  // Update local cache immediately — no wait for server
+  mutate([...(data ?? []), newUser], { revalidate: false });
+  // Then persist to server
+  await trigger({ method: "POST", data: newUser });
+  // SWR revalidates automatically after trigger
+};
+```
+
+Only use optimistic updates when the operation is likely to succeed and instant feedback matters (e.g. toggling a favorite, reordering items). For destructive actions, wait for the server response first.
