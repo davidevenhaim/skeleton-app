@@ -42,6 +42,7 @@ import { Typography, type TypoVariant } from "@/components/ui/typography";
 import { useWindowSize } from "@/hooks";
 import { useLoaderStore } from "@/store/loader.store";
 import { cn } from "@/lib/utils";
+import { TermTip } from "@/components/ui/term-tip";
 import { inputFormatter } from "@/utils/formatters";
 
 const VARIANT_ROWS: Array<{
@@ -646,6 +647,40 @@ export function DemoTypographyTab() {
                   </Button>
                 </EmptyContent>
               </Empty>
+            </div>
+
+            <div className="space-y-3">
+              <Typography variant="label2" as="p" color="muted">
+                {t("showcase.termTipTitle")}
+              </Typography>
+              <div className="border-border/60 bg-background space-y-3 rounded-xl border p-4">
+                <Typography variant="caption2" as="p" color="muted">
+                  {t("showcase.termTipHint")}
+                </Typography>
+                <Typography variant="body2" as="p" className="text-foreground leading-relaxed">
+                  {t("showcase.termTipDemo1")}{" "}
+                  <TermTip
+                    term={t("showcase.termSwr")}
+                    explanation={t("showcase.defSwr")}
+                  />{" "}
+                  {t("showcase.termTipDemo2")}{" "}
+                  <TermTip
+                    term={t("showcase.termZustand")}
+                    explanation={t("showcase.defZustand")}
+                  />{" "}
+                  {t("showcase.termTipDemo3")}{" "}
+                  <TermTip
+                    term={t("showcase.termRhf")}
+                    explanation={t("showcase.defRhf")}
+                  />{" "}
+                  {t("showcase.termTipDemo4")}{" "}
+                  <TermTip
+                    term={t("showcase.termZod")}
+                    explanation={t("showcase.defZod")}
+                  />
+                  {t("showcase.termTipDemo5")}
+                </Typography>
+              </div>
             </div>
           </section>
         </CardContent>

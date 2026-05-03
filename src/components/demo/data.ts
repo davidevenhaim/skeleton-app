@@ -296,9 +296,12 @@ export const PRODUCT_GUIDE_START_STEPS: ProductGuideStep[] = [
     id: "startProject",
     icon: "lucide:sparkles",
     color: "text-violet-500",
-    commands: [ENV_SETUP_COMMAND, PROJECT_RUN_COMMAND],
+    commands: [PROJECT_RUN_COMMAND, ENV_SETUP_COMMAND],
   },
 ];
+
+export const GITHUB_SIGNUP_URL = "https://github.com/signup";
+export const CLAUDE_CODE_URL = "https://claude.ai/download";
 
 export const PRODUCT_GUIDE_RESOURCES: ProductGuideLink[] = [
   {
@@ -327,6 +330,18 @@ export const PRODUCT_GUIDE_RESOURCES: ProductGuideLink[] = [
     color: "",
     href: PNPM_INSTALL_URL,
     command: PNPM_INSTALL_COMMAND,
+  },
+  {
+    id: "claudeCode",
+    icon: "lucide:bot",
+    color: "text-indigo-500",
+    href: CLAUDE_CODE_URL,
+  },
+  {
+    id: "githubSignup",
+    icon: "lucide:github",
+    color: "text-foreground",
+    href: GITHUB_SIGNUP_URL,
   },
 ];
 
@@ -592,5 +607,119 @@ export const PRODUCT_GUIDE_CREDITS: ProductGuideLink[] = [
     icon: "logos:vercel-icon",
     color: "",
     href: "https://vercel.com",
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Interactive setup checklist
+// ---------------------------------------------------------------------------
+
+export type GuideChecklistItemDef = {
+  id: string;
+  icon: string;
+  required: boolean;
+  /** When `required` is false: show optional/recommended badge instead of bonus. */
+  recommended?: boolean;
+  checkCommand?: string;
+  expectedOutput?: string;
+  resourceId?: string;
+  installCommand?: string;
+  commands?: string[];
+};
+
+export type GuideChecklistGroup = {
+  id: string;
+  icon: string;
+  items: GuideChecklistItemDef[];
+};
+
+export const GUIDE_CHECKLIST_GROUPS: GuideChecklistGroup[] = [
+  {
+    id: "tools",
+    icon: "lucide:wrench",
+    items: [
+      {
+        id: "git",
+        icon: "logos:git-icon",
+        required: true,
+        checkCommand: "git --version",
+        expectedOutput: "git version 2.x.x",
+        resourceId: "git",
+      },
+      {
+        id: "node",
+        icon: "logos:nodejs-icon",
+        required: true,
+        checkCommand: "node --version",
+        expectedOutput: "v20.x.x or higher",
+        resourceId: "node",
+      },
+      {
+        id: "pnpm",
+        icon: "logos:pnpm",
+        required: true,
+        checkCommand: "pnpm --version",
+        expectedOutput: "9.x.x",
+        resourceId: "pnpm",
+        installCommand: PNPM_INSTALL_COMMAND,
+      },
+      {
+        id: "editor",
+        icon: "lucide:code-2",
+        required: true,
+      },
+    ],
+  },
+  {
+    id: "setup",
+    icon: "lucide:rocket",
+    items: [
+      {
+        id: "githubAccount",
+        icon: "lucide:github",
+        required: true,
+        resourceId: "github",
+      },
+      {
+        id: "clone",
+        icon: "lucide:git-fork",
+        required: true,
+        commands: [GIT_CLONE_COMMAND],
+      },
+      {
+        id: "install",
+        icon: "lucide:package",
+        required: true,
+        commands: [PROJECT_INSTALL_COMMAND],
+      },
+      {
+        id: "run",
+        icon: "lucide:play",
+        required: true,
+        commands: [PROJECT_RUN_COMMAND],
+      },
+      {
+        id: "env",
+        icon: "lucide:file-cog",
+        required: false,
+        recommended: true,
+        commands: [ENV_SETUP_COMMAND],
+      },
+    ],
+  },
+];
+
+export const GUIDE_BONUS_ITEMS: GuideChecklistItemDef[] = [
+  {
+    id: "claudeCode",
+    icon: "lucide:bot",
+    required: false,
+    resourceId: "claudeCode",
+  },
+  {
+    id: "cursorBonus",
+    icon: "lucide:sparkles",
+    required: false,
+    resourceId: "cursor",
   },
 ];

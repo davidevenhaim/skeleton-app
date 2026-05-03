@@ -164,12 +164,6 @@
           "editorTitle": "Un editor de código — elige uno:",
           "editorDescription": "Necesitas un editor para abrir y trabajar en los archivos del proyecto."
         },
-        "terminalCallout": {
-          "title": "Necesitarás una ventana de Terminal para los comandos",
-          "body": "Una Terminal (también llamada Línea de comandos) te permite dar instrucciones directamente a tu computadora. No te preocupes — solo tienes que copiar y pegar lo que se muestra.",
-          "mac": "En Mac: presiona Cmd + Space, escribe \"Terminal\", presiona Enter",
-          "windows": "En Windows: presiona la tecla Windows, escribe \"cmd\" o \"PowerShell\", presiona Enter"
-        },
         "success": {
           "title": "¡Funcionó! Tu app está corriendo.",
           "body": "Si se abrió una página en http://localhost:3000 — ¡listo! Tu app ya está corriendo en tu propia computadora. Puedes empezar a explorar o construir de inmediato.",
@@ -214,9 +208,9 @@
             "commandNote": "Consejo: VS Code y Cursor tienen una terminal integrada. Ábrela desde el menú: View → Terminal. Estará automáticamente dentro de tu carpeta de proyecto."
           },
           "startProject": {
-            "title": "Copia el archivo de configuración e inicia la app",
-            "description": "Crea tu archivo de configuración local, inicia el servidor y la app se abrirá en tu navegador en localhost:3000.",
-            "commandNote": "El primer comando copia tu archivo de configuración (.env.local). No necesitas cambiar nada dentro de él para pruebas locales — solo cópialo y continúa.",
+            "title": "Inicia la app",
+            "description": "Ejecuta el servidor de desarrollo y abre la app en el navegador en localhost:3000.",
+            "commandNote": "El segundo comando copia tu archivo de configuración local (.env.local) cuando quieras. Puedes omitirlo en un primer arranque — úsalo si la app pide configuración.",
             "note": "Después de <code>pnpm dev</code>, una vez que el proyecto esté corriendo, puedes abrirlo en el navegador de tu computadora en <link>http://localhost:3000</link>."
           }
         }
@@ -245,6 +239,113 @@
           "cursor": {
             "title": "Descargar Cursor",
             "description": "Un editor centrado en AI que se siente parecido a VS Code y funciona muy bien para construir con guía."
+          }
+        }
+      },
+      "checklist": {
+        "title": "Empieza en minutos",
+        "description": "Marca cada paso al completarlo: tu progreso se guarda en el navegador.",
+        "progress": "{done} / {total} completados",
+        "allDone": "¡Listo! Tu app está en marcha.",
+        "openApp": "Abrir localhost:3000",
+        "requiredBadge": "Imprescindible",
+        "optionalBadge": "Opcional",
+        "bonusBadge": "Extra",
+        "checkLabel": "Comprueba en <terminal>Terminal</terminal>:",
+        "expectedLabel": "Salida esperada:",
+        "notInstalledLabel": "¿Todavía no está instalado?",
+        "installCommandLabel": "O instálalo rápido con:",
+        "commandLabel": "Ejecuta en <terminal>Terminal</terminal>:",
+        "installOptionsLabel": "Elige uno e instálalo:",
+        "orVersus": "— o —",
+        "bonusTitle": "Extra — recomendable",
+        "bonusDescription": "No es obligatorio para ejecutar la app, pero mejora mucho trabajar con IA.",
+        "vibeTerms": {
+          "terminal": {
+            "term": "Terminal",
+            "explanation": "Una ventana de texto donde pegas comandos breves para que herramientas como Git o Node los ejecuten uno tras otro."
+          },
+          "lts": {
+            "term": "LTS",
+            "explanation": "Significa «Long Term Support»: una versión estable y probada que recomiendan para la mayoría — no siempre la más nueva."
+          },
+          "packageManager": {
+            "term": "Gestor de paquetes",
+            "explanation": "Software que descarga y organiza las bibliotecas de código de las que depende tu proyecto, como aprovisionar la despensa antes de cocinar."
+          },
+          "codeEditor": {
+            "term": "Editor de código",
+            "explanation": "Una app como VS Code o Cursor para abrir carpetas, editar archivos y, a menudo, abrir la Terminal en la misma ventana."
+          },
+          "github": {
+            "term": "GitHub",
+            "explanation": "Un sitio donde viven los repositorios en línea. Creas tu copia allí y luego la bajas a tu equipo con Git (clonar)."
+          },
+          "localhost": {
+            "term": "localhost",
+            "explanation": "Significa «esta computadora». Una URL como localhost:3000 abre la app en tu navegador solo en tu máquina mientras desarrollas."
+          },
+          "envFile": {
+            "term": ".env / archivo de configuración",
+            "explanation": "Un archivo pequeño con ajustes como URLs. El proyecto incluye un ejemplo que puedes copiar a `.env.local` cuando lo necesites."
+          },
+          "git": {
+            "term": "Git",
+            "explanation": "Software de control de versiones: guarda instantáneas de tu proyecto para seguir cambios, volver atrás si hace falta y sincronizar código con tu equipo o con sitios como GitHub."
+          },
+          "javascript": {
+            "term": "JavaScript",
+            "explanation": "El lenguaje de programación en el que está escrito este proyecto para el navegador y herramientas de servidor. Node.js es un entorno que ejecuta JavaScript en tu equipo para construir y ejecutar la app en local."
+          }
+        },
+        "groups": {
+          "tools": "Instala las herramientas",
+          "setup": "Configura tu proyecto"
+        },
+        "items": {
+          "git": {
+            "title": "Git",
+            "description": "<git>Git</git> es un sistema de control de versiones — la herramienta básica para seguir cambios y el historial del proyecto. Abre <terminal>Terminal</terminal>, ejecuta el comando de comprobación; si ves un número de versión, va bien."
+          },
+          "node": {
+            "title": "Node.js",
+            "description": "Entorno de ejecución de <javascript>JavaScript</javascript> necesario para ejecutar este proyecto en tu equipo. Descarga la versión <lts>LTS</lts> (recomendada) desde la página oficial."
+          },
+          "pnpm": {
+            "title": "pnpm",
+            "description": "El <packageManager>gestor de paquetes</packageManager> que usa este proyecto. Si ya tienes Node.js, puedes instalarlo al instante con un solo comando."
+          },
+          "editor": {
+            "title": "Editor de código",
+            "description": "Necesitas un <codeEditor>editor de código</codeEditor> para abrir y trabajar los archivos. VS Code y Cursor son gratuitos y muy buenos."
+          },
+          "githubAccount": {
+            "title": "Cuenta de GitHub y tu copia",
+            "description": "Crea una cuenta gratuita en <github>GitHub</github> si no tienes. Luego abre la página del proyecto y usa «Use this template» para crear tu copia."
+          },
+          "clone": {
+            "title": "Clona el proyecto en tu equipo",
+            "description": "En <github>GitHub</github> pulsa el botón verde Code, copia la URL y ejecuta el comando en <terminal>Terminal</terminal> — sustituye el ejemplo por tu URL real."
+          },
+          "install": {
+            "title": "Instala dependencias del proyecto",
+            "description": "Abre <terminal>Terminal</terminal> dentro de la carpeta del proyecto (en VS Code o Cursor: View → Terminal) y ejecuta este comando."
+          },
+          "env": {
+            "title": "Copia el archivo de ajustes",
+            "description": "Hazlo cuando la app ya esté corriendo (o si ves un mensaje de configuración). Crea tu <envFile>.env.local</envFile> desde el ejemplo — para probar en local no hace falta editarlo."
+          },
+          "run": {
+            "title": "Inicia la app",
+            "description": "Ejecuta este comando y la app se abrirá en el navegador en <localhost>localhost:3000</localhost>. Si ves esta página, ¡terminaste!"
+          },
+          "claudeCode": {
+            "title": "Claude Code",
+            "description": "Asistente de IA que lee el CLAUDE.md del proyecto y escribe código siguiendo los patrones correctos. Acelera mucho el trabajo."
+          },
+          "cursorBonus": {
+            "title": "Editor Cursor",
+            "description": "Un <codeEditor>editor de código</codeEditor> pensado para programar con IA, muy parecido a VS Code. Si aún no eliges editor, empieza aquí."
           }
         }
       },

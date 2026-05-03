@@ -155,12 +155,6 @@
           "editorTitle": "עורך קוד — בחר אחד:",
           "editorDescription": "צריך עורך כדי לפתוח ולעבוד על קבצי הפרויקט."
         },
-        "terminalCallout": {
-          "title": "תצטרך חלון טרמינל לפקודות האלה",
-          "body": "טרמינל (נקרא גם שורת פקודה) מאפשר לך לתת הוראות ישירות למחשב. אל תדאג — אתה רק צריך להעתיק ולהדביק את מה שמוצג.",
-          "mac": "ב-Mac: לחץ Cmd + Space, הקלד \"Terminal\", לחץ Enter",
-          "windows": "ב-Windows: לחץ על מקש Windows, הקלד \"cmd\" או \"PowerShell\", לחץ Enter"
-        },
         "success": {
           "title": "עבד! האפליקציה שלך פועלת.",
           "body": "אם נפתח דף אינטרנט בכתובת http://localhost:3000 — סיימת! האפליקציה שלך פועלת עכשיו על המחשב שלך. אפשר להתחיל לחקור או לבנות.",
@@ -205,9 +199,9 @@
             "commandNote": "טיפ: ל-VS Code ול-Cursor יש טרמינל מובנה. פתחו אותו מהתפריט: View → Terminal. הוא ייפתח אוטומטית בתוך תיקיית הפרויקט."
           },
           "startProject": {
-            "title": "העתיקו את קובץ ההגדרות והפעילו את האפליקציה",
-            "description": "צרו את קובץ ההגדרות המקומי, הפעילו את שרת הפיתוח, והאתר ייפתח בדפדפן בכתובת localhost:3000.",
-            "commandNote": "הפקודה הראשונה מעתיקה את קובץ ההגדרות שלך (.env.local). לבדיקה מקומית אין צורך לשנות כלום בתוכו — פשוט העתק והמשך.",
+            "title": "הפעילו את האפליקציה",
+            "description": "הפעילו את שרת הפיתוח והאפליקציה תיפתח בדפדפן בכתובת localhost:3000.",
+            "commandNote": "הפקודה השנייה מעתיקה את קובץ ההגדרות המקומי (.env.local) כשמוכנים. אפשר לדלג בפעם הראשונה — הוסיפו אם האפליקציה מבקשת הגדרות.",
             "note": "אחרי <code>pnpm dev</code>, כשהפרויקט כבר רץ, אפשר לפתוח אותו בדפדפן של המחשב דרך <link>http://localhost:3000</link>."
           }
         }
@@ -240,6 +234,121 @@
           "cursor": {
             "title": "הורדת Cursor",
             "description": "עורך קוד שממוקד ב-AI, מרגיש דומה ל-VS Code ומתאים מאוד לבנייה מודרכת."
+          },
+          "claudeCode": {
+            "title": "הורדת Claude Code",
+            "description": "Claude Code הוא עוזר קידוד AI שמבין את מבנה הפרויקט ומייצר קוד טוב יותר."
+          },
+          "githubSignup": {
+            "title": "צור חשבון GitHub חינמי",
+            "description": "צריך חשבון GitHub כדי ליצור עותק משלך של תבנית הפרויקט."
+          }
+        }
+      },
+      "checklist": {
+        "title": "תתחיל תוך כמה דקות",
+        "description": "סמן כל פריט כשסיימת — ההתקדמות שלך נשמרת בדפדפן.",
+        "progress": "{done} / {total} הושלמו",
+        "allDone": "מוכן! האפליקציה שלך פועלת.",
+        "openApp": "פתח localhost:3000",
+        "requiredBadge": "חובה",
+        "optionalBadge": "לא חובה",
+        "bonusBadge": "בונוס",
+        "checkLabel": "הרץ ב-<terminal>טרמינל</terminal> לבדיקה:",
+        "expectedLabel": "פלט צפוי:",
+        "notInstalledLabel": "לא מותקן עדיין?",
+        "installCommandLabel": "או התקן מהר עם:",
+        "commandLabel": "הרץ ב-<terminal>טרמינל</terminal>:",
+        "installOptionsLabel": "בחר אחד והתקן:",
+        "orVersus": "— או —",
+        "bonusTitle": "בונוס — נחמד לקבל",
+        "bonusDescription": "לא חובה כדי להריץ את האפליקציה, אבל הופך בנייה עם AI לטובה הרבה יותר.",
+        "vibeTerms": {
+          "terminal": {
+            "term": "טרמינל",
+            "explanation": "חלון שבו מקלידים פקודות טקסט קצרות — כמו לשלוח הודעה למחשב במקום ללחוץ על כפתורים. ב-Mac: Cmd + Space ← הקלד Terminal. ב-Windows: מקש Windows ← הקלד cmd."
+          },
+          "lts": {
+            "term": "LTS",
+            "explanation": "Long Term Support — הגרסה היציבה והבדוקה שמומלצת לרוב האנשים. לא החדשה ביותר, אבל זו עם הכי פחות הפתעות. תמיד בחר LTS בעת התקנת Node.js."
+          },
+          "packageManager": {
+            "term": "מנהל חבילות",
+            "explanation": "כלי שמוריד בפקודה אחת את כל ספריות הקוד שהאפליקציה צריכה. מריצים `pnpm install` פעם אחת וזה מסדר הכול — כמו משלוח חומרים לפרויקט."
+          },
+          "codeEditor": {
+            "term": "עורך קוד",
+            "explanation": "האפליקציה שבה פותחים ועורכים את קבצי הפרויקט — כמו Google Docs, אבל לקוד. VS Code ו-Cursor שניהם חינמיים. ל-Cursor יש גם AI מובנה שאפשר לשוחח איתו תוך כדי בנייה."
+          },
+          "github": {
+            "term": "GitHub",
+            "explanation": "אתר לאחסון ושיתוף פרויקטי קוד. לוחצים על 'Use this template' כדי ליצור עותק אישי של הפרויקט הזה, ואז מורידים אותו למחשב ומתחילים לבנות."
+          },
+          "localhost": {
+            "term": "localhost",
+            "explanation": "המחשב שלך שמתנהג כשרת אתר. כשמריצים `pnpm dev`, האפליקציה נפתחת בכתובת localhost:3000 — נראית ועובדת בדיוק כמו אתר אמיתי, אבל רק אתה רואה אותה."
+          },
+          "envFile": {
+            "term": "קובץ הגדרות",
+            "explanation": "קובץ נסתר עם הגדרות הפרויקט כמו כתובות שרת. הפרויקט כולל קובץ דוגמה — מריצים פקודה אחת כדי ליצור את שלך, ולא צריך לשנות כלום לצורך בדיקה מקומית."
+          },
+          "git": {
+            "term": "Git",
+            "explanation": "תוכנת בקרת גרסאות: היא שומרת צילומי מצב של הפרויקט לאורך זמן כדי לעקוב אחרי שינויים, לחזור אחורה במידת הצורך ולסנכרן קוד עם צוות או עם אתרים כמו GitHub."
+          },
+          "javascript": {
+            "term": "JavaScript",
+            "explanation": "שפת התכנות שבה נכתב הפרויקט לדפדפן ולכלי שרת. Node.js הוא סביבת הרצה שמריצה JavaScript על המחשב שלך כדי שהאפליקציה תיבנה ותרוץ מקומית."
+          }
+        },
+        "groups": {
+          "tools": "התקן את הכלים",
+          "setup": "הגדר את הפרויקט"
+        },
+        "items": {
+          "git": {
+            "title": "Git",
+            "description": "<git>Git</git> הוא מערכת לבקרת גרסאות — הכלי הבסיסי לעקוב אחרי שינויים ולנהל את היסטוריית הפרויקט. פתח <terminal>טרמינל</terminal> והרץ את פקודת הבדיקה — אם רואים מספר גרסה, הכל תקין."
+          },
+          "node": {
+            "title": "Node.js",
+            "description": "סביבת הרצה של <javascript>JavaScript</javascript> נדרשת להרצת הפרויקט מקומית. הורד את גרסת <lts>LTS</lts> (מומלץ) מהדף הרשמי."
+          },
+          "pnpm": {
+            "title": "pnpm",
+            "description": "ה-<packageManager>מנהל חבילות</packageManager> שבו משתמש הפרויקט. אם Node.js מותקן, אפשר להתקין אותו מיד עם פקודה אחת."
+          },
+          "editor": {
+            "title": "עורך קוד",
+            "description": "צריך <codeEditor>עורך קוד</codeEditor> כדי לפתוח ולעבוד על קבצי הפרויקט. VS Code ו-Cursor שניהם חינמיים ומצוינים."
+          },
+          "githubAccount": {
+            "title": "חשבון GitHub + עותק משלך",
+            "description": "צור חשבון <github>GitHub</github> חינמי אם אין לך. אחר כך פתח את דף הפרויקט ולחץ 'Use this template' כדי ליצור עותק אישי."
+          },
+          "clone": {
+            "title": "הורד את הפרויקט למחשב",
+            "description": "ב-<github>GitHub</github> לחץ על הכפתור הירוק Code, העתק את ה-URL, ואז הרץ פקודה זו ב-<terminal>טרמינל</terminal> — החלף את הדוגמה ב-URL האמיתי שלך."
+          },
+          "install": {
+            "title": "התקן תלויות הפרויקט",
+            "description": "פתח <terminal>טרמינל</terminal> בתוך תיקיית הפרויקט (ב-VS Code או Cursor: View → Terminal) והרץ פקודה זו."
+          },
+          "env": {
+            "title": "העתק את קובץ ההגדרות",
+            "description": "אחרי שהאפליקציה כבר רצה (או אם מופיעה הודעת הגדרות). יוצר את <envFile>.env.local</envFile> מהדוגמה — לבדיקה מקומית אין חובה לערוך."
+          },
+          "run": {
+            "title": "הפעל את האפליקציה",
+            "description": "הרץ פקודה זו והאפליקציה תיפתח בדפדפן בכתובת <localhost>localhost:3000</localhost>. אמורים לראות את הדף הזה — סיימת!"
+          },
+          "claudeCode": {
+            "title": "Claude Code",
+            "description": "עוזר AI שקורא את CLAUDE.md של הפרויקט וכותב קוד שעוקב אחרי הדפוסים הנכונים. מאיץ מאוד את הבנייה."
+          },
+          "cursorBonus": {
+            "title": "עורך Cursor",
+            "description": "<codeEditor>עורך קוד</codeEditor> ממוקד-AI שנבנה לעבודה עם AI. דומה מאוד ל-VS Code — אם עוד לא בחרת עורך, התחל כאן."
           }
         }
       },
@@ -744,7 +853,22 @@
         "emptyStateSection": "מצב ריק",
         "emptyHeading": "אין עדיין פריטים",
         "emptyDescription": "מצב ריק מסביר מה קרה ומה אפשר לעשות הלאה כשאין נתונים.",
-        "emptyAction": "פעולה ראשית"
+        "emptyAction": "פעולה ראשית",
+        "termTipTitle": "TermTip — הגדרות בסגנון ויקיפדיה",
+        "termTipHint": "רחף מעל (או הקש על) המונחים המסומנים כדי לראות את ההגדרה שלהם.",
+        "termTipDemo1": "הפרויקט הזה משתמש ב-",
+        "termTipDemo2": "לשליפת נתונים,",
+        "termTipDemo3": "לניהול מצב גלובלי, ו-",
+        "termTipDemo4": "לטפסים — הכול עם אימות של",
+        "termTipDemo5": ".",
+        "termSwr": "SWR",
+        "termZustand": "Zustand",
+        "termRhf": "react-hook-form",
+        "termZod": "Zod",
+        "defSwr": "ספריית שליפת נתונים ל-React. Stale-While-Revalidate — מחזירה נתונים שמורים מיד, ואז משחזרת נתונים עדכניים ברקע.",
+        "defZustand": "ספריית ניהול מצב גלובלי קלה ל-React. פשוטה הרבה יותר מ-Redux — ללא actions, reducers, או boilerplate. רק store וhook.",
+        "defRhf": "ספריית טפסים לביצועים גבוהים ב-React. משתמשת ב-inputs לא מבוקרים כדי למזער re-renders ולשמור על טפסים גדולים מהירים.",
+        "defZod": "ספריית אימות סכמות לTypeScript. הגדר את צורת הנתונים שלך פעם אחת וקבל גם אימות בזמן ריצה וגם type inference בזמן קומפילציה."
       }
     }
   },

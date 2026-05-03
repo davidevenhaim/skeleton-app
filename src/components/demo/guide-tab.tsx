@@ -12,31 +12,92 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Progress } from "@/components/ui/progress";
 import Iconify from "@/components/ui/iconify";
+import { TermTip } from "@/components/ui/term-tip";
 import { Typography } from "@/components/ui/typography";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { useLocalStorage } from "@/hooks/use-local-storage";
 import { cn } from "@/lib/utils";
 import {
+  GUIDE_BONUS_ITEMS,
+  GUIDE_CHECKLIST_GROUPS,
   GUIDE_IGNORE_FILES,
-  GUIDE_PREREQUISITES,
   GUIDE_TROUBLESHOOTING,
   PRODUCT_GUIDE_CREDITS,
   PRODUCT_GUIDE_GOOD_FIT,
   PRODUCT_GUIDE_LESS_SUITABLE,
   PRODUCT_GUIDE_PURPOSE_POINTS,
   PRODUCT_GUIDE_RESOURCES,
-  PRODUCT_GUIDE_START_STEPS,
+  type GuideChecklistItemDef,
 } from "@/components/demo/data";
-import AnimatedDivBreathing from "../ui/animations/animated-div-breathing";
+
+const CHECKLIST_TERM_TIP_KEYS = [
+  "terminal",
+  "lts",
+  "packageManager",
+  "codeEditor",
+  "github",
+  "localhost",
+  "envFile",
+  "git",
+  "javascript",
+] as const;
+
+type ChecklistTermTipKey = (typeof CHECKLIST_TERM_TIP_KEYS)[number];
+
+function richChunksToPlainString(chunks: React.ReactNode): string {
+  if (chunks == null || chunks === false) return "";
+  if (typeof chunks === "string" || typeof chunks === "number") return String(chunks);
+  if (Array.isArray(chunks)) return chunks.map(richChunksToPlainString).join("");
+  return "";
+}
 
 export function DemoGuideTab() {
   const tProductGuide = useTranslations("demo.productGuide");
+
+  const checklistTermTipRich = React.useMemo(() => {
+    const map = {} as Record<
+      ChecklistTermTipKey,
+      (chunks: React.ReactNode) => React.ReactNode
+    >;
+    for (const key of CHECKLIST_TERM_TIP_KEYS) {
+      map[key] = (chunks: React.ReactNode) => (
+        <TermTip
+          term={
+            richChunksToPlainString(chunks) ||
+            tProductGuide(`checklist.vibeTerms.${key}.term`)
+          }
+          explanation={tProductGuide(`checklist.vibeTerms.${key}.explanation`)}
+          className="text-inherit"
+          side="top"
+        />
+      );
+    }
+    return map;
+  }, [tProductGuide]);
   const { copy } = useCopyToClipboard();
   const [lastCopied, setLastCopied] = React.useState<string | null>(null);
+  const [expandedId, setExpandedId] = React.useState<string | null>(null);
+  const { state: checked, setState: setChecked } = useLocalStorage<Record<string, boolean>>(
+    "guide-setup-checklist",
+    {} as Record<string, boolean>
+  );
+
   const resourcesById = React.useMemo(
-    () => new Map(PRODUCT_GUIDE_RESOURCES.map((resource) => [resource.id, resource])),
+    () => new Map(PRODUCT_GUIDE_RESOURCES.map((r) => [r.id, r])),
     []
   );
+
+  const allChecklistItems = React.useMemo(
+    () => GUIDE_CHECKLIST_GROUPS.flatMap((g) => g.items),
+    []
+  );
+  const requiredTotal = allChecklistItems.filter((i) => i.required).length;
+  const requiredDone = allChecklistItems.filter((i) => i.required && checked[i.id]).length;
+  const progressPct = requiredTotal > 0 ? Math.round((requiredDone / requiredTotal) * 100) : 0;
+  const allDone = requiredDone === requiredTotal;
 
   const handleCopy = React.useCallback(
     async (key: string, value: string) => {
@@ -47,47 +108,6 @@ export function DemoGuideTab() {
       }, 2000);
     },
     [copy]
-  );
-
-  const renderResourceLinks = React.useCallback(
-    (stepId: string, resourceIds?: string[]) =>
-      resourceIds?.map((resourceId) => {
-        const resource = resourcesById.get(resourceId);
-
-        if (!resource) return null;
-
-        return (
-          <Link
-            key={`${stepId}-${resource.id}`}
-            href={resource.href}
-            target="_blank"
-            rel="noreferrer"
-            className="border-border/60 bg-muted/30 hover:border-primary/30 hover:bg-accent/40 block rounded-xl border p-3 transition-all duration-200 hover:-translate-y-0.5"
-          >
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex min-w-0 items-center gap-2">
-                <Iconify icon={resource.icon} className="text-muted-foreground size-4 shrink-0" />
-                <Typography
-                  variant="label1"
-                  as="h4"
-                  className="text-foreground truncate text-sm font-medium"
-                >
-                  {tProductGuide(`resources.items.${resource.id}.title`)}
-                </Typography>
-              </div>
-              <Typography
-                variant="label2"
-                as="span"
-                className="text-primary inline-flex shrink-0 items-center gap-1 text-sm font-medium"
-              >
-                {tProductGuide("actions.openLink")}
-                <Iconify icon="lucide:arrow-up-right" className="size-3.5" />
-              </Typography>
-            </div>
-          </Link>
-        );
-      }),
-    [resourcesById, tProductGuide]
   );
 
   const renderCommandBlocks = React.useCallback(
@@ -131,361 +151,455 @@ export function DemoGuideTab() {
     [handleCopy, lastCopied, tProductGuide]
   );
 
+  const renderChecklistItem = React.useCallback(
+    (item: GuideChecklistItemDef) => {
+      const isChecked = Boolean(checked[item.id]);
+      const isExpanded = expandedId === item.id;
+      const resource = item.resourceId ? resourcesById.get(item.resourceId) : undefined;
+
+      return (
+        <div
+          key={item.id}
+          className={cn(
+            "border-border/40 border-b last:border-0 transition-colors duration-150",
+            isChecked && "bg-muted/20"
+          )}
+        >
+          {/* Row header */}
+          <button
+            type="button"
+            className="hover:bg-muted/30 flex w-full cursor-pointer items-center gap-3 px-4 py-3.5 text-left transition-colors"
+            onClick={() => setExpandedId((prev) => (prev === item.id ? null : item.id))}
+          >
+            <Checkbox
+              checked={isChecked}
+              onCheckedChange={() => {
+                setChecked({ [item.id]: !isChecked });
+              }}
+              onClick={(e: React.MouseEvent) => e.stopPropagation()}
+              className="shrink-0"
+            />
+            <Iconify
+              icon={item.icon}
+              className={cn("size-4 shrink-0", isChecked && "opacity-40")}
+            />
+            <Typography
+              variant="label1"
+              className={cn(
+                "flex-1 text-sm font-medium",
+                isChecked
+                  ? "text-muted-foreground line-through decoration-muted-foreground/40"
+                  : "text-foreground"
+              )}
+            >
+              {tProductGuide(`checklist.items.${item.id}.title`)}
+            </Typography>
+            <div className="flex shrink-0 items-center gap-2">
+              <Badge
+                variant="secondary"
+                className={cn(
+                  "text-xs font-medium",
+                  !item.required &&
+                    "border border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-300"
+                )}
+              >
+                {item.required
+                  ? tProductGuide("checklist.requiredBadge")
+                  : item.recommended
+                    ? tProductGuide("checklist.optionalBadge")
+                    : tProductGuide("checklist.bonusBadge")}
+              </Badge>
+              <Iconify
+                icon={isExpanded ? "lucide:chevron-up" : "lucide:chevron-down"}
+                className="text-muted-foreground size-4 shrink-0"
+              />
+            </div>
+          </button>
+
+          {/* Expanded panel */}
+          {isExpanded && (
+            <div className="border-border/30 bg-muted/10 space-y-3 border-t px-4 pb-4 pt-3">
+              <Typography variant="caption2" className="text-muted-foreground text-sm leading-relaxed">
+                {tProductGuide.rich(
+                  `checklist.items.${item.id}.description`,
+                  checklistTermTipRich
+                )}
+              </Typography>
+
+              {/* Verify command */}
+              {item.checkCommand && (
+                <div className="space-y-1.5">
+                  <Typography
+                    variant="caption2"
+                    className="text-muted-foreground block text-xs font-medium uppercase tracking-wide"
+                  >
+                    {tProductGuide.rich("checklist.checkLabel", checklistTermTipRich)}
+                  </Typography>
+                  <div className="flex items-center gap-2">
+                    <code className="bg-background text-foreground min-w-0 flex-1 rounded-md border px-2 py-1.5 text-xs break-all">
+                      {item.checkCommand}
+                    </code>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      className="size-7 shrink-0 p-0"
+                      onClick={() => handleCopy(`chk-${item.id}`, item.checkCommand!)}
+                    >
+                      <Iconify
+                        icon={lastCopied === `chk-${item.id}` ? "lucide:check" : "lucide:copy"}
+                        className="size-3.5"
+                      />
+                    </Button>
+                  </div>
+                  {item.expectedOutput && (
+                    <Typography variant="caption2" className="text-muted-foreground text-xs">
+                      {tProductGuide("checklist.expectedLabel")}{" "}
+                      <code className="bg-muted text-foreground rounded px-1.5 py-0.5 text-xs font-medium">
+                        {item.expectedOutput}
+                      </code>
+                    </Typography>
+                  )}
+                </div>
+              )}
+
+              {/* Editor: VS Code or Cursor */}
+              {item.id === "editor" && (
+                <div className="space-y-1.5">
+                  <Typography
+                    variant="caption2"
+                    className="text-muted-foreground block text-xs font-medium uppercase tracking-wide"
+                  >
+                    {tProductGuide("checklist.installOptionsLabel")}
+                  </Typography>
+                  <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
+                    {(["vscode", "cursor"] as const).map((editorId, i) => {
+                      const editorRes = resourcesById.get(editorId);
+                      if (!editorRes) return null;
+                      return (
+                        <React.Fragment key={editorId}>
+                          {i === 1 && (
+                            <Typography
+                              variant="caption2"
+                              className="text-muted-foreground text-center text-xs font-medium"
+                            >
+                              {tProductGuide("checklist.orVersus")}
+                            </Typography>
+                          )}
+                          <Link
+                            href={editorRes.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="border-border/60 bg-background hover:border-primary/30 hover:bg-accent/40 flex items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-all duration-200 hover:-translate-y-0.5"
+                          >
+                            <Iconify icon={editorRes.icon} className="size-4 shrink-0" />
+                            <Typography
+                              variant="label1"
+                              className="text-foreground min-w-0 flex-1 truncate text-xs font-medium"
+                            >
+                              {tProductGuide(`resources.items.${editorId}.title`)}
+                            </Typography>
+                            <Iconify
+                              icon="lucide:arrow-up-right"
+                              className="text-primary size-3 shrink-0"
+                            />
+                          </Link>
+                        </React.Fragment>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Install link (non-editor items with a resource) */}
+              {resource && item.id !== "editor" && (
+                <div className="space-y-1.5">
+                  {item.checkCommand && (
+                    <Typography
+                      variant="caption2"
+                      className="text-muted-foreground block text-xs font-medium uppercase tracking-wide"
+                    >
+                      {tProductGuide("checklist.notInstalledLabel")}
+                    </Typography>
+                  )}
+                  <Link
+                    href={resource.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="border-border/60 bg-background hover:border-primary/30 hover:bg-accent/40 inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-all duration-200 hover:-translate-y-0.5"
+                  >
+                    <Iconify icon={resource.icon} className="size-4 shrink-0" />
+                    <Typography variant="label1" className="text-foreground font-medium">
+                      {tProductGuide(`resources.items.${resource.id}.title`)}
+                    </Typography>
+                    <Iconify
+                      icon="lucide:arrow-up-right"
+                      className="text-primary ml-2 size-3.5 shrink-0"
+                    />
+                  </Link>
+                </div>
+              )}
+
+              {/* Install command (e.g. pnpm via npm) */}
+              {item.installCommand && (
+                <div className="space-y-1.5">
+                  <Typography
+                    variant="caption2"
+                    className="text-muted-foreground block text-xs font-medium uppercase tracking-wide"
+                  >
+                    {tProductGuide("checklist.installCommandLabel")}
+                  </Typography>
+                  <div className="flex items-center gap-2">
+                    <code className="bg-background text-foreground min-w-0 flex-1 rounded-md border px-2 py-1.5 text-xs break-all">
+                      {item.installCommand}
+                    </code>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      className="size-7 shrink-0 p-0"
+                      onClick={() => handleCopy(`icmd-${item.id}`, item.installCommand!)}
+                    >
+                      <Iconify
+                        icon={lastCopied === `icmd-${item.id}` ? "lucide:check" : "lucide:copy"}
+                        className="size-3.5"
+                      />
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {/* Setup / run commands */}
+              {item.commands && item.commands.length > 0 && (
+                <div className="space-y-2">
+                  <Typography
+                    variant="caption2"
+                    className="text-muted-foreground block text-xs font-medium uppercase tracking-wide"
+                  >
+                    {tProductGuide.rich("checklist.commandLabel", checklistTermTipRich)}
+                  </Typography>
+                  {item.commands.map((cmd, i) => {
+                    const ck = `cmd-${item.id}-${i}`;
+                    return (
+                      <div key={ck} className="flex items-center gap-2">
+                        <code className="bg-background text-foreground min-w-0 flex-1 rounded-md border px-2 py-1.5 text-xs break-all">
+                          {cmd}
+                        </code>
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                          className="size-7 shrink-0 p-0"
+                          onClick={() => handleCopy(ck, cmd)}
+                        >
+                          <Iconify
+                            icon={lastCopied === ck ? "lucide:check" : "lucide:copy"}
+                            className="size-3.5"
+                          />
+                        </Button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* "run" step: extra note with localhost link */}
+              {item.id === "run" && (
+                <div className="border-primary/15 bg-primary/5 rounded-lg border px-3 py-2">
+                  <Typography variant="caption2" className="text-muted-foreground text-xs">
+                    {tProductGuide.rich("howToUse.steps.startProject.note", {
+                      code: (chunks) => (
+                        <code className="bg-background text-foreground rounded px-1.5 py-0.5 text-xs">
+                          {chunks}
+                        </code>
+                      ),
+                      link: (chunks) => (
+                        <Link
+                          href="http://localhost:3000"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-primary font-medium underline underline-offset-4"
+                        >
+                          {chunks}
+                        </Link>
+                      ),
+                    })}
+                  </Typography>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      );
+    },
+    [
+      checked,
+      expandedId,
+      handleCopy,
+      lastCopied,
+      resourcesById,
+      setChecked,
+      tProductGuide,
+      checklistTermTipRich,
+    ]
+  );
+
   return (
     <div className="space-y-10">
       {/* 1. Hero */}
-      <AnimatedDivBreathing>
-        <section className="from-primary/10 via-background to-background relative overflow-hidden rounded-2xl border bg-gradient-to-br p-8 shadow-sm md:p-10 rtl:bg-gradient-to-bl">
-          <div className="from-primary/5 pointer-events-none absolute inset-y-0 end-0 w-1/2 bg-gradient-to-l to-transparent rtl:bg-gradient-to-r" />
-          <div className="relative max-w-4xl space-y-4">
-            <Badge variant="secondary" className="text-xs font-medium">
-              {tProductGuide("eyebrow")}
-            </Badge>
-            <Typography
-              variant="h2"
-              as="h1"
-              className="text-foreground text-4xl font-bold tracking-tight md:text-5xl"
-            >
-              {tProductGuide("title")}
-            </Typography>
-            <Typography variant="body2" className="text-muted-foreground text-lg leading-relaxed">
-              {tProductGuide("subtitle")}
-            </Typography>
-          </div>
-        </section>
-      </AnimatedDivBreathing>
-
-      {/* 2. Start here — moved to top so users get running immediately */}
-      <section className="space-y-6">
-        <div className="max-w-4xl space-y-2">
+      <section className="from-primary/10 via-background to-background relative overflow-hidden rounded-2xl border bg-gradient-to-br p-8 shadow-sm md:p-10 rtl:bg-gradient-to-bl">
+        <div className="from-primary/5 pointer-events-none absolute inset-y-0 end-0 w-1/2 bg-gradient-to-l to-transparent rtl:bg-gradient-to-r" />
+        <div className="relative space-y-4">
+          <Badge variant="secondary" className="text-xs font-medium">
+            {tProductGuide("eyebrow")}
+          </Badge>
           <Typography
-            variant="subtitle1"
-            as="h2"
-            className="text-foreground text-2xl font-semibold tracking-tight"
+            variant="h2"
+            as="h1"
+            className="text-foreground text-4xl font-bold tracking-tight md:text-5xl"
           >
-            {tProductGuide("howToUse.title")}
+            {tProductGuide("title")}
           </Typography>
-          <Typography variant="caption1" className="text-muted-foreground">
-            {tProductGuide("howToUse.description")}
+          <Typography variant="body2" className="text-muted-foreground leading-relaxed">
+            {tProductGuide("subtitle")}
           </Typography>
         </div>
+      </section>
 
-        {/* Terminal callout */}
-        <div className="flex items-start gap-3 rounded-xl border border-sky-200 bg-sky-50 p-4 dark:border-sky-900 dark:bg-sky-950/30">
-          <Iconify icon="lucide:terminal" className="mt-0.5 size-5 shrink-0 text-sky-500" />
-          <div className="space-y-2">
-            <Typography variant="label1" className="text-foreground text-sm font-semibold">
-              {tProductGuide("howToUse.terminalCallout.title")}
-            </Typography>
-            <Typography variant="caption2" className="text-muted-foreground text-sm">
-              {tProductGuide("howToUse.terminalCallout.body")}
-            </Typography>
-            <div className="space-y-0.5 pt-0.5">
-              <Typography variant="caption2" className="text-muted-foreground block text-xs">
-                {tProductGuide("howToUse.terminalCallout.mac")}
-              </Typography>
-              <Typography variant="caption2" className="text-muted-foreground block text-xs">
-                {tProductGuide("howToUse.terminalCallout.windows")}
-              </Typography>
-            </div>
-          </div>
-        </div>
-
-        {/* Prerequisites */}
-        <div className="space-y-4">
+      {/* 2. Interactive Setup Checklist */}
+      <section className="space-y-5">
+        {/* Header + progress counter */}
+        <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="space-y-1">
-            <Typography variant="subtitle2" as="h3" className="text-foreground font-semibold">
-              {tProductGuide("howToUse.prerequisites.title")}
+            <Typography
+              variant="subtitle1"
+              as="h2"
+              className="text-foreground text-2xl font-semibold tracking-tight"
+            >
+              {tProductGuide("checklist.title")}
             </Typography>
             <Typography variant="caption1" className="text-muted-foreground">
-              {tProductGuide("howToUse.prerequisites.description")}
+              {tProductGuide("checklist.description")}
             </Typography>
           </div>
-
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-            {GUIDE_PREREQUISITES.map((prereq) => {
-              const resource = resourcesById.get(prereq.resourceId);
-              return (
-                <Card key={prereq.id} className="border-border/70">
-                  <CardContent className="flex flex-col gap-3 p-4">
-                    <div className="flex items-center gap-2">
-                      <Iconify icon={prereq.icon} className="size-5 shrink-0" />
-                      <Typography variant="subtitle2" className="text-foreground font-semibold">
-                        {tProductGuide(`howToUse.prerequisites.items.${prereq.id}.name`)}
-                      </Typography>
-                    </div>
-                    <Typography variant="caption2" className="text-muted-foreground text-xs">
-                      {tProductGuide(`howToUse.prerequisites.items.${prereq.id}.description`)}
-                    </Typography>
-
-                    <div className="space-y-1.5">
-                      <Typography
-                        variant="caption2"
-                        className="text-muted-foreground block text-xs font-medium tracking-wide uppercase"
-                      >
-                        {tProductGuide("howToUse.prerequisites.checkLabel")}
-                      </Typography>
-                      {renderCommandBlocks(`prereq-${prereq.id}`, [prereq.checkCommand])}
-                    </div>
-
-                    <div className="flex items-center gap-1.5">
-                      <Typography
-                        variant="caption2"
-                        className="text-muted-foreground shrink-0 text-xs"
-                      >
-                        {tProductGuide("howToUse.prerequisites.expectedLabel")}
-                      </Typography>
-                      <code className="bg-muted text-foreground rounded px-1.5 py-0.5 text-xs">
-                        {prereq.expectedOutput}
-                      </code>
-                    </div>
-
-                    {resource && (
-                      <Link
-                        href={resource.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="border-border/60 bg-muted/30 hover:border-primary/30 hover:bg-accent/40 mt-auto block rounded-xl border p-3 transition-all duration-200 hover:-translate-y-0.5"
-                      >
-                        <div className="flex items-center justify-between gap-3">
-                          <Typography variant="caption2" className="text-muted-foreground text-xs">
-                            {tProductGuide("howToUse.prerequisites.installLabel")}
-                          </Typography>
-                          <Typography
-                            variant="label2"
-                            as="span"
-                            className="text-primary inline-flex shrink-0 items-center gap-1 text-xs font-medium"
-                          >
-                            {tProductGuide(`resources.items.${prereq.resourceId}.title`)}
-                            <Iconify icon="lucide:arrow-up-right" className="size-3" />
-                          </Typography>
-                        </div>
-                      </Link>
-                    )}
-
-                    {prereq.installCommand && (
-                      <div className="space-y-1.5">
-                        <Typography
-                          variant="caption2"
-                          className="text-muted-foreground block text-xs font-medium tracking-wide uppercase"
-                        >
-                          {tProductGuide("howToUse.prerequisites.installCommandLabel")}
-                        </Typography>
-                        {renderCommandBlocks(`prereq-install-${prereq.id}`, [
-                          prereq.installCommand,
-                        ])}
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              );
+          <Typography
+            variant="label1"
+            className={cn(
+              "shrink-0 text-sm font-bold tabular-nums",
+              allDone
+                ? "text-emerald-600 dark:text-emerald-400"
+                : "text-muted-foreground"
+            )}
+          >
+            {tProductGuide("checklist.progress", {
+              done: requiredDone,
+              total: requiredTotal,
             })}
-          </div>
-
-          {/* Editor choice */}
-          <div className="border-border/70 rounded-xl border p-4">
-            <div className="mb-3 space-y-0.5">
-              <Typography variant="subtitle2" className="text-foreground text-sm font-semibold">
-                {tProductGuide("howToUse.prerequisites.editorTitle")}
-              </Typography>
-              <Typography variant="caption2" className="text-muted-foreground text-xs">
-                {tProductGuide("howToUse.prerequisites.editorDescription")}
-              </Typography>
-            </div>
-            <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3">
-              {[resourcesById.get("vscode")].map(
-                (resource) =>
-                  resource && (
-                    <Link
-                      key={resource.id}
-                      href={resource.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="border-border/60 bg-muted/30 hover:border-primary/30 hover:bg-accent/40 block rounded-xl border p-3 transition-all duration-200 hover:-translate-y-0.5"
-                    >
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="flex min-w-0 items-center gap-2">
-                          <Iconify
-                            icon={resource.icon}
-                            className="text-muted-foreground size-4 shrink-0"
-                          />
-                          <Typography
-                            variant="label1"
-                            as="h4"
-                            className="text-foreground truncate text-sm font-medium"
-                          >
-                            {tProductGuide(`resources.items.${resource.id}.title`)}
-                          </Typography>
-                        </div>
-                        <Iconify
-                          icon="lucide:arrow-up-right"
-                          className="text-primary size-3.5 shrink-0"
-                        />
-                      </div>
-                    </Link>
-                  )
-              )}
-              <p className="text-muted-foreground text-center text-xs font-medium">— or —</p>
-              {[resourcesById.get("cursor")].map(
-                (resource) =>
-                  resource && (
-                    <Link
-                      key={resource.id}
-                      href={resource.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="border-border/60 bg-muted/30 hover:border-primary/30 hover:bg-accent/40 block rounded-xl border p-3 transition-all duration-200 hover:-translate-y-0.5"
-                    >
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="flex min-w-0 items-center gap-2">
-                          <Iconify
-                            icon={resource.icon}
-                            className="text-muted-foreground size-4 shrink-0"
-                          />
-                          <Typography
-                            variant="label1"
-                            as="h4"
-                            className="text-foreground truncate text-sm font-medium"
-                          >
-                            {tProductGuide(`resources.items.${resource.id}.title`)}
-                          </Typography>
-                        </div>
-                        <Iconify
-                          icon="lucide:arrow-up-right"
-                          className="text-primary size-3.5 shrink-0"
-                        />
-                      </div>
-                    </Link>
-                  )
-              )}
-            </div>
-          </div>
+          </Typography>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {PRODUCT_GUIDE_START_STEPS.map((step, index) => (
-            <Card key={step.id} className="border-border/70">
-              <CardContent className="flex h-full flex-col gap-4 p-5">
-                <Badge variant="outline" className="w-fit text-xs font-medium">
-                  {tProductGuide("howToUse.stepLabel", { step: index + 1 })}
-                </Badge>
-                <div
-                  className={cn(
-                    "bg-muted flex size-10 items-center justify-center rounded-xl",
-                    step.color
-                  )}
-                >
-                  <Iconify icon={step.icon} className="size-5" />
-                </div>
-                <div className="space-y-2">
-                  <Typography
-                    variant="subtitle2"
-                    as="h3"
-                    className="text-foreground text-lg font-semibold"
-                  >
-                    {tProductGuide(`howToUse.steps.${step.id}.title`)}
-                  </Typography>
-                  <Typography variant="caption1" className="text-muted-foreground">
-                    {tProductGuide(`howToUse.steps.${step.id}.description`)}
-                  </Typography>
-                </div>
+        {/* Progress bar */}
+        <Progress
+          value={progressPct}
+          className={cn(
+            "h-2.5",
+            allDone && "[&>[data-slot=progress-indicator]]:bg-emerald-500"
+          )}
+        />
 
-                <Accordion type="single" collapsible className="mt-auto w-full">
-                  <AccordionItem
-                    value={`${step.id}-details`}
-                    className="border-border/60 bg-muted/45 dark:bg-muted/25 hover:border-border rounded-xl border px-2 transition-colors"
-                  >
-                    <AccordionTrigger className="hover:bg-accent/60 dark:hover:bg-accent/25 cursor-pointer rounded-lg px-2 py-3 text-sm no-underline hover:no-underline">
-                      {tProductGuide("actions.howToAccordion")}
-                    </AccordionTrigger>
-                    <AccordionContent className="space-y-3 pt-1">
-                      {(step.id === "openProject" || step.id === "startProject") && (
-                        <Typography
-                          variant="caption2"
-                          className="border-primary/15 bg-primary/5 text-foreground rounded-xl border px-3 py-2 text-sm font-semibold"
-                        >
-                          {tProductGuide(`howToUse.steps.${step.id}.commandNote`)}
-                        </Typography>
+        {/* All done banner */}
+        {allDone && (
+          <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-900 dark:bg-emerald-950/30">
+            <Iconify
+              icon="lucide:circle-check"
+              className="mt-0.5 size-5 shrink-0 text-emerald-500"
+            />
+            <div className="flex-1 space-y-1.5">
+              <Typography
+                variant="label1"
+                className="text-foreground text-sm font-semibold"
+              >
+                {tProductGuide("checklist.allDone")}
+              </Typography>
+              <Link
+                href="http://localhost:3000"
+                target="_blank"
+                rel="noreferrer"
+                className="text-primary inline-flex items-center gap-1 text-sm font-medium underline underline-offset-4"
+              >
+                {tProductGuide("checklist.openApp")}
+                <Iconify icon="lucide:arrow-up-right" className="size-3.5" />
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {/* Checklist groups — accordion */}
+        <Accordion
+          type="multiple"
+          defaultValue={GUIDE_CHECKLIST_GROUPS.map((g) => g.id)}
+          className="space-y-3"
+        >
+          {GUIDE_CHECKLIST_GROUPS.map((group) => {
+            const groupDone = group.items.filter((i) => checked[i.id]).length;
+            return (
+              <Card key={group.id} className="border-border/70 overflow-hidden p-0">
+                <AccordionItem value={group.id} className="border-0">
+                  <AccordionTrigger className="hover:bg-accent/40 border-border/40 bg-muted/40 data-[state=open]:border-border/40 flex cursor-pointer items-center gap-2 border-b px-4 py-2.5 hover:no-underline data-[state=open]:border-b">
+                    <Iconify
+                      icon={group.icon}
+                      className="text-muted-foreground size-4 shrink-0"
+                    />
+                    <Typography
+                      variant="subtitle2"
+                      as="span"
+                      className="text-foreground flex-1 text-left text-sm font-semibold"
+                    >
+                      {tProductGuide(`checklist.groups.${group.id}`)}
+                    </Typography>
+                    <Typography
+                      variant="caption2"
+                      as="span"
+                      className={cn(
+                        "me-1 text-xs font-medium tabular-nums",
+                        groupDone === group.items.length
+                          ? "text-emerald-600 dark:text-emerald-400"
+                          : "text-muted-foreground"
                       )}
+                    >
+                      {groupDone}/{group.items.length}
+                    </Typography>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-0">
+                    <div>{group.items.map((item) => renderChecklistItem(item))}</div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Card>
+            );
+          })}
+        </Accordion>
 
-                      {step.id === "cloneProject" && (
-                        <Typography
-                          variant="caption2"
-                          className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-800 dark:border-amber-900 dark:bg-amber-950/30 dark:text-amber-200"
-                        >
-                          {tProductGuide("howToUse.steps.cloneProject.githubNote")}
-                        </Typography>
-                      )}
-
-                      {step.id === "cloneProject" && (
-                        <Typography
-                          variant="caption2"
-                          className="border-primary/15 bg-primary/5 text-foreground rounded-xl border px-3 py-2 text-sm font-semibold"
-                        >
-                          {tProductGuide("howToUse.steps.cloneProject.commandNote")}
-                        </Typography>
-                      )}
-
-                      {step.resourceIds && step.resourceIds.length > 0 && (
-                        <div className="space-y-2">
-                          {renderResourceLinks(step.id, step.resourceIds)}
-                        </div>
-                      )}
-
-                      {renderCommandBlocks(step.id, step.commands)}
-
-                      {step.id === "startProject" && (
-                        <Typography
-                          variant="caption2"
-                          className="border-primary/15 bg-primary/5 text-muted-foreground rounded-xl border px-3 py-2 text-sm"
-                        >
-                          {tProductGuide.rich("howToUse.steps.startProject.note", {
-                            code: (chunks) => (
-                              <code className="bg-background text-foreground rounded px-1.5 py-0.5 text-xs">
-                                {chunks}
-                              </code>
-                            ),
-                            link: (chunks) => (
-                              <Link
-                                href="http://localhost:3000"
-                                target="_blank"
-                                rel="noreferrer"
-                                className="text-primary font-medium underline underline-offset-4"
-                              >
-                                {chunks}
-                              </Link>
-                            ),
-                          })}
-                        </Typography>
-                      )}
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Success card */}
-        <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-900 dark:bg-emerald-950/30">
-          <Iconify icon="lucide:circle-check" className="mt-0.5 size-5 shrink-0 text-emerald-500" />
-          <div className="flex-1 space-y-2">
-            <Typography variant="label1" className="text-foreground text-sm font-semibold">
-              {tProductGuide("howToUse.success.title")}
-            </Typography>
-            <Typography variant="caption2" className="text-muted-foreground text-sm">
-              {tProductGuide("howToUse.success.body")}
-            </Typography>
-            <Link
-              href="http://localhost:3000"
-              target="_blank"
-              rel="noreferrer"
-              className="text-primary inline-flex items-center gap-1 text-sm font-medium underline underline-offset-4"
+        {/* Bonus section */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-3">
+            <div className="h-px flex-1 bg-border/50" />
+            <Badge
+              variant="outline"
+              className="border-amber-300 bg-amber-50 text-amber-700 dark:border-amber-700 dark:bg-amber-950/30 dark:text-amber-300"
             >
-              {tProductGuide("howToUse.success.openLink")}
-              <Iconify icon="lucide:arrow-up-right" className="size-3.5" />
-            </Link>
+              ⭐ {tProductGuide("checklist.bonusTitle")}
+            </Badge>
+            <div className="h-px flex-1 bg-border/50" />
           </div>
+          <Typography
+            variant="caption2"
+            className="text-muted-foreground text-center text-xs"
+          >
+            {tProductGuide("checklist.bonusDescription")}
+          </Typography>
+          <Card className="border-border/70 overflow-hidden">
+            <div>{GUIDE_BONUS_ITEMS.map((item) => renderChecklistItem(item))}</div>
+          </Card>
         </div>
       </section>
 
@@ -502,7 +616,11 @@ export function DemoGuideTab() {
                   icon="lucide:triangle-alert"
                   className="text-muted-foreground size-4 shrink-0"
                 />
-                <Typography variant="subtitle1" as="span" className="text-foreground font-semibold">
+                <Typography
+                  variant="subtitle1"
+                  as="span"
+                  className="text-foreground font-semibold"
+                >
                   {tProductGuide("howToUse.troubleshooting.title")}
                 </Typography>
               </div>
@@ -525,7 +643,9 @@ export function DemoGuideTab() {
                             variant="caption1"
                             className="text-foreground text-sm font-medium"
                           >
-                            {tProductGuide(`howToUse.troubleshooting.items.${item.id}.problem`)}
+                            {tProductGuide(
+                              `howToUse.troubleshooting.items.${item.id}.problem`
+                            )}
                           </Typography>
                         </div>
                         <div className="space-y-2">
@@ -538,12 +658,16 @@ export function DemoGuideTab() {
                               variant="caption1"
                               className="text-muted-foreground text-sm"
                             >
-                              {tProductGuide(`howToUse.troubleshooting.items.${item.id}.fix`)}
+                              {tProductGuide(
+                                `howToUse.troubleshooting.items.${item.id}.fix`
+                              )}
                             </Typography>
                           </div>
                           {item.command && (
                             <div>
-                              {renderCommandBlocks(`troubleshoot-${item.id}`, [item.command])}
+                              {renderCommandBlocks(`troubleshoot-${item.id}`, [
+                                item.command,
+                              ])}
                             </div>
                           )}
                         </div>
@@ -584,7 +708,10 @@ export function DemoGuideTab() {
             <div className="border-border/50 space-y-2.5 border-t pt-4">
               {(["bullet1", "bullet2", "bullet3"] as const).map((key) => (
                 <div key={key} className="flex items-start gap-2.5">
-                  <Iconify icon="lucide:check" className="text-primary mt-0.5 size-4 shrink-0" />
+                  <Iconify
+                    icon="lucide:check"
+                    className="text-primary mt-0.5 size-4 shrink-0"
+                  />
                   <Typography variant="caption1" className="text-foreground">
                     {tProductGuide(`vibeCoder.${key}`)}
                   </Typography>
@@ -741,8 +868,15 @@ export function DemoGuideTab() {
           >
             <AccordionTrigger className="hover:bg-accent/55 dark:hover:bg-accent/20 -mx-2 cursor-pointer rounded-xl px-2 py-5 no-underline hover:no-underline">
               <div className="flex items-center gap-2">
-                <Iconify icon="lucide:folder-open" className="text-muted-foreground size-4" />
-                <Typography variant="subtitle1" as="span" className="text-foreground font-semibold">
+                <Iconify
+                  icon="lucide:folder-open"
+                  className="text-muted-foreground size-4"
+                />
+                <Typography
+                  variant="subtitle1"
+                  as="span"
+                  className="text-foreground font-semibold"
+                >
                   {tProductGuide("ignoreAtFirst.title")}
                 </Typography>
               </div>
