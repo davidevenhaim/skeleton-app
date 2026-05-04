@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { getTranslations } from "next-intl/server";
 import { PageContainer } from "@/components/app";
 import { DemoLayoutWidth } from "./components/demo-layout-width";
 import { DemoTabNav } from "./components/demo-tab-nav";
@@ -9,8 +10,10 @@ import { DemoTabNav } from "./components/demo-tab-nav";
 // - per-tab page content rendered as children
 
 export default async function DemoLayout({ children }: { children: ReactNode }) {
+  const t = await getTranslations("demo");
+
   return (
-    <PageContainer>
+    <PageContainer subtitle={t("layoutSubtitle")}>
       <DemoTabNav />
       <DemoLayoutWidth>{children}</DemoLayoutWidth>
     </PageContainer>

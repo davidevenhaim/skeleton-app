@@ -52,6 +52,7 @@
   "themeDarkMode": "Dark mode",
   "demo": {
     "pageTitle": "Skeleton App",
+    "layoutSubtitle": "These pages are a live preview of the starter kit. Every component here is meant to be customized and reused in your own projects.",
     "productGuide": {
       "eyebrow": "Build with AI in a structured way",
       "title": "Build with AI without creating a mess",
