@@ -16,6 +16,12 @@ export const DEMO_TABS: DemoTab[] = [
     href: WEB_ROUTES.DEMO_AI_TIPS,
   },
   {
+    id: "landing",
+    labelKey: "tabLanding",
+    icon: "lucide:layout-template",
+    href: WEB_ROUTES.DEMO_LANDING,
+  },
+  {
     id: "view",
     labelKey: "tabView",
     icon: "lucide:eye",

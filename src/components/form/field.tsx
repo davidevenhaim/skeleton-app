@@ -4,6 +4,7 @@ import * as React from "react";
 import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { formatFormError } from "@/components/form/utils/format-form-error";
 
 const Field = React.forwardRef<
   HTMLDivElement,
@@ -85,7 +86,7 @@ const FieldError = React.forwardRef<
     errors?: Array<{ message?: string } | undefined>;
   }
 >(({ className, errors, ...props }, ref) => {
-  const t = useTranslations();
+  const tForms = useTranslations("forms");
   if (!errors?.length) {
     return null;
   }
@@ -105,7 +106,7 @@ const FieldError = React.forwardRef<
           color="destructive"
           className="leading-none font-medium"
         >
-          {t(error?.message || "form_validation.required")}
+          {formatFormError(tForms, error?.message || "required")}
         </Typography>
       ))}
     </div>

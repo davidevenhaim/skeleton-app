@@ -1,5 +1,6 @@
 import type { DateRange } from "react-day-picker";
 import type { MultiSelectOption, SelectOption } from "@/types/ui.types";
+import { GITHUB_URL } from "@/constants/app.constants";
 
 export type DemoUser = {
   id: number;
@@ -197,7 +198,7 @@ export type ProductGuideStep = ProductGuideItem & {
   commands?: string[];
 };
 
-export const STARTER_GITHUB_URL = "https://github.com/davidevenhaim/skeleton-app";
+export const STARTER_GITHUB_URL = GITHUB_URL;
 export const GIT_INSTALL_URL = "https://git-scm.com/downloads";
 export const NODE_INSTALL_URL = "https://nodejs.org/en/download";
 export const PNPM_INSTALL_URL = "https://pnpm.io/installation";

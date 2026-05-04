@@ -14,7 +14,7 @@ export function DemoTabNav() {
 
   return (
     <nav
-      className="mb-6 flex w-full overflow-x-auto border-b [-webkit-overflow-scrolling:touch]"
+      className="mx-auto mb-6 flex w-full max-w-7xl overflow-x-auto border-b [-webkit-overflow-scrolling:touch]"
       aria-label="Demo sections"
     >
       {DEMO_TABS.map((tab) => {

@@ -106,3 +106,7 @@ export function getIsImageValid(url: string): Promise<boolean> {
     img.src = url;
   });
 }
+
+export function openLinkInNewTab(url: string): void {
+  window.open(url, "_blank");
+}

@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import {
   Accordion,
@@ -33,6 +34,7 @@ import {
   PRODUCT_GUIDE_RESOURCES,
   type GuideChecklistItemDef,
 } from "@/components/demo/data";
+import { GUIDE_SECTION_ID } from "@/constants/guide-sections.constants";
 
 const CHECKLIST_TERM_TIP_KEYS = [
   "terminal",
@@ -56,7 +58,34 @@ function richChunksToPlainString(chunks: React.ReactNode): string {
 }
 
 export function DemoGuideTab() {
+  const pathname = usePathname();
   const tProductGuide = useTranslations("demo.productGuide");
+
+  const [troubleshootingAccordion, setTroubleshootingAccordion] = React.useState<
+    string | undefined
+  >(undefined);
+  const [ignoreAccordion, setIgnoreAccordion] = React.useState<string | undefined>(undefined);
+
+  React.useEffect(() => {
+    const syncHash = () => {
+      const raw = window.location.hash.replace(/^#/, "");
+      if (!raw) return;
+      const id = decodeURIComponent(raw);
+      if (id === GUIDE_SECTION_ID.troubleshooting) {
+        setTroubleshootingAccordion("troubleshooting");
+      }
+      if (id === GUIDE_SECTION_ID.ignoreAtFirst) {
+        setIgnoreAccordion("ignore-at-first");
+      }
+      window.setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 120);
+    };
+
+    syncHash();
+    window.addEventListener("hashchange", syncHash);
+    return () => window.removeEventListener("hashchange", syncHash);
+  }, [pathname]);
 
   const checklistTermTipRich = React.useMemo(() => {
     const map = {} as Record<ChecklistTermTipKey, (chunks: React.ReactNode) => React.ReactNode>;
@@ -444,7 +473,10 @@ export function DemoGuideTab() {
   return (
     <div className="space-y-10">
       {/* 1. Hero */}
-      <section className="from-primary/10 via-background to-background relative overflow-hidden rounded-2xl border bg-gradient-to-br p-8 shadow-sm md:p-10 rtl:bg-gradient-to-bl">
+      <section
+        id={GUIDE_SECTION_ID.getStarted}
+        className="from-primary/10 via-background to-background relative scroll-mt-24 overflow-hidden rounded-2xl border bg-gradient-to-br p-8 shadow-sm md:p-10 rtl:bg-gradient-to-bl"
+      >
         <div className="from-primary/5 pointer-events-none absolute inset-y-0 end-0 w-1/2 bg-gradient-to-l to-transparent rtl:bg-gradient-to-r" />
         <div className="relative space-y-4">
           <Badge variant="secondary" className="text-xs font-medium">
@@ -464,7 +496,7 @@ export function DemoGuideTab() {
       </section>
 
       {/* 2. Interactive Setup Checklist */}
-      <section className="space-y-5">
+      <section id={GUIDE_SECTION_ID.setupChecklist} className="scroll-mt-24 space-y-5">
         {/* Header + progress counter */}
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="space-y-1">
@@ -587,8 +619,13 @@ export function DemoGuideTab() {
       </section>
 
       {/* 3. Troubleshooting */}
-      <section>
-        <Accordion type="single" collapsible>
+      <section id={GUIDE_SECTION_ID.troubleshooting} className="scroll-mt-24">
+        <Accordion
+          type="single"
+          collapsible
+          value={troubleshootingAccordion}
+          onValueChange={setTroubleshootingAccordion}
+        >
           <AccordionItem
             value="troubleshooting"
             className="border-border/70 bg-muted/45 dark:bg-muted/20 hover:border-primary/25 rounded-2xl border px-4 transition-colors"
@@ -655,7 +692,7 @@ export function DemoGuideTab() {
       </section>
 
       {/* 4. Why */}
-      <section className="space-y-6">
+      <section id={GUIDE_SECTION_ID.purpose} className="scroll-mt-24 space-y-6">
         <div className="max-w-4xl space-y-2">
           <Typography
             variant="subtitle1"
@@ -699,8 +736,11 @@ export function DemoGuideTab() {
       </section>
 
       {/* 5. When */}
-      <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <Card className="border-border/70">
+      <section
+        id={GUIDE_SECTION_ID.whenToUse}
+        className="grid scroll-mt-24 grid-cols-1 gap-6 lg:grid-cols-2"
+      >
+        <Card id={GUIDE_SECTION_ID.goodFit} className="border-border/70 scroll-mt-24">
           <CardContent className="space-y-5 p-6">
             <div className="space-y-2">
               <Typography
@@ -746,7 +786,7 @@ export function DemoGuideTab() {
           </CardContent>
         </Card>
 
-        <Card className="border-border/70">
+        <Card id={GUIDE_SECTION_ID.lessSuitable} className="border-border/70 scroll-mt-24">
           <CardContent className="space-y-5 p-6">
             <div className="space-y-2">
               <Typography
@@ -794,8 +834,13 @@ export function DemoGuideTab() {
       </section>
 
       {/* 6. What you can safely ignore */}
-      <section>
-        <Accordion type="single" collapsible>
+      <section id={GUIDE_SECTION_ID.ignoreAtFirst} className="scroll-mt-24">
+        <Accordion
+          type="single"
+          collapsible
+          value={ignoreAccordion}
+          onValueChange={setIgnoreAccordion}
+        >
           <AccordionItem
             value="ignore-at-first"
             className="border-border/70 bg-muted/45 dark:bg-muted/20 hover:border-primary/25 rounded-2xl border px-4 transition-colors"
@@ -846,7 +891,7 @@ export function DemoGuideTab() {
       </section>
 
       {/* 7. Built with */}
-      <section className="space-y-6">
+      <section id={GUIDE_SECTION_ID.builtWith} className="scroll-mt-24 space-y-6">
         <div className="max-w-4xl space-y-2">
           <Typography
             variant="subtitle1"

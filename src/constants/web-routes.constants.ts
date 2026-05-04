@@ -9,6 +9,7 @@ const WEB_ROUTES = {
   DEMO_FORMS: "/demo/forms",
   DEMO_DIALOGS: "/demo/dialogs",
   DEMO_TECHNICAL_GUIDE: "/demo/technical-guide",
+  DEMO_LANDING: "/demo/landing",
 } as const;
 
 export default WEB_ROUTES;

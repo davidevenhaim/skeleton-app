@@ -659,25 +659,16 @@ export function DemoTypographyTab() {
                 </Typography>
                 <Typography variant="body2" as="p" className="text-foreground leading-relaxed">
                   {t("showcase.termTipDemo1")}{" "}
-                  <TermTip
-                    term={t("showcase.termSwr")}
-                    explanation={t("showcase.defSwr")}
-                  />{" "}
+                  <TermTip term={t("showcase.termSwr")} explanation={t("showcase.defSwr")} />{" "}
                   {t("showcase.termTipDemo2")}{" "}
                   <TermTip
                     term={t("showcase.termZustand")}
                     explanation={t("showcase.defZustand")}
                   />{" "}
                   {t("showcase.termTipDemo3")}{" "}
-                  <TermTip
-                    term={t("showcase.termRhf")}
-                    explanation={t("showcase.defRhf")}
-                  />{" "}
+                  <TermTip term={t("showcase.termRhf")} explanation={t("showcase.defRhf")} />{" "}
                   {t("showcase.termTipDemo4")}{" "}
-                  <TermTip
-                    term={t("showcase.termZod")}
-                    explanation={t("showcase.defZod")}
-                  />
+                  <TermTip term={t("showcase.termZod")} explanation={t("showcase.defZod")} />
                   {t("showcase.termTipDemo5")}
                 </Typography>
               </div>
