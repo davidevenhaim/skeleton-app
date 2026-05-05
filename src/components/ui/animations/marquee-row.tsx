@@ -1,5 +1,9 @@
 "use client";
 
+// Marquee implementation inspired by ui-layouts.com/components/marquee
+// Key technique: each strip animates by calc(-100% - var(--mq-gap)) so the
+// scroll distance equals exactly one strip width + gap → seam is always clean.
+
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 
@@ -12,6 +16,12 @@ type MarqueeRowProps = {
   pauseOnHover?: boolean;
   /** Gap between items in rem. Default: 2 */
   gap?: number;
+  /**
+   * How many copies of children to render.
+   * Increase for very few / very narrow items so the row always stays full.
+   * Default: 4
+   */
+  repeat?: number;
   className?: string;
 };
 
@@ -21,28 +31,41 @@ export function MarqueeRow({
   direction = "left",
   pauseOnHover = true,
   gap = 2,
+  repeat = 4,
   className,
 }: MarqueeRowProps) {
-  const animName = direction === "left" ? "marquee-left" : "marquee-right";
   return (
-    <div className={cn("overflow-hidden", className)}>
+    <div
+      className={cn("group flex overflow-hidden", className)}
+      style={{ "--mq-gap": `${gap}rem`, "--mq-speed": `${speed}s` } as React.CSSProperties}
+    >
       <style>{`
-        @keyframes marquee-left {
+        @keyframes mq-left {
           from { transform: translateX(0); }
-          to   { transform: translateX(-50%); }
+          to   { transform: translateX(calc(-100% - var(--mq-gap))); }
         }
-        @keyframes marquee-right {
-          from { transform: translateX(-50%); }
+        @keyframes mq-right {
+          from { transform: translateX(calc(-100% - var(--mq-gap))); }
           to   { transform: translateX(0); }
         }
+        @media (prefers-reduced-motion: reduce) { .mq-strip { animation-play-state: paused; } }
       `}</style>
-      <div
-        className={cn("flex w-max", pauseOnHover && "hover:[animation-play-state:paused]")}
-        style={{ gap: `${gap}rem`, animation: `${animName} ${speed}s linear infinite` }}
-      >
-        {children}
-        {children}
-      </div>
+
+      {Array.from({ length: repeat }, (_, i) => (
+        <div
+          key={i}
+          className={cn(
+            "mq-strip flex shrink-0 items-center",
+            pauseOnHover && "group-hover:[animation-play-state:paused]"
+          )}
+          style={{
+            gap: "var(--mq-gap)",
+            animation: `mq-${direction} var(--mq-speed) linear infinite`,
+          }}
+        >
+          {children}
+        </div>
+      ))}
     </div>
   );
 }

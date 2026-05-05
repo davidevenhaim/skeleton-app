@@ -6,16 +6,16 @@ import { useTranslations } from "next-intl";
 import AnimatedNumber from "@/components/ui/animations/animated-number";
 import { AppearIn } from "@/components/ui/animations/appear-in";
 import { GradientText } from "@/components/ui/animations/gradient-text";
-import { MarqueeRow } from "@/components/ui/animations/marquee-row";
-import { MarqueeBrandTile } from "@/components/ui/animations/marquee-brand-tile";
+import { InfinityBrandMarquee } from "@/components/ui/animations/infinity-brand-marquee";
 import { SpotlightCard } from "@/components/ui/animations/spotlight-card";
 import { HeroCarousel, type HeroSlide } from "@/components/ui/animations/hero-carousel";
-import { HowItWorksShowcase } from "@/features/landing-page/components/HowItWorksShowcase";
+import { DemoStackingCards } from "@/components/demo/demo-stacking-cards";
 import { RotatingTypewriterText } from "@/components/ui/animations/rotating-typewriter-text";
 import { TypewriterText } from "@/components/ui/animations/typewriter-text";
 import { Button } from "@/components/ui/button";
 import { FaqSection, type FaqItem } from "@/components/ui/faq-section";
 import { HeroWithBackgroundImage } from "@/components/ui/hero-with-background-image";
+import { RandomizedTextEffect } from "@/components/ui/text-randomized";
 import { Typography } from "@/components/ui/typography";
 import { GITHUB_URL } from "@/constants/app.constants";
 import {
@@ -38,6 +38,8 @@ const POWERED_BY_BRANDS = [
   { id: "zustand", icon: "simple-icons:zustand", label: "Zustand" },
   { id: "vitest", icon: "logos:vitest", label: "Vitest" },
   { id: "intl", icon: "lucide:languages", label: "next-intl" },
+  { id: "eslint", icon: "logos:eslint", label: "ESLint" },
+  { id: "prettier", icon: "logos:prettier", label: "Prettier" },
 ] as const;
 
 function StatCard({ value, suffix, label }: { value: number; suffix: string; label: string }) {
@@ -124,6 +126,33 @@ export function DemoLandingTab() {
     { value: 100, suffix: "%", label: t("landing.stat4Label") },
   ];
 
+  const motionStackCards = useMemo(
+    () => [
+      {
+        title: t("landing.motionStackCard1Title"),
+        description: t("landing.motionStackCard1Desc"),
+        imageUrl:
+          "https://images.unsplash.com/photo-1605106702842-01a887a31122?q=80&w=900&auto=format&fit=crop",
+        color: "#5196fd",
+      },
+      {
+        title: t("landing.motionStackCard2Title"),
+        description: t("landing.motionStackCard2Desc"),
+        imageUrl:
+          "https://images.unsplash.com/photo-1605106250963-ffda6d2a4b32?w=900&auto=format&fit=crop&q=60",
+        color: "#8f89ff",
+      },
+      {
+        title: t("landing.motionStackCard3Title"),
+        description: t("landing.motionStackCard3Desc"),
+        imageUrl:
+          "https://images.unsplash.com/photo-1605106901227-991bd663255c?w=900&auto=format&fit=crop",
+        color: "#645FB2",
+      },
+    ],
+    [t]
+  );
+
   const features = [
     { icon: "📋", title: t("landing.feature1Title"), desc: t("landing.feature1Desc") },
     { icon: "⚡", title: t("landing.feature2Title"), desc: t("landing.feature2Desc") },
@@ -139,7 +168,7 @@ export function DemoLandingTab() {
   ];
 
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-x-clip">
       {/* ── Hero ────────────────────────────────────────────── */}
       <HeroWithBackgroundImage
         backgroundImageSrc={LANDING_DEMO_HERO_IMAGE_DARK}
@@ -189,18 +218,15 @@ export function DemoLandingTab() {
         </AppearIn>
       </HeroWithBackgroundImage>
 
-      {/* ── Marquee ─────────────────────────────────────────── */}
-      <section className="from-muted/40 via-background to-background border-y bg-gradient-to-b py-12 md:py-14">
-        <AppearIn className="mb-8 space-y-2 px-6 text-center">
-          <Typography variant="overline" className="text-muted-foreground tracking-[0.2em]">
-            {t("landing.marqueeTitle")}
-          </Typography>
-        </AppearIn>
-        <MarqueeRow speed={28} gap={1.25}>
-          {POWERED_BY_BRANDS.map((brand) => (
-            <MarqueeBrandTile key={brand.id} icon={brand.icon} label={brand.label} />
-          ))}
-        </MarqueeRow>
+      {/* ── Infinity Brand Marquee ──────────────────────────── */}
+      <section className="from-muted/30 via-background to-background border-y bg-gradient-to-b py-14 md:py-16">
+        <InfinityBrandMarquee
+          brands={POWERED_BY_BRANDS}
+          label={t("landing.marqueeTitle")}
+          speed={35}
+          gap={0.75}
+          repeat={4}
+        />
       </section>
 
       {/* ── Hero Carousel ───────────────────────────────────── */}
@@ -208,11 +234,25 @@ export function DemoLandingTab() {
         <HeroCarousel slides={heroSlides} interval={5000} />
       </section>
 
-      {/* ── How It Works ────────────────────────────────────── */}
-      <HowItWorksShowcase />
+      {/* ── Stacking cards (UI Layouts / Framer-style) ───────── */}
+      <DemoStackingCards
+        introTitle={t("landing.motionStackIntroTitle")}
+        introHint={t("landing.motionStackIntroHint")}
+        cards={motionStackCards}
+        imageAlt={t("landing.motionStackImageAlt")}
+        seeMoreLabel={t("landing.motionStackSeeMore")}
+        seeMoreHref={`${WEB_ROUTES.DEMO_GUIDE}#${GUIDE_SECTION_ID.getStarted}`}
+      />
+
+      {/* ── Randomized text effect (UI Layouts) ─────────────── */}
+      <section className="bg-background px-6 py-16">
+        <AppearIn className="flex justify-center">
+          <RandomizedTextEffect text={t("landing.motionRandomizedText")} />
+        </AppearIn>
+      </section>
 
       {/* ── Stats ───────────────────────────────────────────── */}
-      <section className="bg-muted/30 py-20">
+      <section className="bg-muted/30">
         <AppearIn className="mb-12 px-6 text-center">
           <Typography variant="h2" className="text-3xl font-bold md:text-4xl">
             {t("landing.statsTitle")}
