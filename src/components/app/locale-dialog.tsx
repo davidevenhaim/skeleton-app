@@ -63,12 +63,12 @@ export function LocaleDialog() {
           aria-haspopup="menu"
           aria-expanded={open}
         >
-          <Iconify icon="lucide:languages" className="size-4" />
+          <Iconify icon="lucide:languages" className="size-5" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent align="end" className="w-52 p-2" sideOffset={6}>
-        <PopoverHeader className="px-2 pt-0.5 pb-2">
-          <PopoverTitle>{t("languageDialogTitle")}</PopoverTitle>
+      <PopoverContent align="end" className="w-72 rounded-xl p-2" sideOffset={8}>
+        <PopoverHeader className="px-2 pt-1 pb-2">
+          <PopoverTitle className="text-left">{t("languageDialogTitle")}</PopoverTitle>
         </PopoverHeader>
         <ul className="flex flex-col gap-0.5" role="menu">
           {SUPPORTED_LOCALES.map((code) => {
@@ -81,17 +81,43 @@ export function LocaleDialog() {
                   aria-checked={active}
                   variant="ghost"
                   className={cn(
-                    "flex w-full items-center gap-3 rounded-md px-2 py-2 text-start text-sm transition-colors outline-none",
-                    "hover:bg-accent hover:text-accent-foreground",
-                    "focus-visible:bg-accent focus-visible:text-accent-foreground",
-                    active && "bg-accent/80 text-accent-foreground"
+                    "relative flex h-auto w-full items-center justify-start rounded-lg px-3 py-3 text-left transition-all outline-none",
+                    "hover:bg-accent/80 hover:text-accent-foreground",
+                    "focus-visible:bg-accent/80 focus-visible:text-accent-foreground",
+                    active && "bg-accent text-accent-foreground shadow-sm"
                   )}
                   onClick={() => select(code)}
                 >
-                  <Iconify icon={LOCALE_ICON[code]} className="size-6 shrink-0" aria-hidden />
-                  <Typography variant="label2" as="span" className="font-medium">
-                    {t(`languages.${code}`)}
-                  </Typography>
+                  {active ? (
+                    <span
+                      className="bg-primary absolute inset-y-2 left-1 w-0.5 rounded-full"
+                      aria-hidden
+                    />
+                  ) : null}
+                  <div className="flex min-w-0 flex-1 items-center gap-3 pr-7 pl-2">
+                    <div
+                      className={cn(
+                        "bg-muted/60 text-foreground flex size-8 shrink-0 items-center justify-center rounded-md",
+                        active && "bg-background/75"
+                      )}
+                    >
+                      <Iconify icon={LOCALE_ICON[code]} className="size-5" aria-hidden />
+                    </div>
+                    <Typography
+                      variant="label2"
+                      as="span"
+                      className="min-w-0 flex-1 truncate text-left font-medium"
+                    >
+                      {t(`languages.${code}`)}
+                    </Typography>
+                  </div>
+                  {active ? (
+                    <Iconify
+                      icon="lucide:check"
+                      className="absolute right-2.5 size-4 shrink-0"
+                      aria-hidden
+                    />
+                  ) : null}
                 </Button>
               </li>
             );

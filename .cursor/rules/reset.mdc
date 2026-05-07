@@ -1,0 +1,132 @@
+---
+description: How to strip demo files and start fresh. Use when the user wants to remove demo content, delete demo, clean up the skeleton, or start from scratch.
+globs:
+alwaysApply: false
+---
+
+# Resetting the Skeleton — Removing Demo Files
+
+The skeleton ships with a live demo (`/demo/*`), a contact feature, and a landing page as working examples. None of that is infrastructure. All of it is safe to remove.
+
+**Infrastructure (keep):** UI components, form system, hooks, utils, stores, i18n setup, API proxy, layout shell, error/not-found pages, types, constants skeleton.
+
+**Demo (delete):** Everything below.
+
+---
+
+## Step 1 — Delete These Paths
+
+Nothing in the infrastructure imports from these paths — all deletions are safe.
+
+**Directories:**
+```
+src/app/demo/
+src/app/contact/
+src/app/api/proxy/contact/
+src/components/demo/
+src/components/marketing/
+src/features/contact/
+src/features/landing-page/
+public/landing-page/
+```
+
+**Individual files:**
+```
+src/constants/demo-tabs.constants.ts
+src/constants/guide-sections.constants.ts
+src/constants/landing-media.constants.ts
+src/__tests__/contact.schema.test.ts
+public/lottie/lottie-demo.json
+```
+
+---
+
+## Step 2 — Replace Root Page
+
+`src/app/page.tsx` currently redirects to `/demo/guide`. Replace with a placeholder:
+
+```tsx
+export default function RootPage() {
+  return null; // replace with your home page
+}
+```
+
+---
+
+## Step 3 — Clean Route Constants
+
+`src/constants/web-routes.constants.ts` — remove all `DEMO_*` keys and `CONTACT`:
+
+```ts
+const WEB_ROUTES = {
+  HOME: "/",
+  // add your own routes here
+} as const;
+
+export default WEB_ROUTES;
+```
+
+`src/constants/api-routes.constants.ts` — remove `CONTACT`:
+
+```ts
+const API_ROUTES = {
+  AUTH: {
+    LOGIN: "/auth/login",
+    LOGOUT: "/auth/logout",
+    ME: "/auth/me",
+  },
+  // add your own routes here
+} as const;
+
+export default API_ROUTES;
+```
+
+---
+
+## Step 4 — Clean Translation Files
+
+Edit all four: `messages/en.json`, `messages/he.json`, `messages/es.json`, `messages/ar.json`.
+
+**Remove these keys:**
+`demo`, `contact`, `tabGuide`, `tabDashboard`, `tabForms`, `tabDialogs`, `tabView`, `tabTokenUsage`, `tabTechnicalGuide`, `tabLanding`
+
+**Keep these** (infrastructure):
+`forms`, `errorBoundary`, `notFound`, and all shared UI keys (`select`, `save`, `cancel`, `loading`, theme keys, language keys, pagination keys, etc.)
+
+Keep all four files in sync — same keys in all of them.
+
+---
+
+## Step 5 — Verify
+
+```bash
+pnpm build
+pnpm test
+```
+
+If build fails, grep for broken imports:
+
+```bash
+grep -r "demo-tabs\|guide-sections\|landing-media\|features/contact\|features/landing\|components/demo\|components/marketing" src/
+```
+
+---
+
+## What Survives the Reset
+
+| Area | Path |
+|------|------|
+| UI component library | `src/components/ui/` |
+| Form system | `src/components/form/` |
+| App shell components | `src/components/app/` |
+| All hooks | `src/hooks/` |
+| All utilities | `src/utils/` |
+| Zustand stores | `src/store/` |
+| API client + toast + config | `src/lib/` |
+| Shared types | `src/types/` |
+| i18n setup | `src/i18n/` |
+| API proxy route | `src/app/api/proxy/[...path]/route.ts` |
+| Global layout | `src/app/layout.tsx` |
+| Error / not-found pages | `src/app/error.tsx`, `src/app/not-found.tsx` |
+| Constants skeleton | `src/constants/web-routes.constants.ts`, `src/constants/api-routes.constants.ts` |
+| Test setup | `src/test/setup.ts`, `src/__tests__/utils.test.ts` |
