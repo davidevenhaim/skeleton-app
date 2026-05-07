@@ -618,6 +618,53 @@ export function DemoGuideTab() {
         </div>
       </section>
 
+      {/* Reset tip */}
+      {(() => {
+        const RESET_PROMPT =
+          "Delete all demo content from this project and leave only the infrastructure. Follow the reset guide in `.claude/rules/reset.md` step by step. Do not skip the translation cleanup or the route constants cleanup. After deleting, run `pnpm build` and fix any broken imports before finishing.";
+        const copyKey = "reset-tip-prompt";
+        return (
+          <div className="border-border/60 bg-muted/30 space-y-3 rounded-2xl border p-5">
+            <div className="flex items-center gap-2">
+              <Iconify icon="lucide:wand-2" className="text-muted-foreground size-4 shrink-0" />
+              <Typography variant="subtitle2" as="h3" className="text-foreground font-semibold">
+                {tProductGuide("resetTip.title")}
+              </Typography>
+            </div>
+            <Typography variant="caption1" className="text-muted-foreground">
+              {tProductGuide("resetTip.description")}
+            </Typography>
+            <div className="border-border/70 bg-muted/40 space-y-2 rounded-xl border border-dashed p-3">
+              <Typography
+                variant="caption2"
+                as="span"
+                className="text-muted-foreground block text-xs font-medium tracking-wide uppercase"
+              >
+                {tProductGuide("resetTip.promptLabel")}
+              </Typography>
+              <code className="bg-background text-foreground block rounded-md px-2 py-1.5 text-xs leading-relaxed break-all">
+                {RESET_PROMPT}
+              </code>
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                className="w-full"
+                onClick={() => handleCopy(copyKey, RESET_PROMPT)}
+              >
+                <Iconify
+                  icon={lastCopied === copyKey ? "lucide:check" : "lucide:copy"}
+                  className="size-4"
+                />
+                {lastCopied === copyKey
+                  ? tProductGuide("actions.copied")
+                  : tProductGuide("actions.copyCommand")}
+              </Button>
+            </div>
+          </div>
+        );
+      })()}
+
       {/* 3. Troubleshooting */}
       <section id={GUIDE_SECTION_ID.troubleshooting} className="scroll-mt-24">
         <Accordion

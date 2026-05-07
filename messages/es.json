@@ -49,6 +49,9 @@
   "themeSwitchToDarkAria": "Cambiar a modo oscuro",
   "themeLightMode": "Modo claro",
   "themeDarkMode": "Modo oscuro",
+  "home": {
+    "startHere": "¡Empieza tu proyecto aquí!"
+  },
   "demo": {
     "pageTitle": "Aplicación Skeleton",
     "productGuide": {
@@ -432,7 +435,12 @@
         "title": "Errores comunes que este starter te ayuda a evitar",
         "description": "Estos son los errores que suelen cometer las herramientas de AI en bases de código no estructuradas. Las convenciones aquí previenen la mayoría."
       },
-      "devReference": "Referencia para desarrolladores (omite si no eres programador)"
+      "devReference": "Referencia para desarrolladores (omite si no eres programador)",
+      "resetTip": {
+        "title": "Recomendado antes de empezar a diseñar tu producto",
+        "description": "Antes de empezar a diseñar tu producto, ejecuta este prompt en la terminal con Claude Code, Cursor o cualquier agente de IA para eliminar todo el contenido de demostración.",
+        "promptLabel": "Prompt para copiar"
+      }
     },
     "guide": {
       "heroDescription": "Una base lista para usar para crear sitios web y aplicaciones de forma ordenada, clara y escalable. Es especialmente útil para trabajar con herramientas de AI, para que incluso usuarios no técnicos puedan construir más rápido sin terminar con código desordenado que luego sea difícil de mantener.",

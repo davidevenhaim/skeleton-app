@@ -8,9 +8,9 @@ The skeleton ships with a live demo (`/demo/*`), a contact feature, and a landin
 
 ## What Is Demo vs. Infrastructure
 
-**Infrastructure (keep):** UI components, form system, hooks, utils, stores, i18n setup, API proxy, layout shell, error/not-found pages, types, constants skeleton.
+**Infrastructure (keep):** UI components, form system, hooks, utils, stores, i18n setup, API proxy, layout shell, error/not-found pages, types, constants skeleton, root page hero images.
 
-**Demo (delete):** Everything under `/demo`, the contact feature, the landing-page feature, demo components, demo constants, demo translation keys, demo test, demo public assets.
+**Demo (delete):** Everything under `/demo`, the contact feature, the landing-page feature, demo components, demo constants, demo translation keys, demo test, orphaned public assets.
 
 ---
 
@@ -28,7 +28,6 @@ src/components/demo/
 src/components/marketing/
 src/features/contact/
 src/features/landing-page/
-public/landing-page/
 ```
 
 ### Individual files
@@ -39,32 +38,24 @@ src/constants/guide-sections.constants.ts
 src/constants/landing-media.constants.ts
 src/__tests__/contact.schema.test.ts
 public/lottie/lottie-demo.json
+public/file.svg
+public/globe.svg
+public/next.svg
+public/vercel.svg
+public/window.svg
 ```
+
+### Hero images — replace, do not delete
+
+`public/landing-page/globe.png` and `public/landing-page/globe-light.png` are used by `src/app/page.tsx` as the root page hero background. Do not delete them. Replace them with your own images when you are ready.
 
 ---
 
-## Step 2 — Replace the Root Page
+## Step 2 — Root Page
 
-`src/app/page.tsx` currently redirects to `/demo/guide`. Replace it with your own home page.
+`src/app/page.tsx` already shows a hero with "Start your project here!" — it is ready to use as-is after the reset. The image paths are inlined directly so deleting `landing-media.constants.ts` (Step 1) does not break it.
 
-Minimal placeholder to unblock routing:
-
-```tsx
-export default function RootPage() {
-  return null; // replace with your home page
-}
-```
-
-Or redirect to your first real route:
-
-```tsx
-import { redirect } from "next/navigation";
-import WEB_ROUTES from "@/constants/web-routes.constants";
-
-export default function RootPage() {
-  redirect(WEB_ROUTES.DASHBOARD); // example — add your own route first
-}
-```
+When you are ready to build your real home page, edit `src/app/page.tsx` and replace the hero with your own content.
 
 ---
 
@@ -121,6 +112,7 @@ Edit all four locale files: `messages/en.json`, `messages/he.json`, `messages/es
 
 | Key                | Used by                                                                                             |
 | ------------------ | --------------------------------------------------------------------------------------------------- |
+| `home`             | `src/app/page.tsx` root page                                                                        |
 | `forms`            | form validation error messages (form field components)                                              |
 | `errorBoundary`    | `src/app/error.tsx`                                                                                 |
 | `notFound`         | `src/app/not-found.tsx`                                                                             |
@@ -140,13 +132,7 @@ pnpm test         # src/__tests__/utils.test.ts should still pass
 If the build fails, grep for the deleted paths:
 
 ```bash
-grep -r "demo-tabs" src/
-grep -r "guide-sections" src/
-grep -r "landing-media" src/
-grep -r "from.*features/contact" src/
-grep -r "from.*features/landing" src/
-grep -r "from.*components/demo" src/
-grep -r "from.*components/marketing" src/
+grep -r "demo-tabs\|guide-sections\|landing-media\|features/contact\|features/landing\|components/demo\|components/marketing" src/
 ```
 
 Fix any remaining imports before proceeding.
@@ -159,6 +145,7 @@ All of this is still intact and ready to use:
 
 | Area                        | Path                                                                             |
 | --------------------------- | -------------------------------------------------------------------------------- |
+| Root page (hero)            | `src/app/page.tsx` — edit to build your home page                                |
 | UI component library        | `src/components/ui/`                                                             |
 | Form system                 | `src/components/form/`                                                           |
 | App shell components        | `src/components/app/`                                                            |
@@ -175,6 +162,7 @@ All of this is still intact and ready to use:
 | Route group pattern         | `src/app/(auth)/`, `src/app/(dashboard)/` — create as needed                     |
 | Constants skeleton          | `src/constants/web-routes.constants.ts`, `src/constants/api-routes.constants.ts` |
 | Test setup                  | `src/test/setup.ts`, `src/__tests__/utils.test.ts`                               |
+| Hero images                 | `public/landing-page/` — replace with your own images                            |
 
 ---
 

@@ -50,6 +50,9 @@
   "themeSwitchToDarkAria": "Switch to dark mode",
   "themeLightMode": "Light mode",
   "themeDarkMode": "Dark mode",
+  "home": {
+    "startHere": "Start your project here!"
+  },
   "demo": {
     "pageTitle": "Skeleton App",
     "layoutSubtitle": "These pages are a live preview of the starter kit. Every component here is meant to be customized and reused in your own projects.",
@@ -153,8 +156,14 @@
               "name": "Git",
               "description": "Needed to download the project to your computer."
             },
-            "node": { "name": "Node.js", "description": "Needed to run the project locally." },
-            "pnpm": { "name": "pnpm", "description": "The package manager this project uses." }
+            "node": {
+              "name": "Node.js",
+              "description": "Needed to run the project locally."
+            },
+            "pnpm": {
+              "name": "pnpm",
+              "description": "The package manager this project uses."
+            }
           },
           "editorTitle": "A code editor — choose one:",
           "editorDescription": "You need an editor to open and work on the project files."
@@ -440,7 +449,12 @@
         "title": "Common mistakes this starter helps you avoid",
         "description": "These are the mistakes AI tools tend to make in unstructured codebases. The conventions here prevent most of them."
       },
-      "devReference": "Developer reference (skip if you're not a programmer)"
+      "devReference": "Developer reference (skip if you're not a programmer)",
+      "resetTip": {
+        "title": "Recommended before you start designing your product",
+        "description": "Before you start designing your product, run this prompt in your terminal with Claude Code, Cursor, or any AI agent to remove all demo content.",
+        "promptLabel": "Prompt to copy"
+      }
     },
     "guide": {
       "heroDescription": "A ready-to-use foundation for building websites and apps in a clean, organized, and scalable way. Especially useful for working with AI tools, so even non-technical users can build faster without ending up with messy code that developers struggle to maintain later.",
