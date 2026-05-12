@@ -25,6 +25,7 @@
   "tabView": "Vista",
   "tabTokenUsage": "Consejos de IA",
   "tabTechnicalGuide": "Guía técnica",
+  "tabLanding": "Página de aterrizaje",
   "themeLight": "Claro",
   "themeDark": "Oscuro",
   "themeCurrentLabel": "Tema",
@@ -50,10 +51,13 @@
   "themeLightMode": "Modo claro",
   "themeDarkMode": "Modo oscuro",
   "home": {
-    "startHere": "¡Empieza tu proyecto aquí!"
+    "startHere": "Construye algo increíble.",
+    "githubProject": "Proyecto en GitHub",
+    "showcasePage": "Ir a la página showcase"
   },
   "demo": {
     "pageTitle": "Aplicación Skeleton",
+    "layoutSubtitle": "Estas páginas son una vista previa en vivo del starter kit. Cada componente está pensado para personalizarse y reutilizarse en tus propios proyectos.",
     "productGuide": {
       "eyebrow": "Construir con AI de forma ordenada",
       "title": "Construir con AI sin crear un caos",
@@ -234,6 +238,10 @@
             "title": "Instalar Node.js",
             "description": "Necesitas Node.js para ejecutar el proyecto localmente si todavía no lo tienes instalado."
           },
+          "pnpm": {
+            "title": "Instalar pnpm",
+            "description": "Esta base usa pnpm; puedes instalarlo desde la página oficial o rápidamente con npm."
+          },
           "vscode": {
             "title": "Descargar VS Code",
             "description": "Un editor popular con un gran ecosistema de extensiones y un flujo de trabajo familiar."
@@ -241,6 +249,14 @@
           "cursor": {
             "title": "Descargar Cursor",
             "description": "Un editor centrado en AI que se siente parecido a VS Code y funciona muy bien para construir con guía."
+          },
+          "claudeCode": {
+            "title": "Descargar Claude Code",
+            "description": "Claude Code es un asistente de programación con AI que entiende la estructura de este proyecto y escribe mejor código."
+          },
+          "githubSignup": {
+            "title": "Crear una cuenta gratuita de GitHub",
+            "description": "Necesitas una cuenta de GitHub para crear tu propia copia de la plantilla del proyecto."
           }
         }
       },
@@ -850,8 +866,105 @@
         "emptyStateSection": "Estado vacío",
         "emptyHeading": "Aún no hay elementos",
         "emptyDescription": "Los estados vacíos explican qué ocurre y qué puede hacer el usuario cuando no hay datos.",
-        "emptyAction": "Acción principal"
+        "emptyAction": "Acción principal",
+        "termTipTitle": "TermTip — definiciones estilo Wikipedia",
+        "termTipHint": "Pasa el cursor (o toca) los términos subrayados para ver su definición.",
+        "termTipDemo1": "Este proyecto usa",
+        "termTipDemo2": "para obtener datos,",
+        "termTipDemo3": "para estado global, y",
+        "termTipDemo4": "para formularios — todo validado con",
+        "termTipDemo5": ".",
+        "termSwr": "SWR",
+        "termZustand": "Zustand",
+        "termRhf": "react-hook-form",
+        "termZod": "Zod",
+        "defSwr": "Una librería de obtención de datos para React. Significa Stale-While-Revalidate: devuelve datos en caché de inmediato y luego actualiza silenciosamente con datos frescos en segundo plano.",
+        "defZustand": "Una librería ligera de estado global para React. Mucho más simple que Redux: sin actions, reducers ni boilerplate. Solo un store y un hook.",
+        "defRhf": "Una librería de formularios eficiente para React. Usa inputs no controlados y refs para reducir re-renderizados y mantener rápidos los formularios grandes.",
+        "defZod": "Una librería de validación de esquemas para TypeScript. Defines la forma de los datos una vez y obtienes validación en runtime e inferencia de tipos en compile-time."
       }
+    },
+    "landing": {
+      "heroBadge": "Cada sección aquí es fácil de reutilizar y personalizar",
+      "heroBackgroundAlt": "Vista estilizada de la Tierra desde el espacio con líneas de red luminosas.",
+      "heroTitle": "Construye más rápido.",
+      "heroAccentPrefix": "Lanza con",
+      "heroAccentRotate1": "confianza.",
+      "heroAccentRotate2": "buenas prácticas.",
+      "heroAccentRotate3": "escalabilidad.",
+      "typewriterPhrase1": "Stack moderno, cero configuración.",
+      "typewriterPhrase2": "Publica en minutos.",
+      "typewriterPhrase3": "Listo para AI desde el primer día.",
+      "typewriterPhrase4": "Creado para productos reales.",
+      "heroCta": "Empezar",
+      "heroSecondary": "Ver código fuente",
+      "marqueeTitle": "Construido con",
+      "motionMarqueeAria": "Marquesina animada de titulares",
+      "motionMarqueeText": "Starter estructurado • Lanza más rápido • Patrones que escalan • ",
+      "motionStackIntroTitle": "Tarjetas apiladas con movimiento",
+      "motionStackIntroHint": "Desplázate hacia abajo: el mazo escala mientras cada capa queda fijada.",
+      "motionStackCard1Title": "Secciones componibles",
+      "motionStackCard1Desc": "Hero, prueba social, precios, FAQ: cada bloque es reutilizable para que el marketing crezca con el producto.",
+      "motionStackCard2Title": "Formularios que se comportan bien",
+      "motionStackCard2Desc": "react-hook-form más validación con Zod mantiene los flujos complejos predecibles sin lógica a medida.",
+      "motionStackCard3Title": "Capa de datos incluida",
+      "motionStackCard3Desc": "useFetch y useMutation envuelven lecturas y escrituras para que las pantallas sean consistentes de principio a fin.",
+      "motionStackImageAlt": "Foto decorativa usada en la demo de tarjetas apiladas",
+      "motionStackSeeMore": "Ver más",
+      "motionRandomizedText": "Convenciones estructuradas. Iteraciones más rápidas.",
+      "statsTitle": "En números",
+      "stat1Label": "min hasta la primera página",
+      "stat2Label": "componentes UI",
+      "stat3Label": "hooks personalizados",
+      "stat4Label": "TypeScript",
+      "featureTitle": "Qué incluye",
+      "feature1Title": "Sistema de formularios",
+      "feature1Desc": "react-hook-form + Zod + componentes de campo compartidos. Un patrón para cada formulario.",
+      "feature2Title": "Obtención de datos",
+      "feature2Desc": "useFetch y useMutation basados en SWR. Sin boilerplate para estados de carga.",
+      "feature3Title": "i18n integrado",
+      "feature3Desc": "next-intl con cambio de idioma por cookie. Todos los textos centralizados.",
+      "ctaTitle": "¿Listo para lanzar?",
+      "ctaSubtitle": "Clona el skeleton y empieza tu próximo proyecto en minutos.",
+      "ctaButton": "Clonar en GitHub",
+      "faqTitle": "Preguntas frecuentes",
+      "faqSubtitle": "Respuestas directas sobre la plantilla: personalización, i18n, datos y autenticación.",
+      "faq1Q": "¿Para qué sirve esta plantilla?",
+      "faq1A": "Es un starter de Next.js con UI compartida, formularios, convenciones de datos, i18n y patrones de rutas para que puedas enfocarte en funciones del producto en lugar de cablear lo básico desde cero.",
+      "faq2Q": "¿Puedo eliminar o reemplazar las páginas demo?",
+      "faq2A": "Sí. Las rutas demo viven bajo la carpeta app demo con componentes de pestañas correspondientes. Elimínalas o cambia el contenido cuando estés listo: el resto del skeleton sigue siendo útil.",
+      "faq3Q": "¿Cómo funciona la internacionalización?",
+      "faq3A": "Los textos viven en archivos de idioma y se cargan con next-intl. Agrega claves para nuevos textos en cada idioma y usa los helpers de traducción del proyecto desde los componentes; no hardcodees texto visible en JSX.",
+      "faq4Q": "¿Cómo debo cargar y actualizar datos?",
+      "faq4A": "Usa el hook compartido useFetch para lecturas y useMutation para escrituras. Envuelven la capa de datos con carga y errores consistentes; evita llamar fetch o axios directamente dentro de componentes.",
+      "faq5Q": "¿La plantilla incluye autenticación?",
+      "faq5A": "Hay un grupo de rutas de auth y patrones de layout que puedes extender. Conecta tu proveedor de identidad o capa de sesión real para producción; el skeleton se enfoca en UI y estructura de app.",
+      "heroSlide1Title": "Lanza en minutos",
+      "heroSlide1Desc": "Clona, configura, despliega.",
+      "heroSlide1Cta": "Ver más",
+      "heroSlide2Title": "Sistema de formularios listo",
+      "heroSlide2Desc": "react-hook-form + Zod + componentes de campo compartidos.",
+      "heroSlide2Cta": "Explorar formularios",
+      "heroSlide3Title": "Internacionalizado desde el primer día",
+      "heroSlide3Desc": "next-intl con soporte RTL y 4 idiomas incluidos.",
+      "heroSlide3Cta": "Ver cómo",
+      "heroSlide4Title": "Diseñado para trabajar con AI",
+      "heroSlide4Desc": "CLAUDE.md le da a tu AI todo el contexto del proyecto.",
+      "heroSlide4Cta": "Empezar",
+      "splitNarrativeEyebrow": "La base",
+      "splitNarrativeTitle": "De una página bonita a una base real de producto",
+      "splitNarrativeStep1Eyebrow": "Primero la historia",
+      "splitNarrativeStep1Title": "Empieza con la historia",
+      "splitNarrativeStep1Desc": "Una landing debe explicar por qué importa tu producto antes de explicar cada función.",
+      "splitNarrativeStep2Eyebrow": "Secciones modulares",
+      "splitNarrativeStep2Title": "Compón a partir de secciones",
+      "splitNarrativeStep2Desc": "Hero, prueba social, problema, producto, precios, FAQ: cada bloque es reutilizable, tipado y fácil de mover.",
+      "splitNarrativeStep3Eyebrow": "Conectado",
+      "splitNarrativeStep3Title": "Conecta con la app",
+      "splitNarrativeStep3Desc": "Tu landing no debe ser una página descartable. Debe vivir junto a tus rutas, auth, formularios, dashboard y futuros flujos de producto.",
+      "splitNarrativeStep4Eyebrow": "Preparado para crecer",
+      "splitNarrativeStep4Title": "Escala sin reescribir",
+      "splitNarrativeStep4Desc": "A medida que el producto crece, el sistema de marketing crece con él: nuevas secciones, nuevos presets, nuevas páginas, misma arquitectura."
     }
   },
   "forms": {
@@ -863,6 +976,7 @@
       "minLength": "Demasiado corto",
       "maxLength": "Demasiado largo",
       "minLen": "Longitud no válida",
+      "maxLen": "Demasiados caracteres",
       "pattern": "Formato no válido",
       "invalid": "Valor no válido",
       "invalidDate": "Fecha no válida",
@@ -975,5 +1089,10 @@
     "title": "Algo salió mal",
     "description": "Ocurrió un error inesperado. Intenta recargar la página.",
     "refresh": "Recargar página"
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "description": "La página que buscas no existe o fue movida.",
+    "back": "Ir al inicio"
   }
 }

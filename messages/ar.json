@@ -25,6 +25,7 @@
   "tabView": "عرض",
   "tabTokenUsage": "نصائح الذكاء الاصطناعي",
   "tabTechnicalGuide": "الدليل التقني",
+  "tabLanding": "صفحة هبوط",
   "themeLight": "فاتح",
   "themeDark": "داكن",
   "themeCurrentLabel": "المظهر",
@@ -50,10 +51,13 @@
   "themeLightMode": "الوضع الفاتح",
   "themeDarkMode": "الوضع الداكن",
   "home": {
-    "startHere": "ابدأ مشروعك من هنا!"
+    "startHere": "أنشئ شيئًا رائعًا.",
+    "githubProject": "مشروع GitHub",
+    "showcasePage": "انتقل إلى صفحة العرض"
   },
   "demo": {
     "pageTitle": "تطبيق Skeleton",
+    "layoutSubtitle": "هذه الصفحات معاينة مباشرة لحزمة البداية. كل مكوّن هنا مصمم ليتم تخصيصه وإعادة استخدامه في مشاريعك.",
     "productGuide": {
       "eyebrow": "ابنِ باستخدام الذكاء الاصطناعي بطريقة منظمة",
       "title": "ابنِ باستخدام الذكاء الاصطناعي من دون فوضى",
@@ -245,6 +249,14 @@
           "cursor": {
             "title": "تنزيل Cursor",
             "description": "محرر يركز على الذكاء الاصطناعي، يشبه VS Code ويعمل بشكل ممتاز للبناء الموجّه."
+          },
+          "claudeCode": {
+            "title": "تنزيل Claude Code",
+            "description": "Claude Code مساعد برمجة بالذكاء الاصطناعي يفهم بنية هذا المشروع ويكتب كودًا أفضل."
+          },
+          "githubSignup": {
+            "title": "إنشاء حساب GitHub مجاني",
+            "description": "تحتاج إلى حساب GitHub لإنشاء نسختك الخاصة من قالب المشروع."
           }
         }
       },
@@ -424,6 +436,7 @@
       },
       "addFeature": {
         "title": "كيف تضيف ميزة جديدة",
+        "note": "سيعرف مساعد الذكاء الاصطناعي كيف ينفذ ذلك لك؛ هذا مجرد شرح يدوي.",
         "description": "نموذج الاتصال في src/features/contact/ هو المثال المرجعي. اتبع نفس الخطوات لأي ميزة جديدة.",
         "stepLabel": "الخطوة {step}"
       },
@@ -853,8 +866,105 @@
         "emptyStateSection": "حالة فارغة",
         "emptyHeading": "لا توجد عناصر بعد",
         "emptyDescription": "الحالة الفارغة توضّح ماذا حدث وماذا يمكن فعله عندما لا توجد بيانات.",
-        "emptyAction": "إجراء رئيسي"
+        "emptyAction": "إجراء رئيسي",
+        "termTipTitle": "TermTip — تعريفات بأسلوب ويكيبيديا",
+        "termTipHint": "مرّر المؤشر فوق المصطلحات المسطرة أو اضغط عليها لرؤية تعريفها.",
+        "termTipDemo1": "يستخدم هذا المشروع",
+        "termTipDemo2": "لجلب البيانات،",
+        "termTipDemo3": "لإدارة الحالة العامة، و",
+        "termTipDemo4": "للنماذج — وكلها موثقة باستخدام",
+        "termTipDemo5": ".",
+        "termSwr": "SWR",
+        "termZustand": "Zustand",
+        "termRhf": "react-hook-form",
+        "termZod": "Zod",
+        "defSwr": "مكتبة لجلب البيانات في React. اختصارها Stale-While-Revalidate: تعرض البيانات المخزنة فورًا ثم تحدّثها بهدوء في الخلفية.",
+        "defZustand": "مكتبة خفيفة لإدارة الحالة العامة في React. أبسط بكثير من Redux: لا actions ولا reducers ولا تعقيد زائد. فقط store و hook.",
+        "defRhf": "مكتبة نماذج عالية الأداء لـ React. تستخدم مدخلات غير متحكم بها و refs لتقليل إعادة التصيير والحفاظ على سرعة النماذج الكبيرة.",
+        "defZod": "مكتبة تحقق من المخططات موجهة لـ TypeScript. تعرّف شكل البيانات مرة واحدة وتحصل على تحقق وقت التشغيل واستنتاج الأنواع وقت البناء."
       }
+    },
+    "landing": {
+      "heroBadge": "كل قسم هنا قابل لإعادة الاستخدام والتخصيص بسهولة",
+      "heroBackgroundAlt": "مشهد زخرفي للأرض من الفضاء مع خطوط شبكة مضيئة.",
+      "heroTitle": "ابنِ بسرعة أكبر.",
+      "heroAccentPrefix": "أطلق بثقة مع",
+      "heroAccentRotate1": "الثقة.",
+      "heroAccentRotate2": "أفضل الممارسات.",
+      "heroAccentRotate3": "قابلية التوسع.",
+      "typewriterPhrase1": "تقنيات حديثة، بلا إعداد معقد.",
+      "typewriterPhrase2": "انشر خلال دقائق.",
+      "typewriterPhrase3": "جاهز للذكاء الاصطناعي من اليوم الأول.",
+      "typewriterPhrase4": "مبني لمنتجات حقيقية.",
+      "heroCta": "ابدأ الآن",
+      "heroSecondary": "عرض الكود المصدري",
+      "marqueeTitle": "مبني باستخدام",
+      "motionMarqueeAria": "شريط عناوين متحرك",
+      "motionMarqueeText": "بداية منظمة • إطلاق أسرع • أنماط قابلة للتوسع • ",
+      "motionStackIntroTitle": "بطاقات متراكبة بالحركة",
+      "motionStackIntroHint": "مرر للأسفل — تتدرج الحزمة بينما تثبت كل طبقة في مكانها.",
+      "motionStackCard1Title": "أقسام قابلة للتركيب",
+      "motionStackCard1Desc": "Hero، إثبات اجتماعي، تسعير، وأسئلة شائعة — كل كتلة قابلة لإعادة الاستخدام حتى ينمو التسويق مع المنتج.",
+      "motionStackCard2Title": "نماذج تعمل كما يجب",
+      "motionStackCard2Desc": "react-hook-form مع تحقق Zod يحافظان على التدفقات المعقدة واضحة من دون حلول مخصصة زائدة.",
+      "motionStackCard3Title": "طبقة بيانات مدمجة",
+      "motionStackCard3Desc": "useFetch و useMutation يغلّفان القراءة والكتابة حتى تبقى الشاشات متسقة من البداية للنهاية.",
+      "motionStackImageAlt": "صورة زخرفية مستخدمة في عرض البطاقات المتراكبة",
+      "motionStackSeeMore": "اعرف المزيد",
+      "motionRandomizedText": "اتفاقيات منظمة. تكرارات أسرع.",
+      "statsTitle": "بالأرقام",
+      "stat1Label": "دقائق لأول صفحة",
+      "stat2Label": "مكوّنات واجهة",
+      "stat3Label": "hooks مخصصة",
+      "stat4Label": "TypeScript",
+      "featureTitle": "ما الموجود بالداخل",
+      "feature1Title": "نظام النماذج",
+      "feature1Desc": "react-hook-form + Zod + مكوّنات حقول مشتركة. نمط واحد لكل نموذج.",
+      "feature2Title": "جلب البيانات",
+      "feature2Desc": "useFetch و useMutation مبنيان على SWR. لا حاجة لتكرار منطق حالة التحميل.",
+      "feature3Title": "i18n مدمج",
+      "feature3Desc": "next-intl مع تبديل اللغة عبر cookie. كل النصوص مركزية.",
+      "ctaTitle": "جاهز للإطلاق؟",
+      "ctaSubtitle": "استنسخ skeleton وابدأ مشروعك التالي خلال دقائق.",
+      "ctaButton": "استنسخ من GitHub",
+      "faqTitle": "الأسئلة الشائعة",
+      "faqSubtitle": "إجابات مباشرة حول القالب — التخصيص، i18n، البيانات، والمصادقة.",
+      "faq1Q": "ما فائدة هذا القالب؟",
+      "faq1A": "إنه starter مبني على Next.js مع واجهة مشتركة، نماذج، اتفاقيات لجلب البيانات، i18n، وأنماط توجيه حتى تركز على ميزات المنتج بدل بناء الأساسيات من الصفر.",
+      "faq2Q": "هل يمكنني إزالة صفحات العرض أو استبدالها؟",
+      "faq2A": "نعم. مسارات العرض موجودة داخل مجلد app demo مع مكوّنات تبويبات مطابقة. احذفها أو استبدل محتواها عندما تكون جاهزًا — وسيبقى باقي skeleton مفيدًا.",
+      "faq3Q": "كيف تعمل الترجمة وتعدد اللغات؟",
+      "faq3A": "النصوص محفوظة في ملفات اللغة وتُحمّل عبر next-intl. أضف مفاتيح لكل نص جديد في كل لغة، واستخدم أدوات الترجمة من المكوّنات — لا تكتب نصوصًا ظاهرة مباشرة داخل JSX.",
+      "faq4Q": "كيف يجب أن أجلب البيانات وأحدّثها؟",
+      "faq4A": "استخدم hook المشترك useFetch للقراءة و useMutation للكتابة. هذه الأدوات تغلّف طبقة البيانات بحالات تحميل وأخطاء متسقة — تجنب استدعاء fetch أو axios مباشرة داخل المكوّنات.",
+      "faq5Q": "هل يتضمن القالب مصادقة؟",
+      "faq5A": "يوجد نمط لمجموعة مسارات auth وتخطيطات يمكنك توسيعها. صِل مزود الهوية أو طبقة الجلسات الحقيقية المناسبة للإنتاج — يركز skeleton على الواجهة وبنية التطبيق.",
+      "heroSlide1Title": "أطلق خلال دقائق",
+      "heroSlide1Desc": "استنسخ، اضبط، وانشر.",
+      "heroSlide1Cta": "اعرف المزيد",
+      "heroSlide2Title": "نظام نماذج جاهز",
+      "heroSlide2Desc": "react-hook-form + Zod + مكوّنات حقول مشتركة.",
+      "heroSlide2Cta": "استكشف النماذج",
+      "heroSlide3Title": "متعدد اللغات من اليوم الأول",
+      "heroSlide3Desc": "next-intl مع دعم RTL و4 لغات مدمجة.",
+      "heroSlide3Cta": "شاهد الطريقة",
+      "heroSlide4Title": "مصمم للعمل مع الذكاء الاصطناعي",
+      "heroSlide4Desc": "CLAUDE.md يمنح مساعد الذكاء الاصطناعي سياق المشروع كاملًا.",
+      "heroSlide4Cta": "ابدأ الآن",
+      "splitNarrativeEyebrow": "الأساس",
+      "splitNarrativeTitle": "من صفحة جميلة إلى أساس حقيقي للمنتج",
+      "splitNarrativeStep1Eyebrow": "القصة أولًا",
+      "splitNarrativeStep1Title": "ابدأ بالقصة",
+      "splitNarrativeStep1Desc": "يجب أن تشرح صفحة الهبوط لماذا يهم منتجك قبل أن تشرح كل ميزة.",
+      "splitNarrativeStep2Eyebrow": "أقسام معيارية",
+      "splitNarrativeStep2Title": "ركّب من الأقسام",
+      "splitNarrativeStep2Desc": "Hero، إثبات اجتماعي، مشكلة، منتج، تسعير، وأسئلة شائعة — كل كتلة قابلة لإعادة الاستخدام، ومكتوبة بأنواع، وسهلة النقل.",
+      "splitNarrativeStep3Eyebrow": "متصل",
+      "splitNarrativeStep3Title": "صِل الصفحة بالتطبيق",
+      "splitNarrativeStep3Desc": "لا ينبغي أن تكون صفحة الهبوط صفحة مؤقتة. يجب أن تعيش بجانب المسارات، والمصادقة، والنماذج، ولوحة التحكم، وتدفقات المنتج المستقبلية.",
+      "splitNarrativeStep4Eyebrow": "جاهز للنمو",
+      "splitNarrativeStep4Title": "توسع من دون إعادة كتابة",
+      "splitNarrativeStep4Desc": "مع نمو المنتج، ينمو نظام التسويق معه — أقسام جديدة، إعدادات جاهزة جديدة، صفحات جديدة، ونفس البنية."
     }
   },
   "forms": {
@@ -866,6 +976,7 @@
       "minLength": "قصير جدًا",
       "maxLength": "طويل جدًا",
       "minLen": "الطول غير صالح",
+      "maxLen": "عدد الأحرف كبير جدًا",
       "pattern": "تنسيق غير صالح",
       "invalid": "قيمة غير صالحة",
       "invalidDate": "تاريخ غير صالح",
@@ -978,5 +1089,10 @@
     "title": "حدث خطأ ما",
     "description": "حدث خطأ غير متوقع. حاول تحديث الصفحة.",
     "refresh": "تحديث الصفحة"
+  },
+  "notFound": {
+    "title": "الصفحة غير موجودة",
+    "description": "الصفحة التي تبحث عنها غير موجودة أو تم نقلها.",
+    "back": "العودة إلى الرئيسية"
   }
 }

@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -17,6 +18,7 @@ import {
   LOCALE_COOKIE,
   LOCALE_COOKIE_MAX_AGE,
   SUPPORTED_LOCALES,
+  getLocaleDirection,
   isAppLocale,
   type AppLocale,
 } from "@/constants/locale";
@@ -31,15 +33,76 @@ const LOCALE_ICON: Record<AppLocale, string> = {
 
 /**
  * Globe trigger opens a compact popover to pick the app locale.
- * Sets `NEXT_LOCALE` and reloads so the server picks up the new locale.
+ * Sets `NEXT_LOCALE` and refreshes server components without a full browser reload.
  */
 export function LocaleDialog() {
   const t = useTranslations();
+  const router = useRouter();
   const rawLocale = useLocale();
   const locale: AppLocale = isAppLocale(rawLocale) ? rawLocale : "en";
   const [open, setOpen] = React.useState(false);
+  const [pendingLocale, setPendingLocale] = React.useState<AppLocale | null>(null);
+  const [isPending, startTransition] = React.useTransition();
+  const isSwitchingLocale = isPending || pendingLocale !== null;
+
+  React.useEffect(() => {
+    if (!pendingLocale) return;
+
+    const root = document.documentElement;
+    const nextDir = getLocaleDirection(pendingLocale);
+    const currentDir = root.dir === "rtl" ? "rtl" : "ltr";
+    const isDirectionChange = currentDir !== nextDir;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const refreshLocale = () => {
+      root.lang = pendingLocale;
+      root.dir = nextDir;
+      startTransition(() => {
+        router.refresh();
+      });
+    };
+
+    if (!isDirectionChange || prefersReducedMotion) {
+      refreshLocale();
+      setPendingLocale(null);
+      return;
+    }
+
+    root.classList.add("locale-direction-switching");
+
+    const fadeOutFrame = window.requestAnimationFrame(() => {
+      root.classList.add("locale-direction-switching-active");
+    });
+
+    const refreshTimer = window.setTimeout(() => {
+      refreshLocale();
+      root.classList.remove("locale-direction-switching-active");
+    }, 240);
+
+    const cleanupTimer = window.setTimeout(() => {
+      root.classList.remove("locale-direction-switching");
+      setPendingLocale(null);
+    }, 720);
+
+    return () => {
+      window.cancelAnimationFrame(fadeOutFrame);
+      window.clearTimeout(refreshTimer);
+      window.clearTimeout(cleanupTimer);
+      root.classList.remove("locale-direction-switching", "locale-direction-switching-active");
+    };
+  }, [pendingLocale, router, startTransition]);
+
+  React.useEffect(() => {
+    if (pendingLocale) return;
+
+    const root = document.documentElement;
+    root.lang = locale;
+    root.dir = getLocaleDirection(locale);
+  }, [locale, pendingLocale]);
 
   const select = (code: AppLocale) => {
+    if (isSwitchingLocale) return;
+
     if (code === locale) {
       setOpen(false);
       return;
@@ -49,7 +112,9 @@ export function LocaleDialog() {
       expires: LOCALE_COOKIE_MAX_AGE / (60 * 60 * 24),
       sameSite: "lax",
     });
-    window.location.reload();
+
+    setOpen(false);
+    setPendingLocale(code);
   };
 
   return (
@@ -62,6 +127,7 @@ export function LocaleDialog() {
           aria-label={t("languageDialogTriggerAria")}
           aria-haspopup="menu"
           aria-expanded={open}
+          disabled={isSwitchingLocale}
         >
           <Iconify icon="lucide:languages" className="size-5" />
         </Button>
@@ -80,6 +146,7 @@ export function LocaleDialog() {
                   role="menuitemradio"
                   aria-checked={active}
                   variant="ghost"
+                  disabled={isSwitchingLocale}
                   className={cn(
                     "relative flex h-auto w-full items-center justify-start rounded-lg px-3 py-3 text-left transition-all outline-none",
                     "hover:bg-accent/80 hover:text-accent-foreground",

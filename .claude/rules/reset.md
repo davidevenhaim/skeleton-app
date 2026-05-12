@@ -2,7 +2,7 @@
 
 This guide tells you exactly what to delete, what to modify, and what to keep when stripping the demo content and starting your own product from scratch.
 
-The skeleton ships with a live demo (`/demo/*`), a contact feature, and a landing page — all as working examples. None of that is infrastructure. All of it is safe to remove.
+The skeleton ships with a live demo (`/demo/*`), a contact feature, and a demo landing page at `/demo/landing` — all as working examples. None of that is infrastructure. All of it is safe to remove.
 
 ---
 
@@ -10,7 +10,7 @@ The skeleton ships with a live demo (`/demo/*`), a contact feature, and a landin
 
 **Infrastructure (keep):** UI components, form system, hooks, utils, stores, i18n setup, API proxy, layout shell, error/not-found pages, types, constants skeleton, root page hero images.
 
-**Demo (delete):** Everything under `/demo`, the contact feature, the landing-page feature, demo components, demo constants, demo translation keys, demo test, orphaned public assets.
+**Demo (delete):** Everything under `/demo`, the contact feature, the demo landing route under `/demo/landing`, demo components, demo constants, demo translation keys, demo test, orphaned public assets, and homepage links that point back to the demo/showcase.
 
 ---
 
@@ -53,9 +53,45 @@ public/window.svg
 
 ## Step 2 — Root Page
 
-`src/app/page.tsx` already shows a hero with "Start your project here!" — it is ready to use as-is after the reset. The image paths are inlined directly so deleting `landing-media.constants.ts` (Step 1) does not break it.
+**Do not delete `src/app/page.tsx`.** Keep the root hero page and the theme/language controls, but remove demo-facing action buttons:
 
-When you are ready to build your real home page, edit `src/app/page.tsx` and replace the hero with your own content.
+- remove the GitHub project button and its `GITHUB_URL` import
+- remove the showcase button and its `WEB_ROUTES.DEMO_GUIDE` link
+- remove unused imports (`Link`, `Button`, `Iconify`, route constants, and app constants)
+
+After the reset, `src/app/page.tsx` should look like this:
+
+```tsx
+import { useTranslations } from "next-intl";
+import { LocaleDialog } from "@/components/app";
+import { HeroWithBackgroundImage } from "@/components/ui/hero-with-background-image";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { Typography } from "@/components/ui/typography";
+
+export default function RootPage() {
+  const t = useTranslations();
+
+  return (
+    <HeroWithBackgroundImage
+      backgroundImageSrc="/landing-page/globe.png"
+      backgroundImageSrcLight="/landing-page/globe-light.png"
+      backgroundImageAlt=""
+      imagePosition="center 75%"
+      contentClassName="mx-auto max-w-4xl"
+    >
+      <div className="flex flex-col items-center gap-6">
+        <Typography variant="h1" className="text-center text-4xl font-bold md:text-6xl">
+          {t("home.startHere")}
+        </Typography>
+        <div className="flex items-center justify-center gap-2">
+          <ThemeToggle className="bg-background/80 border-border/60 border shadow-sm backdrop-blur" />
+          <LocaleDialog />
+        </div>
+      </div>
+    </HeroWithBackgroundImage>
+  );
+}
+```
 
 ---
 
@@ -85,6 +121,12 @@ const API_ROUTES = {
 } as const;
 
 export default API_ROUTES;
+```
+
+`src/constants/app.constants.ts` — remove `GITHUB_URL` if it is only used by the demo/homepage GitHub button. Keep other infrastructure constants:
+
+```ts
+export const DEFAULT_REFRESH_INTERVAL = 1500;
 ```
 
 ---
@@ -118,24 +160,29 @@ Edit all four locale files: `messages/en.json`, `messages/he.json`, `messages/es
 | `notFound`         | `src/app/not-found.tsx`                                                                             |
 | All shared UI keys | (`select`, `search`, `save`, `cancel`, `loading`, theme keys, language keys, pagination keys, etc.) |
 
+Inside `home`, keep `startHere`. Remove `githubProject` and `showcasePage` because they belong to the demo-facing homepage buttons removed in Step 2.
+
 After editing, keep all four locale files in sync — same keys present in all of them.
 
 ---
 
-## Step 5 — Verify Nothing Is Broken
+## Step 5 — Clear Cache and Verify
+
+**Always delete the Next.js cache after the reset** — stale cached routes will cause redirects and broken pages even after files are deleted.
 
 ```bash
+rm -rf .next
 pnpm build        # no import errors
 pnpm test         # src/__tests__/utils.test.ts should still pass
 ```
 
-If the build fails, grep for the deleted paths:
+If the build fails, search for broken imports and leftover demo homepage links:
 
 ```bash
-grep -r "demo-tabs\|guide-sections\|landing-media\|features/contact\|features/landing\|components/demo\|components/marketing" src/
+rg "demo-tabs|guide-sections|landing-media|features/contact|features/landing|components/demo|components/marketing|WEB_ROUTES\.DEMO|WEB_ROUTES\.CONTACT|API_ROUTES\.CONTACT|GITHUB_URL|home\.githubProject|home\.showcasePage" src messages
 ```
 
-Fix any remaining imports before proceeding.
+Fix any remaining imports, then run `pnpm build` again.
 
 ---
 

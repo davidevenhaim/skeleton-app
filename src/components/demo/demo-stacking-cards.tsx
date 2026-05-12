@@ -80,7 +80,7 @@ function StackingCard({
           </div>
 
           <div className="relative h-48 w-full overflow-hidden rounded-lg md:h-full md:min-h-0 md:w-[60%]">
-            <motion.div className="h-full w-full" style={{ scale: imageScale }}>
+            <motion.div className="relative h-full w-full" style={{ scale: imageScale }}>
               <Image
                 fill
                 src={imageUrl}
@@ -118,7 +118,7 @@ export function DemoStackingCards({
   });
 
   return (
-    <div ref={container}>
+    <div ref={container} className="relative">
       <section className="bg-muted/20">
         {cards.map((project, i) => {
           const targetScale = 1 - (cards.length - i) * 0.05;

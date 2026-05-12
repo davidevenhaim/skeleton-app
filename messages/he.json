@@ -51,7 +51,9 @@
   "themeLightMode": "מצב בהיר",
   "themeDarkMode": "מצב כהה",
   "home": {
-    "startHere": "התחילו את הפרויקט שלכם כאן!"
+    "startHere": "תבנו משהו מדהים.",
+    "githubProject": "פרויקט GitHub",
+    "showcasePage": "לעמוד התצוגה"
   },
   "demo": {
     "pageTitle": "Skeleton App",

@@ -134,6 +134,25 @@ body.locale-font-ar {
   --font-app-body: var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html.locale-direction-switching body > * {
+    transition:
+      opacity 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      filter 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  html.locale-direction-switching.locale-direction-switching-active body > * {
+    opacity: 0.08;
+    transform: scale(0.992);
+    filter: blur(3px);
+  }
+}
+
+html.locale-direction-switching {
+  pointer-events: none;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

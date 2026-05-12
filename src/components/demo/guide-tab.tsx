@@ -620,8 +620,29 @@ export function DemoGuideTab() {
 
       {/* Reset tip */}
       {(() => {
-        const RESET_PROMPT =
-          "Delete all demo content from this project and leave only the infrastructure. Follow the reset guide in `.claude/rules/reset.md` step by step. Do not skip the translation cleanup or the route constants cleanup. After deleting, run `pnpm build` and fix any broken imports before finishing.";
+        const RESET_PROMPT = [
+          "Delete demo content by following `.claude/rules/reset.md`.",
+          "",
+          "Important: treat the delete list in Step 1 as an allowlist. Do not delete extra files or directories.",
+          "",
+          "Do NOT delete:",
+          "- `src/app/page.tsx` (only edit it as the reset guide instructs)",
+          "- `public/landing-page/globe.png`",
+          "- `public/landing-page/globe-light.png`",
+          "- the `home` translation key in any locale",
+          "- shared infrastructure under `src/components/ui`, `src/components/form`, `src/hooks`, `src/lib`, `src/store`, `src/utils`, `src/i18n`",
+          "",
+          "Do delete `public/lottie/lottie-demo.json`.",
+          "",
+          "After cleanup:",
+          "- remove `.next`",
+          "- run `pnpm build`",
+          "- run `pnpm test`",
+          "- search for remaining imports/references to deleted demo/contact/landing-demo files",
+          "- remove the homepage GitHub and showcase buttons from `src/app/page.tsx`, including `GITHUB_URL`, `WEB_ROUTES.DEMO_GUIDE`, and their translation keys",
+          "- verify `src/app/page.tsx` still renders `home.startHere`",
+        ].join("\n");
+        const RESET_PROMPT_PREVIEW = `${RESET_PROMPT.split("\n").filter(Boolean).slice(0, 2).join("\n")}\n.....`;
         const copyKey = "reset-tip-prompt";
         return (
           <div className="border-border/60 bg-muted/30 space-y-3 rounded-2xl border p-5">
@@ -642,8 +663,8 @@ export function DemoGuideTab() {
               >
                 {tProductGuide("resetTip.promptLabel")}
               </Typography>
-              <code className="bg-background text-foreground block rounded-md px-2 py-1.5 text-xs leading-relaxed break-all">
-                {RESET_PROMPT}
+              <code className="bg-background text-foreground block rounded-md px-2 py-1.5 text-xs leading-relaxed whitespace-pre-line select-none">
+                {RESET_PROMPT_PREVIEW}
               </code>
               <Button
                 type="button"

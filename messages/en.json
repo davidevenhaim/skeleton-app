@@ -51,7 +51,9 @@
   "themeLightMode": "Light mode",
   "themeDarkMode": "Dark mode",
   "home": {
-    "startHere": "Start your project here!"
+    "startHere": "Build something great.",
+    "githubProject": "GitHub project",
+    "showcasePage": "Go to showcase page"
   },
   "demo": {
     "pageTitle": "Skeleton App",
