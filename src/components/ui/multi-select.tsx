@@ -190,15 +190,24 @@ export function MultiSelect({
     }
   };
 
+  const valuesForOption = React.useCallback(
+    (flat: FlatOpt) => {
+      if (flat.hasChildren) return collectLeafValues(flat.option);
+      return [flat.option.value];
+    },
+    [collectLeafValues]
+  );
+
   const handleSelectAll = () => {
     const targetValues = filteredOptions
-      .map((o) => o.option)
-      .filter((opt) => !opt.disabled)
-      .map((opt) => opt.value);
-    const allTargetSelected = targetValues.every((v) => selected.includes(v));
+      .filter((o) => !o.option.disabled)
+      .flatMap((o) => valuesForOption(o));
+    const allTargetSelected =
+      targetValues.length > 0 && targetValues.every((v) => selected.includes(v));
 
     if (allTargetSelected) {
-      onChange(selected.filter((v) => !targetValues.includes(v)));
+      const toRemove = new Set(targetValues);
+      onChange(selected.filter((v) => !toRemove.has(v)));
     } else {
       const newSelected = [...new Set([...selected, ...targetValues])];
       onChange(typeof maxSelected === "number" ? newSelected.slice(0, maxSelected) : newSelected);
@@ -206,9 +215,11 @@ export function MultiSelect({
   };
 
   const allFilteredSelected = React.useMemo(() => {
-    const enabled = filteredOptions.map((o) => o.option).filter((opt) => !opt.disabled);
-    return enabled.length > 0 && enabled.every((opt) => selected.includes(opt.value));
-  }, [filteredOptions, selected]);
+    const enabled = filteredOptions
+      .filter((o) => !o.option.disabled)
+      .flatMap((o) => valuesForOption(o));
+    return enabled.length > 0 && enabled.every((v) => selected.includes(v));
+  }, [filteredOptions, selected, valuesForOption]);
 
   const selectedOptions = React.useMemo(() => {
     const all = allOptionsFlat.map((o) => o.option);
@@ -379,7 +390,7 @@ export function MultiSelect({
                               toggleFolder(option.value);
                             }}
                             role="button"
-                            aria-label={isExpanded ? "Collapse" : "Expand"}
+                            aria-label={isExpanded ? t("collapseOption") : t("expandOption")}
                           >
                             <Iconify
                               icon={isExpanded ? "lucide:chevron-down" : "lucide:chevron-right"}

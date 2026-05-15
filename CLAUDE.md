@@ -124,6 +124,7 @@ Read the relevant rule file when working in these areas:
 - error handling → `.claude/rules/error-handling.md`
 - auth / permissions → `.claude/rules/auth.md`
 - writing tests → `.claude/rules/testing.md`
+- component reuse / shared UI patterns → `.claude/rules/component-reuse.md`
 - removing demo files / starting fresh → `.claude/rules/reset.md`
 
 ---

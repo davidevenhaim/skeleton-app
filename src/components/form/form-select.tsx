@@ -1,10 +1,10 @@
 "use client";
 
 import { Controller, useFormContext } from "react-hook-form";
-import { useTranslations } from "next-intl";
 import type { SelectOption } from "@/types/ui.types";
 import { Typography } from "@/components/ui/typography";
 import { Field, FieldError, FieldLabel } from "@/components/form/field";
+import { useFieldText } from "@/components/form/utils/translate-field-text";
 import {
   Select,
   SelectContent,
@@ -15,32 +15,15 @@ import {
 
 export type FormSelectProps = {
   name: string;
-  label?: string;
+  label?: React.ReactNode;
   placeholder?: string;
   options: SelectOption[];
   className?: string;
-  /** Enable search filtering in the dropdown */
-  searchable?: boolean;
-  /** Placeholder text for the search input */
-  searchPlaceholder?: string;
 };
 
-export function FormSelect({
-  name,
-  label,
-  placeholder,
-  options,
-  className,
-  searchable = false,
-  searchPlaceholder,
-}: FormSelectProps) {
+export function FormSelect({ name, label, placeholder, options, className }: FormSelectProps) {
   const { control } = useFormContext();
-  const tForms = useTranslations("forms");
-  const tRoot = useTranslations();
-  void searchable;
-  void searchPlaceholder;
-
-  const tr = (key: string) => (key.includes(".") ? tForms(key as never) : tRoot(key as never));
+  const { tr, render } = useFieldText();
 
   return (
     <Controller
@@ -50,7 +33,7 @@ export function FormSelect({
         <Field data-invalid={fieldState.invalid} className={className}>
           {label && (
             <FieldLabel htmlFor={`form-select-${name}`}>
-              <Typography variant="label2">{tr(label)}</Typography>
+              <Typography variant="label2">{render(label)}</Typography>
             </FieldLabel>
           )}
           <Select

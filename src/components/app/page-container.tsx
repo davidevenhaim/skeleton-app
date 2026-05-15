@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
-import Actions from "../demo/layout/actions";
 
 // ----------------------------------------------------------------------
 
@@ -10,6 +9,8 @@ export type PageContainerProps = {
   title?: React.ReactNode;
   /** Optional subtitle or breadcrumb below the title */
   subtitle?: React.ReactNode;
+  /** Optional header actions (e.g. theme toggle, locale picker) */
+  actions?: React.ReactNode;
   /** Page body content */
   children: React.ReactNode;
   className?: string;
@@ -19,19 +20,11 @@ export type PageContainerProps = {
 
 /**
  * Standard page layout wrapper with title, subtitle, actions, and content.
- *
- * @example
- * <PageContainer
- *   title="Users"
- *   subtitle="Manage your team"
- *   actions={<Button>Invite</Button>}
- * >
- *   <DataTable ... />
- * </PageContainer>
  */
 export function PageContainer({
   title,
   subtitle,
+  actions,
   children,
   className,
   maxWidth,
@@ -55,9 +48,7 @@ export function PageContainer({
             </Typography>
           )}
         </div>
-        <div className="flex shrink-0 items-center gap-2">
-          <Actions />
-        </div>
+        {actions ? <div className="flex shrink-0 items-center gap-2">{actions}</div> : null}
       </div>
       {children}
     </div>

@@ -60,21 +60,51 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
 
     const acceptStr = Array.isArray(accept) ? accept.join(",") : accept;
 
-    const validateDroppedFiles = React.useCallback(
-      (items: DataTransferItemList): boolean => {
-        const types = acceptStr?.split(",").filter(Boolean) ?? [];
+    const fileMatchesAccept = React.useCallback(
+      (file: File) => {
+        const types =
+          acceptStr
+            ?.split(",")
+            .map((s) => s.trim())
+            .filter(Boolean) ?? [];
         if (types.length === 0) return true;
-        return Array.from(items).some((item) =>
+        return types.some((type) => {
+          if (type.endsWith("/*")) {
+            return file.type.startsWith(type.replace("/*", ""));
+          }
+          if (type.startsWith(".")) {
+            return file.name.toLowerCase().endsWith(type.toLowerCase());
+          }
+          return file.type === type;
+        });
+      },
+      [acceptStr]
+    );
+
+    const validateDroppedFiles = React.useCallback(
+      (items: DataTransferItemList, files?: FileList) => {
+        if (!acceptStr) return true;
+        const fileArr = files ? Array.from(files) : [];
+        if (fileArr.length > 0) {
+          return fileArr.every(fileMatchesAccept);
+        }
+        const types = acceptStr
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean);
+        return Array.from(items).every((item) =>
           types.some((type) => {
             if (type.endsWith("/*")) {
-              const base = type.replace("/*", "");
-              return item.type.startsWith(base);
+              return item.type.startsWith(type.replace("/*", ""));
+            }
+            if (type.startsWith(".")) {
+              return item.type === "" || item.type.includes(type.slice(1));
             }
             return item.type === type;
           })
         );
       },
-      [acceptStr]
+      [acceptStr, fileMatchesAccept]
     );
 
     return (
@@ -100,8 +130,13 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
 
           const addFiles = (newFiles: FileList | File[]) => {
             const arr = Array.from(newFiles);
-            const valid = maxSize ? arr.filter((f) => f.size <= maxSize) : arr;
-            const newUnique = valid.filter((f) => !isDuplicate(f, fileList));
+            const typeValid = arr.filter(fileMatchesAccept);
+            if (typeValid.length < arr.length) {
+              setDragError(t("errors.fileTypeNotAllowed"));
+            }
+            const sizeValid = maxSize ? typeValid.filter((f) => f.size <= maxSize) : typeValid;
+            const newUnique = sizeValid.filter((f) => !isDuplicate(f, fileList));
+            if (newUnique.length === 0) return;
             field.onChange(multiple ? [...fileList, ...newUnique] : (newUnique[0] ?? fileList[0]));
           };
 
@@ -127,7 +162,7 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
             e.preventDefault();
             e.stopPropagation();
             setIsDragging(true);
-            const valid = validateDroppedFiles(e.dataTransfer.items);
+            const valid = validateDroppedFiles(e.dataTransfer.items, e.dataTransfer.files);
             setDragError(valid ? null : t("errors.fileTypeNotAllowed"));
           };
 
@@ -204,7 +239,7 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
                             size="icon"
                             className="size-6"
                             onClick={() => removeFile(i)}
-                            aria-label="Remove file"
+                            aria-label={t("helpers.removeFile")}
                           >
                             <Iconify icon="lucide:x" className="size-3" />
                           </Button>

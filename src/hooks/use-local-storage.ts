@@ -20,9 +20,9 @@ export function useLocalStorage<T>(key: string, initialState: T): UseLocalStorag
   const canReset = !isEqual(state, initialState);
 
   useEffect(() => {
-    const restoredValue: T = getStorage(key);
+    const restoredValue: T | null = getStorage(key);
 
-    if (restoredValue) {
+    if (restoredValue !== null) {
       if (multiValue) {
         // eslint-disable-next-line react-hooks/set-state-in-effect
         set((prevValue) => ({ ...prevValue, ...restoredValue }));

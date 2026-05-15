@@ -134,7 +134,7 @@ export function LocaleDialog() {
       </PopoverTrigger>
       <PopoverContent align="end" className="w-72 rounded-xl p-2" sideOffset={8}>
         <PopoverHeader className="px-2 pt-1 pb-2">
-          <PopoverTitle className="text-left">{t("languageDialogTitle")}</PopoverTitle>
+          <PopoverTitle className="text-start">{t("languageDialogTitle")}</PopoverTitle>
         </PopoverHeader>
         <ul className="flex flex-col gap-0.5" role="menu">
           {SUPPORTED_LOCALES.map((code) => {
@@ -148,7 +148,7 @@ export function LocaleDialog() {
                   variant="ghost"
                   disabled={isSwitchingLocale}
                   className={cn(
-                    "relative flex h-auto w-full items-center justify-start rounded-lg px-3 py-3 text-left transition-all outline-none",
+                    "relative flex h-auto w-full items-center justify-start rounded-lg px-3 py-3 text-start transition-all outline-none",
                     "hover:bg-accent/80 hover:text-accent-foreground",
                     "focus-visible:bg-accent/80 focus-visible:text-accent-foreground",
                     active && "bg-accent text-accent-foreground shadow-sm"
@@ -157,11 +157,11 @@ export function LocaleDialog() {
                 >
                   {active ? (
                     <span
-                      className="bg-primary absolute inset-y-2 left-1 w-0.5 rounded-full"
+                      className="bg-primary absolute inset-y-2 start-1 w-0.5 rounded-full"
                       aria-hidden
                     />
                   ) : null}
-                  <div className="flex min-w-0 flex-1 items-center gap-3 pr-7 pl-2">
+                  <div className="flex min-w-0 flex-1 items-center gap-3 ps-2 pe-7">
                     <div
                       className={cn(
                         "bg-muted/60 text-foreground flex size-8 shrink-0 items-center justify-center rounded-md",
@@ -173,7 +173,7 @@ export function LocaleDialog() {
                     <Typography
                       variant="label2"
                       as="span"
-                      className="min-w-0 flex-1 truncate text-left font-medium"
+                      className="min-w-0 flex-1 truncate text-start font-medium"
                     >
                       {t(`languages.${code}`)}
                     </Typography>
@@ -181,7 +181,7 @@ export function LocaleDialog() {
                   {active ? (
                     <Iconify
                       icon="lucide:check"
-                      className="absolute right-2.5 size-4 shrink-0"
+                      className="absolute end-2.5 size-4 shrink-0"
                       aria-hidden
                     />
                   ) : null}

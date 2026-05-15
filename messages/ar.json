@@ -11,6 +11,11 @@
   "search": "بحث",
   "clear": "مسح",
   "close": "إغلاق",
+  "collapseOption": "طي",
+  "expandOption": "توسيع",
+  "openSidebar": "فتح الشريط الجانبي",
+  "sidebarTitle": "الشريط الجانبي",
+  "sidebarDescription": "التنقل في الشريط الجانبي للجوال",
   "back": "رجوع",
   "next": "التالي",
   "previous": "السابق",
@@ -1073,7 +1078,10 @@
       "required": "مطلوب",
       "maxSize": "الحد الأقصى للحجم: {size}",
       "acceptedTypes": "الأنواع المدعومة: {types}",
-      "clearFiles": "مسح الكل"
+      "clearFiles": "مسح الكل",
+      "showPassword": "إظهار كلمة المرور",
+      "hidePassword": "إخفاء كلمة المرور",
+      "removeFile": "إزالة الملف"
     }
   },
   "contact": {

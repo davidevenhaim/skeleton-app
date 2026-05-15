@@ -6,6 +6,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
 import { formatFormError } from "./utils/format-form-error";
+import { useFieldText } from "./utils/translate-field-text";
 import { Label } from "@/components/ui/label";
 import Iconify from "@/components/ui/iconify";
 import { Button } from "@/components/ui/button";
@@ -13,7 +14,7 @@ import { Typography } from "@/components/ui/typography";
 
 interface TextInputProps extends Omit<React.ComponentProps<typeof Input>, "name"> {
   name: string;
-  label?: string;
+  label?: React.ReactNode;
   helperText?: string;
   required?: boolean;
   className?: string;
@@ -44,6 +45,7 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
   ) => {
     const { control } = useFormContext();
     const t = useTranslations("forms");
+    const { render } = useFieldText();
     const [showPassword, setShowPassword] = React.useState(false);
     const resolvedType = typeProp ?? inputType;
     const isPassword = resolvedType === "password";
@@ -59,7 +61,7 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
             <div className={cn("w-full", className)}>
               {label && (
                 <Label htmlFor={name} className={cn("mb-1", labelClassName)}>
-                  <Typography variant="caption1">{t(label)}</Typography>
+                  <Typography variant="caption1">{render(label)}</Typography>
                   {required && (
                     <Typography variant="caption2" as="span" color="destructive">
                       *
@@ -94,7 +96,9 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
                     className="absolute end-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                     onClick={() => setShowPassword((p) => !p)}
                     tabIndex={-1}
-                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    aria-label={
+                      showPassword ? t("helpers.hidePassword") : t("helpers.showPassword")
+                    }
                   >
                     <Iconify
                       icon={showPassword ? "lucide:eye-off" : "lucide:eye"}

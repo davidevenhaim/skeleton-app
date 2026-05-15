@@ -5,6 +5,7 @@ import Iconify from "@/components/ui/iconify";
 import { Dialog as SheetPrimitive } from "radix-ui";
 
 import { useDirection } from "@/components/app/direction-provider";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 function Sheet({ ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) {
@@ -49,6 +50,7 @@ function SheetContent({
   side?: "top" | "right" | "bottom" | "left";
   showCloseButton?: boolean;
 }) {
+  const t = useTranslations();
   const dir = useDirection();
   const directionProps = { dir } as Record<string, string>;
 
@@ -76,7 +78,7 @@ function SheetContent({
         {showCloseButton && (
           <SheetPrimitive.Close className="ring-offset-background focus:ring-ring data-[state=open]:bg-secondary absolute end-4 top-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none">
             <Iconify icon="lucide:x" className="size-4" />
-            <span className="sr-only">Close</span>
+            <span className="sr-only">{t("close")}</span>
           </SheetPrimitive.Close>
         )}
       </SheetPrimitive.Content>

@@ -11,6 +11,11 @@
   "search": "חיפוש",
   "clear": "נקה",
   "close": "סגור",
+  "collapseOption": "כווץ",
+  "expandOption": "הרחב",
+  "openSidebar": "פתח תפריט צד",
+  "sidebarTitle": "תפריט צד",
+  "sidebarDescription": "ניווט בתפריט צד למובייל",
   "back": "חזרה",
   "next": "הבא",
   "previous": "הקודם",
@@ -1072,7 +1077,10 @@
       "required": "חובה",
       "maxSize": "עד {size}",
       "acceptedTypes": "קבצים נתמכים: {types}",
-      "clearFiles": "נקה הכול"
+      "clearFiles": "נקה הכול",
+      "showPassword": "הצג סיסמה",
+      "hidePassword": "הסתר סיסמה",
+      "removeFile": "הסר קובץ"
     }
   },
   "contact": {

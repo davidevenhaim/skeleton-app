@@ -11,6 +11,11 @@
   "search": "Search",
   "clear": "Clear",
   "close": "Close",
+  "collapseOption": "Collapse",
+  "expandOption": "Expand",
+  "openSidebar": "Open sidebar",
+  "sidebarTitle": "Sidebar",
+  "sidebarDescription": "Mobile sidebar navigation",
   "back": "Back",
   "next": "Next",
   "previous": "Previous",
@@ -1072,7 +1077,10 @@
       "required": "Required",
       "maxSize": "Maximum size: {size}",
       "acceptedTypes": "Supported types: {types}",
-      "clearFiles": "Clear all"
+      "clearFiles": "Clear all",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "removeFile": "Remove file"
     }
   },
   "contact": {

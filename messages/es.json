@@ -11,6 +11,11 @@
   "search": "Buscar",
   "clear": "Limpiar",
   "close": "Cerrar",
+  "collapseOption": "Contraer",
+  "expandOption": "Expandir",
+  "openSidebar": "Abrir barra lateral",
+  "sidebarTitle": "Barra lateral",
+  "sidebarDescription": "Navegación lateral en móvil",
   "back": "Atrás",
   "next": "Siguiente",
   "previous": "Anterior",
@@ -1073,7 +1078,10 @@
       "required": "Obligatorio",
       "maxSize": "Tamaño máximo: {size}",
       "acceptedTypes": "Tipos admitidos: {types}",
-      "clearFiles": "Limpiar todo"
+      "clearFiles": "Limpiar todo",
+      "showPassword": "Mostrar contraseña",
+      "hidePassword": "Ocultar contraseña",
+      "removeFile": "Eliminar archivo"
     }
   },
   "contact": {

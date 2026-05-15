@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
+import { useDirection } from "@/components/app/direction-provider";
 import { cn } from "@/lib/utils";
 
 export type HeroSlide = {
@@ -33,12 +34,7 @@ export function HeroCarousel({ slides, interval = 5000, className }: HeroCarouse
   const [current, setCurrent] = React.useState(0);
   const [progress, setProgress] = React.useState(0);
   const timerRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
-  const [dir, setDir] = React.useState<"ltr" | "rtl">("ltr");
-
-  React.useEffect(() => {
-    const d = document.documentElement.getAttribute("dir");
-    setDir(d === "rtl" ? "rtl" : "ltr");
-  }, []);
+  const dir = useDirection();
 
   React.useEffect(() => {
     if (!api) return;

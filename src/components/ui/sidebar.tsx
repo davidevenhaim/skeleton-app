@@ -4,6 +4,7 @@ import * as React from "react";
 import { Slot } from "radix-ui";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from "@/components/ui/sheet";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 type SidebarContextValue = {
@@ -46,6 +47,7 @@ function SidebarProvider({ children, className }: React.ComponentProps<"div">) {
 }
 
 function Sidebar({ children, className }: React.ComponentProps<"aside">) {
+  const t = useTranslations();
   const { open, openMobile, setOpenMobile } = useSidebar();
 
   return (
@@ -68,8 +70,8 @@ function Sidebar({ children, className }: React.ComponentProps<"aside">) {
           showCloseButton={false}
           className="bg-sidebar text-sidebar-foreground w-72 p-0"
         >
-          <SheetTitle className="sr-only">Sidebar</SheetTitle>
-          <SheetDescription className="sr-only">Mobile sidebar navigation</SheetDescription>
+          <SheetTitle className="sr-only">{t("sidebarTitle")}</SheetTitle>
+          <SheetDescription className="sr-only">{t("sidebarDescription")}</SheetDescription>
           <aside data-slot="sidebar-mobile" className="flex h-full flex-col">
             {children}
           </aside>
@@ -80,6 +82,7 @@ function Sidebar({ children, className }: React.ComponentProps<"aside">) {
 }
 
 function SidebarTrigger({ className, ...props }: React.ComponentProps<typeof Button>) {
+  const t = useTranslations();
   const { toggleSidebar, setOpenMobile } = useSidebar();
 
   return (
@@ -103,7 +106,7 @@ function SidebarTrigger({ className, ...props }: React.ComponentProps<typeof But
       }}
       {...props}
     >
-      <span className="sr-only">Open sidebar</span>
+      <span className="sr-only">{t("openSidebar")}</span>
       {props.children}
     </Button>
   );

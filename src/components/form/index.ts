@@ -26,3 +26,4 @@ export {
 } from "./field";
 export type { FormSelectProps } from "./form-select";
 export type { FormMultiSelectProps } from "./form-multi-select";
+export { useFieldText } from "./utils/translate-field-text";

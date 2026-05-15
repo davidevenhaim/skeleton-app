@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useTranslations } from "next-intl";
 import { useIsLoading } from "@/store/loader.store";
 import { Spinner } from "@/components/ui/spinner";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -59,7 +60,9 @@ export function LoadingIndicator({
   spinnerClassName,
   skeletonRows = 3,
 }: LoadingIndicatorProps) {
+  const t = useTranslations();
   const isLoading = useIsLoading(loadingKey);
+  const loadingLabel = t("loading");
 
   // ─── spinner ──────────────────────────────────────────────────────────
   if (variant === "spinner") {
@@ -67,7 +70,7 @@ export function LoadingIndicator({
     return (
       <div
         role="status"
-        aria-label="Loading"
+        aria-label={loadingLabel}
         className={cn("flex items-center justify-center", className)}
       >
         <Spinner className={cn("size-5", spinnerClassName)} />
@@ -81,7 +84,7 @@ export function LoadingIndicator({
     return (
       <div
         role="status"
-        aria-label="Loading"
+        aria-label={loadingLabel}
         className={cn(
           "bg-background/60 fixed inset-0 z-[9999] flex items-center justify-center backdrop-blur-sm",
           className
@@ -99,13 +102,13 @@ export function LoadingIndicator({
     if (!isLoading) return <>{children}</>;
     if (children) {
       return (
-        <div role="status" aria-label="Loading" className={cn("animate-pulse", className)}>
+        <div role="status" aria-label={loadingLabel} className={cn("animate-pulse", className)}>
           {children}
         </div>
       );
     }
     return (
-      <div role="status" aria-label="Loading" className={cn("flex flex-col gap-3", className)}>
+      <div role="status" aria-label={loadingLabel} className={cn("flex flex-col gap-3", className)}>
         {Array.from({ length: skeletonRows }).map((_, i) => (
           <Skeleton key={i} className={cn("h-4 w-full", i === skeletonRows - 1 && "w-3/4")} />
         ))}

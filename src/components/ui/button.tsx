@@ -75,7 +75,6 @@ function Button({
   // Slot (asChild) must receive exactly one element — never a sibling loader + children.
   if (asChild && loading) {
     const child = React.Children.only(children) as React.ReactElement<Record<string, unknown>>;
-    const originalOnClick = child.props.onClick as React.MouseEventHandler<HTMLElement> | undefined;
     return (
       <Slot.Root
         data-slot="button"
@@ -89,7 +88,7 @@ function Button({
           tabIndex: -1,
           onClick: (e: React.MouseEvent<HTMLElement>) => {
             e.preventDefault();
-            originalOnClick?.(e);
+            e.stopPropagation();
           },
           children: (
             <>
@@ -116,14 +115,17 @@ function Button({
     );
   }
 
+  const { type = "button", ...buttonProps } = props;
+
   return (
     <button
+      type={type}
       data-slot="button"
       data-variant={variant}
       data-size={size}
       disabled={disabled || loading}
       className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
+      {...buttonProps}
     >
       {loading && <ButtonLoadingIndicator variant={loadingVariant} />}
       {children}

@@ -17,10 +17,11 @@ import { Typography } from "@/components/ui/typography";
 import Iconify from "@/components/ui/iconify";
 import { cn } from "@/lib/utils";
 import type { SelectOption } from "@/types/ui.types";
+import { useFieldText } from "@/components/form/utils/translate-field-text";
 
 export type FormComboboxProps = {
   name: string;
-  label?: string;
+  label?: React.ReactNode;
   placeholder?: string;
   searchPlaceholder?: string;
   emptyLabel?: string;
@@ -38,12 +39,10 @@ export function FormCombobox({
   className,
 }: FormComboboxProps) {
   const { control } = useFormContext();
-  const tForms = useTranslations("forms");
   const tRoot = useTranslations();
+  const { tr, render } = useFieldText();
   const [open, setOpen] = React.useState(false);
   const listboxId = React.useId();
-
-  const tr = (key: string) => (key.includes(".") ? tForms(key as never) : tRoot(key as never));
 
   return (
     <Controller
@@ -56,7 +55,7 @@ export function FormCombobox({
           <Field data-invalid={fieldState.invalid} className={className}>
             {label && (
               <FieldLabel htmlFor={`form-combobox-${name}`}>
-                <Typography variant="label2">{tr(label)}</Typography>
+                <Typography variant="label2">{render(label)}</Typography>
               </FieldLabel>
             )}
             <Popover open={open} onOpenChange={setOpen}>
