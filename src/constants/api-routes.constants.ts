@@ -11,6 +11,9 @@ const API_ROUTES = {
   CONTACT: {
     SUBMIT: "/contact",
   },
+  DEMO: {
+    SEARCH: "/demo/search",
+  },
 } as const;
 
 export default API_ROUTES;

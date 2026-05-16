@@ -43,6 +43,13 @@ import { useWindowSize } from "@/hooks";
 import { useLoaderStore } from "@/store/loader.store";
 import { cn } from "@/lib/utils";
 import { TermTip } from "@/components/ui/term-tip";
+import {
+  ViewCompositesSection,
+  ViewFeedbackSection,
+  ViewIdentityControlsRow,
+  ViewTestimonialsSection,
+  ViewNavigationSection,
+} from "@/components/demo/view-showcase-sections";
 import { inputFormatter } from "@/utils/formatters";
 
 const VARIANT_ROWS: Array<{
@@ -366,14 +373,16 @@ export function DemoTypographyTab() {
               </Typography>
               <ContextMenu>
                 <ContextMenuTrigger asChild>
-                  <button
+                  <Button
                     type="button"
-                    className="border-border bg-muted/20 flex w-full max-w-md items-center justify-center rounded-xl border border-dashed px-4 py-10 text-center outline-none"
+                    variant="ghost"
+                    size="none"
+                    className="border-border bg-muted/20 flex h-auto w-full max-w-md items-center justify-center rounded-xl border border-dashed px-4 py-10 text-center"
                   >
                     <Typography variant="body2" as="span" color="muted">
                       {t("showcase.contextMenuHint")}
                     </Typography>
-                  </button>
+                  </Button>
                 </ContextMenuTrigger>
                 <ContextMenuContent className="w-48">
                   <ContextMenuItem>
@@ -622,6 +631,12 @@ export function DemoTypographyTab() {
                 <ViewResizableScrollSeparatorDemo />
               </div>
             </div>
+
+            <ViewIdentityControlsRow />
+            <ViewNavigationSection />
+            <ViewFeedbackSection />
+            <ViewCompositesSection />
+            <ViewTestimonialsSection />
 
             <div className="space-y-3">
               <Typography variant="label2" as="p" color="muted">

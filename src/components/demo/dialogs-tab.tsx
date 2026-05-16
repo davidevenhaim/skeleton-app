@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { AppDialog } from "@/components/app";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -47,6 +48,24 @@ export function DemoDialogsTab() {
 
   return (
     <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">{tView("showcase.alertTitle")}</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <Alert>
+            <Iconify icon="lucide:info" />
+            <AlertTitle>{tView("showcase.alertInfoTitle")}</AlertTitle>
+            <AlertDescription>{tView("showcase.alertInfoBody")}</AlertDescription>
+          </Alert>
+          <Alert variant="destructive">
+            <Iconify icon="lucide:triangle-alert" />
+            <AlertTitle>{tView("showcase.alertErrorTitle")}</AlertTitle>
+            <AlertDescription>{tView("showcase.alertErrorBody")}</AlertDescription>
+          </Alert>
+        </CardContent>
+      </Card>
+
       <Card>
         <CardHeader>
           <CardTitle>{tDemo("dialogs.toastsAndDialogs")}</CardTitle>

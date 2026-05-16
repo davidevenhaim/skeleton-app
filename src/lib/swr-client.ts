@@ -12,6 +12,10 @@ import { apiClient } from "@/lib/api-client";
 export const fetcher = <T>(url: string): Promise<T> =>
   apiClient.get<T>(url).then((res) => res.data);
 
+/** GET fetcher that does not trigger the global axios overlay loader. */
+export const silentFetcher = <T>(url: string): Promise<T> =>
+  apiClient.get<T>(url, { skipGlobalLoader: true }).then((res) => res.data);
+
 /**
  * Mutation executor for useSWRMutation.
  * Supports POST / PUT / PATCH / DELETE via the `method` key in the extra arg.
