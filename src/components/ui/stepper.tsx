@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { Button } from "@/components/ui/button";
 import Iconify from "@/components/ui/iconify";
 import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
@@ -55,14 +56,16 @@ function StepIndicator({
 
   if (canClick) {
     return (
-      <button
+      <Button
         type="button"
+        variant="ghost"
+        size="none"
         onClick={() => onStepClick?.(index)}
         className={indicatorClass(isComplete, isCurrent)}
         aria-current={isCurrent ? "step" : undefined}
       >
         {content}
-      </button>
+      </Button>
     );
   }
 

@@ -11,6 +11,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { Button } from "@/components/ui/button";
 import Iconify from "@/components/ui/iconify";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Typography } from "@/components/ui/typography";
@@ -47,13 +48,15 @@ export function AutocompleteInput({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <button
+        <Button
           type="button"
+          variant="outline"
+          size="none"
           role="combobox"
           aria-controls={listboxId}
           aria-expanded={open}
           className={cn(
-            "border-input data-[placeholder]:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 flex h-9 w-full items-center justify-between rounded-md border bg-transparent px-3 py-2 text-start font-sans text-sm shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50",
+            "flex h-9 w-full items-center justify-between px-3 py-2 font-sans text-sm font-normal shadow-xs",
             !selected && "text-muted-foreground",
             className
           )}
@@ -62,7 +65,7 @@ export function AutocompleteInput({
             {selected?.label ?? placeholder ?? t("select")}
           </Typography>
           <Iconify icon="lucide:chevrons-up-down" className="ms-2 size-4 shrink-0 opacity-50" />
-        </button>
+        </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" align="start">
         <Command>

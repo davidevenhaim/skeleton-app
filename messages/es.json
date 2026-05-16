@@ -1256,5 +1256,6 @@
     "title": "Notifications",
     "empty": "You're all caught up.",
     "triggerAria": "Notifications, {count} unread"
-  }
+  },
+  "breadcrumbMore": "Más"
 }

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useTranslations } from "next-intl";
 import { Slot } from "radix-ui";
 
 import { cn } from "@/lib/utils";
@@ -76,6 +77,7 @@ function BreadcrumbSeparator({ children, className, ...props }: React.ComponentP
 }
 
 function BreadcrumbEllipsis({ className, ...props }: React.ComponentProps<"span">) {
+  const t = useTranslations();
   return (
     <span
       data-slot="breadcrumb-ellipsis"
@@ -85,7 +87,7 @@ function BreadcrumbEllipsis({ className, ...props }: React.ComponentProps<"span"
       {...props}
     >
       <span className="text-muted-foreground">…</span>
-      <span className="sr-only">More</span>
+      <span className="sr-only">{t("breadcrumbMore")}</span>
     </span>
   );
 }
