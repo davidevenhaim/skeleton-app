@@ -26,6 +26,8 @@ import Iconify from "@/components/ui/iconify";
 import { Typography } from "@/components/ui/typography";
 import { toastSuccess } from "@/lib/toast";
 import { inputFormatter } from "@/utils/formatters";
+import { DateCalendarPreview } from "@/components/demo/date-calendar-preview";
+import { InputsSearchSection } from "@/components/demo/inputs-showcase-sections";
 import {
   CATEGORY_OPTIONS,
   MULTI_OPTIONS,
@@ -349,6 +351,8 @@ export function DemoFormsTab() {
           </Card>
         </Form>
 
+        <InputsSearchSection />
+
         <Form form={dateFileForm} onSubmit={onSubmitDateFile} className="contents">
           <Card className="lg:col-span-2">
             <CardHeader>
@@ -364,6 +368,7 @@ export function DemoFormsTab() {
                 <DateInput name="date" label="labels.date" mode="single" required />
                 <DateInput name="dateRange" label="labels.startDate" mode="range" />
               </div>
+              <DateCalendarPreview />
               <FileUpload
                 name="files"
                 label="labels.upload"

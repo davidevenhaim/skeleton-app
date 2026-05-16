@@ -33,7 +33,12 @@ export const DEMO_TABS: DemoTab[] = [
     icon: "lucide:layout-dashboard",
     href: WEB_ROUTES.DEMO_DASHBOARD,
   },
-  { id: "forms", labelKey: "tabForms", icon: "lucide:file-text", href: WEB_ROUTES.DEMO_FORMS },
+  {
+    id: "forms",
+    labelKey: "tabForms",
+    icon: "lucide:text-cursor-input",
+    href: WEB_ROUTES.DEMO_FORMS,
+  },
   {
     id: "dialogs",
     labelKey: "tabDialogs",

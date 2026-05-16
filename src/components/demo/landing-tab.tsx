@@ -10,6 +10,7 @@ import { InfinityBrandMarquee } from "@/components/ui/animations/infinity-brand-
 import { SpotlightCard } from "@/components/ui/animations/spotlight-card";
 import { HeroCarousel, type HeroSlide } from "@/components/ui/animations/hero-carousel";
 import { DemoStackingCards } from "@/components/demo/demo-stacking-cards";
+import { LandingPricingSection } from "@/components/demo/landing-pricing-section";
 import { RotatingTypewriterText } from "@/components/ui/animations/rotating-typewriter-text";
 import { TypewriterText } from "@/components/ui/animations/typewriter-text";
 import { Button } from "@/components/ui/button";
@@ -292,6 +293,8 @@ export function DemoLandingTab() {
           ))}
         </div>
       </section>
+
+      <LandingPricingSection />
 
       <FaqSection
         title={t("landing.faqTitle")}

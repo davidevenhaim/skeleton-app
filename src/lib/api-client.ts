@@ -2,6 +2,13 @@ import axios, { type AxiosInstance, type AxiosError } from "axios";
 import { CONFIG } from "@/lib/app-config";
 import { clientT } from "@/lib/client-t";
 
+declare module "axios" {
+  export interface AxiosRequestConfig {
+    /** When true, skips the global axios overlay loader for this request. */
+    skipGlobalLoader?: boolean;
+  }
+}
+
 // ----------------------------------------------------------------------
 
 /**
@@ -38,7 +45,9 @@ apiClient.interceptors.request.use(async (config) => {
       import("@/store/loader.store"),
       import("@/store/auth.store"),
     ]);
-    useLoaderStore.getState().add("axios");
+    if (!config.skipGlobalLoader) {
+      useLoaderStore.getState().add("axios");
+    }
     const token = useAuthStore.getState().token;
     if (token) config.headers.Authorization = `Bearer ${token}`;
   }
@@ -47,7 +56,7 @@ apiClient.interceptors.request.use(async (config) => {
 
 apiClient.interceptors.response.use(
   (response) => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined" && !response.config.skipGlobalLoader) {
       import("@/store/loader.store").then(({ useLoaderStore }) => {
         useLoaderStore.getState().remove("axios");
       });
@@ -55,7 +64,7 @@ apiClient.interceptors.response.use(
     return response;
   },
   (error: AxiosError<{ message?: string }>) => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined" && !error.config?.skipGlobalLoader) {
       import("@/store/loader.store").then(({ useLoaderStore }) => {
         useLoaderStore.getState().remove("axios");
       });

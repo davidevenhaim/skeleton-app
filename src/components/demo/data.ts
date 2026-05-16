@@ -182,6 +182,57 @@ export const MULTI_OPTIONS: MultiSelectOption[] = [
   { label: "labels.stackRedis", value: "redis", group: "groups.backend" },
 ];
 
+export type DemoSearchItem = {
+  id: string;
+  labelKey: string;
+  categoryKey: string;
+  /** Lowercase text used for API filtering (not shown in UI). */
+  searchText: string;
+};
+
+export const DEMO_SEARCH_ITEMS: DemoSearchItem[] = [
+  {
+    id: "react-docs",
+    labelKey: "searchItemReactDocs",
+    categoryKey: "searchCategoryDocs",
+    searchText: "react hooks documentation",
+  },
+  {
+    id: "form-patterns",
+    labelKey: "searchItemFormPatterns",
+    categoryKey: "searchCategoryGuide",
+    searchText: "form validation patterns",
+  },
+  {
+    id: "data-table",
+    labelKey: "searchItemDataTable",
+    categoryKey: "searchCategoryComponents",
+    searchText: "data table sorting pagination",
+  },
+  {
+    id: "i18n-setup",
+    labelKey: "searchItemI18n",
+    categoryKey: "searchCategoryGuide",
+    searchText: "internationalization next-intl",
+  },
+  {
+    id: "auth-flow",
+    labelKey: "searchItemAuth",
+    categoryKey: "searchCategoryGuide",
+    searchText: "authentication login session",
+  },
+  {
+    id: "toast-dialogs",
+    labelKey: "searchItemToasts",
+    categoryKey: "searchCategoryComponents",
+    searchText: "toast notifications dialogs",
+  },
+];
+
+export type DemoSearchApiResponse = {
+  items: Array<{ id: string; labelKey: string; categoryKey: string }>;
+};
+
 export type ProductGuideItem = {
   id: string;
   icon: string;
