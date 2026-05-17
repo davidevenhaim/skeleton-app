@@ -221,6 +221,7 @@ export function DemoFormsTab() {
                   name="formatBytes"
                   label="labels.formatBytes"
                   formatter={inputFormatter.bytes}
+                  focusFormatter={inputFormatter.integer}
                   placeholder="placeholders.formatBytes"
                   required
                 />
@@ -366,7 +367,7 @@ export function DemoFormsTab() {
             <CardContent className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <DateInput name="date" label="labels.date" mode="single" required />
-                <DateInput name="dateRange" label="labels.startDate" mode="range" />
+                <DateInput name="dateRange" label="labels.dateRange" mode="range" />
               </div>
               <DateCalendarPreview />
               <FileUpload

@@ -1167,6 +1167,7 @@
       "volume": "Volume",
       "date": "Date",
       "startDate": "Start date",
+      "dateRange": "Date range",
       "endDate": "End date",
       "otp": "Verification code",
       "upload": "File upload",

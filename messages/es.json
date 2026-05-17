@@ -1146,6 +1146,7 @@
       "volume": "Volumen",
       "date": "Fecha",
       "startDate": "Fecha de inicio",
+      "dateRange": "Rango de fechas",
       "endDate": "Fecha de fin",
       "otp": "Código de verificación",
       "upload": "Carga de archivo",

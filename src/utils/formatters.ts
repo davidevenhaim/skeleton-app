@@ -82,24 +82,69 @@ const creditCardFormatter: FormatterFn = {
   parse: (displayValue) => displayValue.replace(/\D/g, ""),
 };
 
+const BYTE_UNITS = ["B", "KB", "MB", "GB", "TB"] as const;
+const BYTE_UNIT_MULTIPLIERS: Record<string, number> = {
+  B: 1,
+  KB: 1024,
+  MB: 1024 ** 2,
+  GB: 1024 ** 3,
+  TB: 1024 ** 4,
+};
+const BYTE_UNIT_SUFFIX = /\s*(TB|GB|MB|KB|B)\s*$/i;
+
 export const formatBytes: FormatterFn = {
   format: (value) => {
     const decimals = 1;
     const bytes = Number(value);
-    if (!Number.isFinite(bytes)) return "0 B";
-    if (bytes === 0) return "0 B";
+    if (!Number.isFinite(bytes) || bytes === 0) return "0 B";
 
     const absBytes = Math.abs(bytes);
-    const units = ["B", "KB", "MB", "GB", "TB"];
     const base = 1024;
-
-    const unitIndex = Math.min(Math.floor(Math.log(absBytes) / Math.log(base)), units.length - 1);
-
+    const unitIndex = Math.min(
+      Math.floor(Math.log(absBytes) / Math.log(base)),
+      BYTE_UNITS.length - 1
+    );
     const output = bytes / Math.pow(base, unitIndex);
 
-    return `${output.toFixed(decimals).replace(/\.0+$/, "")} ${units[unitIndex]}`;
+    return `${output.toFixed(decimals).replace(/\.0+$/, "")} ${BYTE_UNITS[unitIndex]}`;
   },
-  parse: (displayValue) => displayValue.replace(/\D/g, ""),
+  parse: (displayValue) => {
+    const trimmed = displayValue.trim();
+    if (!trimmed) return "";
+
+    const withoutCommas = trimmed.replace(/,/g, "");
+
+    // Raw digits → treat as bytes (user mid-typing)
+    if (/^[\d.]+$/.test(withoutCommas)) {
+      const num = parseFloat(withoutCommas);
+      return Number.isFinite(num) ? String(Math.round(num)) : "";
+    }
+
+    // Unit at end: "10 KB", "1.5 MB"
+    const suffixMatch = withoutCommas.match(BYTE_UNIT_SUFFIX);
+    if (suffixMatch) {
+      const unitKey = suffixMatch[1].toUpperCase();
+      const numericPart = withoutCommas.slice(0, suffixMatch.index).trim();
+      const num = parseFloat(numericPart.replace(/[^\d.]/g, ""));
+      if (!Number.isFinite(num)) return "";
+      return String(Math.round(num * (BYTE_UNIT_MULTIPLIERS[unitKey] ?? 1)));
+    }
+
+    // Digit(s) typed after the unit: "1 KB0" → "10 KB", "1.5 KB0" → "10 KB"
+    // Strip fractional part of the lead so "1.5"+"0" = "10", not "1.50" (digit absorbed)
+    const midMatch = withoutCommas.match(/^([\d.]+)\s*(TB|GB|MB|KB|B)\s*(\d+)$/i);
+    if (midMatch) {
+      const unitKey = midMatch[2].toUpperCase();
+      const leadInt = midMatch[1].split(".")[0];
+      const num = parseFloat(leadInt + midMatch[3]);
+      if (!Number.isFinite(num)) return "";
+      return String(Math.round(num * (BYTE_UNIT_MULTIPLIERS[unitKey] ?? 1)));
+    }
+
+    // Fallback: extract digits, treat as raw bytes
+    const num = parseFloat(withoutCommas.replace(/[^\d.]/g, ""));
+    return Number.isFinite(num) ? String(Math.round(num)) : "";
+  },
 };
 
 /** Integer with commas: 1,234 */

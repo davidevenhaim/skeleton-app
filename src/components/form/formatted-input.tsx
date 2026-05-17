@@ -23,6 +23,13 @@ interface FormattedInputProps extends Omit<
   labelClassName?: string;
   /** Formatter from @/utils/formatters (e.g. dollarFormatter, percentFormatter) */
   formatter: FormatterFn;
+  /**
+   * Optional formatter to use while the input is focused. The main `formatter`
+   * is always used on blur. Useful when the blur format changes its unit label
+   * as the value grows (e.g. bytes: show integer "1,024" while focused,
+   * "1 KB" when blurred).
+   */
+  focusFormatter?: FormatterFn;
 }
 
 export const FormattedInput = React.forwardRef<HTMLInputElement, FormattedInputProps>(
@@ -36,6 +43,7 @@ export const FormattedInput = React.forwardRef<HTMLInputElement, FormattedInputP
       error,
       labelClassName = "",
       formatter,
+      focusFormatter,
       placeholder,
       ...props
     },
@@ -43,6 +51,7 @@ export const FormattedInput = React.forwardRef<HTMLInputElement, FormattedInputP
   ) => {
     const { control } = useFormContext();
     const t = useTranslations("forms");
+    const [isFocused, setIsFocused] = React.useState(false);
 
     return (
       <Controller
@@ -51,7 +60,8 @@ export const FormattedInput = React.forwardRef<HTMLInputElement, FormattedInputP
         render={({ field, fieldState: { error: fieldError } }) => {
           const isNumeric = typeof field.value === "number";
           const raw = String(field.value ?? "");
-          const displayValue = formatter.format(raw);
+          const activeFormatter = focusFormatter && isFocused ? focusFormatter : formatter;
+          const displayValue = activeFormatter.format(raw);
 
           const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             const rawValue = formatter.parse(e.target.value);
@@ -84,7 +94,11 @@ export const FormattedInput = React.forwardRef<HTMLInputElement, FormattedInputP
                 value={displayValue}
                 placeholder={placeholder ? t(placeholder) : ""}
                 onChange={handleChange}
-                onBlur={field.onBlur}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => {
+                  setIsFocused(false);
+                  field.onBlur();
+                }}
                 {...props}
               />
               {(error || fieldError) && (
