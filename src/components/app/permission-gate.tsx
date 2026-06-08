@@ -4,25 +4,22 @@ import type { ReactNode } from "react";
 import { usePermissions } from "@/hooks/use-permissions";
 
 type PermissionGateProps = {
-  roles: string | string[];
   children: ReactNode;
   fallback?: ReactNode;
 };
 
 /**
- * Renders children only when the current user has one of the required roles.
- * Renders fallback (or nothing) otherwise.
+ * Renders children only when the current user is authenticated.
+ * To extend with role checks: see comment in src/hooks/use-permissions.ts —
+ * once `hasRole` is added to the hook, accept a `roles` prop here and gate on it.
  *
  * @example
- * <PermissionGate roles="admin">
- *   <DeleteButton />
- * </PermissionGate>
- *
- * <PermissionGate roles={["admin", "editor"]} fallback={<ReadOnlyView />}>
- *   <EditForm />
+ * <PermissionGate fallback={<LoginPrompt />}>
+ *   <ProtectedUI />
  * </PermissionGate>
  */
-export function PermissionGate({ roles, children, fallback = null }: PermissionGateProps) {
-  const { hasRole } = usePermissions();
-  return hasRole(roles) ? <>{children}</> : <>{fallback}</>;
+export function PermissionGate({ children, fallback = null }: PermissionGateProps) {
+  const { isAuthenticated, isLoading } = usePermissions();
+  if (isLoading) return null;
+  return isAuthenticated ? <>{children}</> : <>{fallback}</>;
 }

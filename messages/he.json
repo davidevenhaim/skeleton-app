@@ -1179,7 +1179,8 @@
       "formatSsn": "מספר זהות / SSN",
       "formatCreditCard": "כרטיס אשראי",
       "formatInteger": "מספר שלם",
-      "formatBytes": "בייטים"
+      "formatBytes": "בייטים",
+      "confirmPassword": "אימות סיסמה"
     },
     "groups": {
       "frontend": "פרונטאנד",
@@ -1257,5 +1258,37 @@
     "empty": "You're all caught up.",
     "triggerAria": "Notifications, {count} unread"
   },
-  "breadcrumbMore": "עוד"
+  "breadcrumbMore": "עוד",
+  "authSupabase": {
+    "loginTitle": "ברוך הבא",
+    "loginSubtitle": "התחבר כדי להמשיך",
+    "signupTitle": "צור חשבון",
+    "signupSubtitle": "זה לוקח רק רגע",
+    "login": "התחבר",
+    "signup": "הרשמה",
+    "logout": "התנתק",
+    "loginFailed": "ההתחברות נכשלה",
+    "signupFailed": "ההרשמה נכשלה",
+    "googleFailed": "ההתחברות עם גוגל נכשלה",
+    "or": "או",
+    "continueWithGoogle": "המשך עם גוגל",
+    "noAccount": "אין לך חשבון?",
+    "haveAccount": "יש לך כבר חשבון?",
+    "supabaseNotConfiguredTitle": "Supabase אינו מחובר",
+    "supabaseNotConfiguredHint": "הוסף את NEXT_PUBLIC_SUPABASE_URL ו-NEXT_PUBLIC_SUPABASE_ANON_KEY לקובץ .env.local — תמצא אותם בעמוד Settings → API של פרויקט הסופבייס שלך."
+  },
+  "todos": {
+    "pageTitle": "המשימות שלך",
+    "pageSubtitle": "דוגמה מהירה של אימות עם Supabase ו-RLS",
+    "placeholder": "מה צריך לעשות?",
+    "add": "הוסף",
+    "delete": "מחק",
+    "empty": "אין משימות עדיין. הוסף אחת למעלה.",
+    "addFailed": "לא ניתן היה להוסיף משימה",
+    "updateFailed": "לא ניתן היה לעדכן משימה",
+    "deleteFailed": "לא ניתן היה למחוק משימה",
+    "loadFailed": "לא ניתן היה לטעון את המשימות",
+    "unconfiguredTitle": "Supabase אינו מחובר",
+    "unconfiguredHint": "לאחר הגדרת NEXT_PUBLIC_SUPABASE_URL ו-NEXT_PUBLIC_SUPABASE_ANON_KEY, צור טבלת todos בפרויקט הסופבייס שלך באמצעות ה-SQL למטה."
+  }
 }

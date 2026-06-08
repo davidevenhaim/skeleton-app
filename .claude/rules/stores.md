@@ -1,14 +1,15 @@
 # Stores and State Management Rules
 
-## The Three Stores
+## The Two Stores
 
-The project has exactly three Zustand stores:
+The project has exactly two Zustand stores:
 
-| Store            | File                        | Purpose                              |
-| ---------------- | --------------------------- | ------------------------------------ |
-| `useAuthStore`   | `src/store/auth.store.ts`   | user, token, isAuthenticated, logout |
-| `useLoaderStore` | `src/store/loader.store.ts` | global HTTP loading state            |
-| `useThemeStore`  | `src/store/theme.store.ts`  | light/dark theme                     |
+| Store            | File                        | Purpose                   |
+| ---------------- | --------------------------- | ------------------------- |
+| `useLoaderStore` | `src/store/loader.store.ts` | global HTTP loading state |
+| `useThemeStore`  | `src/store/theme.store.ts`  | light/dark theme          |
+
+**Auth state is not a Zustand store.** It lives in Supabase cookies and is read via `createClient()` (server) or `usePermissions()` (client). See `.claude/rules/auth.md`.
 
 ## Rules
 
@@ -18,14 +19,12 @@ If state is local to a component or a subtree, use `useState` or `useReducer`.
 
 Do not put server-fetched data into a store — use `useFetch` (SWR handles caching).
 
-## Using the Auth Store
+## Reading Auth State
 
-```ts
-const { user, isAuthenticated, logout } = useAuthStore();
-const { isAdmin, hasRole } = usePermissions(); // preferred for role checks
-```
+Auth state is not stored here. See `.claude/rules/auth.md`.
 
-Do not read `user.role` directly — use `usePermissions()` instead. It provides a clean API (`isAdmin`, `hasRole(["admin", "editor"])`) that is easier to reason about and refactor later.
+- Server: `const supabase = await createClient(); const { data } = await supabase.auth.getUser();`
+- Client: `const { user, isAuthenticated } = usePermissions();`
 
 ## Using the Loader Store
 

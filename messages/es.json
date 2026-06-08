@@ -1180,7 +1180,8 @@
       "formatSsn": "SSN",
       "formatCreditCard": "Tarjeta de crédito",
       "formatInteger": "Entero",
-      "formatBytes": "Bytes"
+      "formatBytes": "Bytes",
+      "confirmPassword": "Confirmar contraseña"
     },
     "groups": {
       "frontend": "Frontend",
@@ -1258,5 +1259,37 @@
     "empty": "You're all caught up.",
     "triggerAria": "Notifications, {count} unread"
   },
-  "breadcrumbMore": "Más"
+  "breadcrumbMore": "Más",
+  "authSupabase": {
+    "loginTitle": "Bienvenido de vuelta",
+    "loginSubtitle": "Inicia sesión para continuar",
+    "signupTitle": "Crea tu cuenta",
+    "signupSubtitle": "Solo toma un minuto",
+    "login": "Iniciar sesión",
+    "signup": "Registrarse",
+    "logout": "Cerrar sesión",
+    "loginFailed": "Error al iniciar sesión",
+    "signupFailed": "Error al registrarse",
+    "googleFailed": "Error al iniciar sesión con Google",
+    "or": "o",
+    "continueWithGoogle": "Continuar con Google",
+    "noAccount": "¿Aún no tienes cuenta?",
+    "haveAccount": "¿Ya tienes una cuenta?",
+    "supabaseNotConfiguredTitle": "Supabase no está conectado",
+    "supabaseNotConfiguredHint": "Añade NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANON_KEY a .env.local — los encuentras en Settings → API de tu proyecto de Supabase."
+  },
+  "todos": {
+    "pageTitle": "Tus tareas",
+    "pageSubtitle": "Demo rápida de Supabase Auth + RLS",
+    "placeholder": "¿Qué hay que hacer?",
+    "add": "Añadir",
+    "delete": "Eliminar",
+    "empty": "Aún no hay tareas. Añade una arriba.",
+    "addFailed": "No se pudo añadir la tarea",
+    "updateFailed": "No se pudo actualizar la tarea",
+    "deleteFailed": "No se pudo eliminar la tarea",
+    "loadFailed": "No se pudieron cargar las tareas",
+    "unconfiguredTitle": "Supabase no está conectado",
+    "unconfiguredHint": "Una vez configures NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANON_KEY, crea la tabla `todos` con el SQL de abajo."
+  }
 }

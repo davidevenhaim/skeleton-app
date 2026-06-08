@@ -8,9 +8,9 @@ The skeleton ships with a live demo (`/demo/*`), a contact feature, and a demo l
 
 ## What Is Demo vs. Infrastructure
 
-**Infrastructure (keep):** UI components, form system, hooks, utils, stores, i18n setup, API proxy, layout shell, error/not-found pages, types, constants skeleton, root page hero images.
+**Infrastructure (keep):** UI components, form system, hooks, utils, stores, i18n setup, API proxy, layout shell, error/not-found pages, types, constants skeleton, root page hero images, **Supabase clients + middleware + auth-supabase feature + login/signup pages**.
 
-**Demo (delete):** Everything under `/demo`, the contact feature, the demo landing route under `/demo/landing`, demo components, demo constants, demo translation keys, demo test, orphaned public assets, and homepage links that point back to the demo/showcase.
+**Demo (delete):** Everything under `/demo`, the contact feature, the demo landing route under `/demo/landing`, demo components, demo constants, demo translation keys, demo test, the `todos` example feature + page, orphaned public assets, and homepage links that point back to the demo/showcase.
 
 ---
 
@@ -23,11 +23,13 @@ Run these deletions. Each one is safe — nothing in the infrastructure imports 
 ```
 src/app/demo/
 src/app/contact/
+src/app/todos/
 src/app/api/proxy/contact/
 src/components/demo/
 src/components/marketing/
 src/features/contact/
 src/features/landing-page/
+src/features/todos/
 ```
 
 ### Individual files
@@ -97,11 +99,14 @@ export default function RootPage() {
 
 ## Step 3 — Clean Up Route Constants
 
-`src/constants/web-routes.constants.ts` — remove all `DEMO_*` keys and `CONTACT`:
+`src/constants/web-routes.constants.ts` — remove all `DEMO_*`, `CONTACT`, and `TODOS` keys. Keep auth routes:
 
 ```ts
 const WEB_ROUTES = {
   HOME: "/",
+  LOGIN: "/login",
+  SIGNUP: "/signup",
+  AUTH_CALLBACK: "/auth/callback",
   // add your own routes here
 } as const;
 
@@ -141,6 +146,7 @@ Edit all four locale files: `messages/en.json`, `messages/he.json`, `messages/es
 | ------------------- | ------------------------ |
 | `demo`              | entire demo UI namespace |
 | `contact`           | contact feature          |
+| `todos`             | todos example feature    |
 | `tabGuide`          | demo tab label           |
 | `tabDashboard`      | demo tab label           |
 | `tabForms`          | demo tab label           |
@@ -156,6 +162,7 @@ Edit all four locale files: `messages/en.json`, `messages/he.json`, `messages/es
 | ------------------ | --------------------------------------------------------------------------------------------------- |
 | `home`             | `src/app/page.tsx` root page                                                                        |
 | `forms`            | form validation error messages (form field components)                                              |
+| `authSupabase`     | login / signup / logout UI (kept as infrastructure)                                                 |
 | `errorBoundary`    | `src/app/error.tsx`                                                                                 |
 | `notFound`         | `src/app/not-found.tsx`                                                                             |
 | All shared UI keys | (`select`, `search`, `save`, `cancel`, `loading`, theme keys, language keys, pagination keys, etc.) |

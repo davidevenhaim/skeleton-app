@@ -2,15 +2,16 @@
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useInView } from "@/hooks/use-in-view";
-import { Typography } from "@/components/ui/typography";
 
 const lettersAndSymbols = "abcdefghijklmnopqrstuvwxyz!@#$%^&*-_+=;:<>,";
 
 interface AnimatedTextProps {
   text: string;
+  /** Wrap in any Typography (or element) — animated text is injected as its children. */
+  children: React.ReactElement;
 }
 
-export function RandomizedTextEffect({ text }: AnimatedTextProps) {
+export function RandomizedTextEffect({ text, children }: AnimatedTextProps) {
   const { ref, inView } = useInView(0.5);
   const [animatedText, setAnimatedText] = useState("");
   const hasAnimated = useRef(false);
@@ -60,11 +61,5 @@ export function RandomizedTextEffect({ text }: AnimatedTextProps) {
     }
   }, [inView, animateText]);
 
-  return (
-    <div ref={ref}>
-      <Typography variant="body1" as="span" className="font-mono tracking-wide">
-        {animatedText || " "}
-      </Typography>
-    </div>
-  );
+  return <div ref={ref}>{React.cloneElement(children, {}, animatedText || " ")}</div>;
 }

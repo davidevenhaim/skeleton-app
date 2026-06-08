@@ -35,16 +35,16 @@ You do not need to understand every file before you start. Most of the infrastru
 
 This repo has many files. Most are either infrastructure you never touch or optional features you can delete later.
 
-| File / folder                            | You can ignore it because                                                                       |
-| ---------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| `src/components/demo/`                   | Home page showcase only. Delete when you build your real app's home page.                       |
-| `src/components/ui/charts/`              | Chart components. Remove if your app has no dashboards.                                         |
-| `src/components/ui/animations/`          | Lottie + CSS animation. Remove if unused.                                                       |
-| `MEMORY.md`, `.claude/rules/`            | Claude Code memory system. Ignore if you're not using Claude Code.                              |
-| `components.json`                        | Only relevant when adding new shadcn/ui components via the `shadcn` CLI.                        |
-| `pnpm-workspace.yaml`                    | pnpm install config. Ignore unless you're troubleshooting package installs.                     |
-| `src/store/auth.store.ts`                | Auth placeholder — stores user and token. Replace with your real auth logic when you add login. |
-| `messages/he.json`, `es.json`, `ar.json` | Remove locales your app doesn't need. Only `en.json` is required.                               |
+| File / folder                            | You can ignore it because                                                                           |
+| ---------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `src/components/demo/`                   | Home page showcase only. Delete when you build your real app's home page.                           |
+| `src/components/ui/charts/`              | Chart components. Remove if your app has no dashboards.                                             |
+| `src/components/ui/animations/`          | Lottie + CSS animation. Remove if unused.                                                           |
+| `MEMORY.md`, `.claude/rules/`            | Claude Code memory system. Ignore if you're not using Claude Code.                                  |
+| `components.json`                        | Only relevant when adding new shadcn/ui components via the `shadcn` CLI.                            |
+| `pnpm-workspace.yaml`                    | pnpm install config. Ignore unless you're troubleshooting package installs.                         |
+| `src/features/auth-supabase/`            | Supabase auth (email/password + Google). Edit the components or swap for a different auth provider. |
+| `messages/he.json`, `es.json`, `ar.json` | Remove locales your app doesn't need. Only `en.json` is required.                                   |
 
 **Do not remove:** `src/app/api/proxy/`, `src/lib/`, `src/constants/`, `src/components/form/`, or `messages/en.json`. Those are load-bearing.
 
@@ -101,7 +101,7 @@ The demo section uses route-per-tab navigation (`/demo/guide`, `/demo/forms`, `/
 | `src/components/demo/`                   | Home page showcase only. Delete when you ship your real home page. |
 | `src/components/ui/charts/`              | Recharts wrappers. Remove if you have no dashboards.               |
 | `src/components/ui/animations/`          | Lottie + CSS animations. Remove if unused.                         |
-| `src/store/auth.store.ts`                | Placeholder — stores user and token. Replace with your real auth.  |
+| `src/features/auth-supabase/`            | Supabase auth feature. Swap if you use a different provider.       |
 | `messages/he.json`, `es.json`, `ar.json` | Keep only the locales your app needs.                              |
 | `src/features/contact/`                  | Example feature. Use it as a template, then delete or adapt it.    |
 
@@ -246,7 +246,6 @@ skeleton-app/
     │   ├── toast.ts          # Typed toast helpers
     │   └── utils.ts          # cn() for Tailwind class merging
     ├── store/
-    │   ├── auth.store.ts     # User + token (localStorage-persisted)
     │   ├── loader.store.ts   # Global loading keys
     │   └── theme.store.ts    # light / dark (localStorage-persisted)
     ├── types/
@@ -485,6 +484,52 @@ const { trigger } = useMutation<User>(API_ROUTES.USERS.DETAIL(id));
 
 ---
 
+## Authentication (Supabase)
+
+The starter ships with **Supabase Auth** wired in via `@supabase/ssr`:
+
+- Email + password signup / login
+- Google OAuth (one-click)
+- HTTP-only cookie session, refreshed by Next.js middleware
+- Server-side and client-side helpers
+- Working `/todos` example with Row Level Security
+
+**Pages out of the box:** `/login`, `/signup`, `/todos`, `/auth/callback`.
+
+**To enable:** add to `.env.local`:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+```
+
+Without these the app still runs — auth pages show a friendly "not configured" notice and the Google button surfaces setup instructions on click.
+
+**On the server (Server Components, Route Handlers, Server Actions):**
+
+```ts
+import { createClient } from "@/lib/supabase/server";
+
+const supabase = await createClient();
+const { data } = await supabase.auth.getUser();
+```
+
+**On the client:**
+
+```ts
+import { usePermissions } from "@/hooks";
+
+const { user, isAuthenticated, isLoading } = usePermissions();
+```
+
+**To add Google OAuth:** in your Supabase dashboard, **Authentication → Providers → Google**, enable, paste Google OAuth client ID + secret, and set the redirect URL to `https://your-domain/auth/callback`.
+
+**To create the `todos` example table:** see the SQL printed on `/todos` when Supabase is unconfigured, or copy it from `src/features/todos/components/TodosList.tsx`.
+
+See `.claude/rules/auth.md` for the full auth guide (route protection, RLS, adding roles).
+
+---
+
 ## Internationalization (i18n)
 
 - **Library:** next-intl 4.8
@@ -505,13 +550,14 @@ const t = useTranslations("forms");
 
 ## State Management
 
-Three Zustand stores, all persisted in localStorage:
+Two Zustand stores, both persisted in localStorage. Auth state lives in Supabase cookies, not a store.
 
-| Store  | Import                          | State                                                               |
-| ------ | ------------------------------- | ------------------------------------------------------------------- |
-| Auth   | `useAuthStore` from `@/store`   | `user`, `token`, `isAuthenticated`, `setUser`, `setToken`, `logout` |
-| Theme  | `useThemeStore` from `@/store`  | `theme` (`"light" \| "dark"`), `setTheme`                           |
-| Loader | `useLoaderStore` from `@/store` | `keys` map, `add`, `remove` — managed by Axios interceptor          |
+| Store  | Import                          | State                                                      |
+| ------ | ------------------------------- | ---------------------------------------------------------- |
+| Theme  | `useThemeStore` from `@/store`  | `theme` (`"light" \| "dark"`), `setTheme`                  |
+| Loader | `useLoaderStore` from `@/store` | `keys` map, `add`, `remove` — managed by Axios interceptor |
+
+For auth — server: `await createClient()` from `@/lib/supabase/server`. Client: `usePermissions()` from `@/hooks`.
 
 ---
 

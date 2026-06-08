@@ -248,7 +248,11 @@ export function DemoLandingTab() {
       {/* ── Randomized text effect (UI Layouts) ─────────────── */}
       <section className="bg-background px-6 py-16">
         <AppearIn className="flex justify-center">
-          <RandomizedTextEffect text={t("landing.motionRandomizedText")} />
+          <RandomizedTextEffect text={t("landing.motionRandomizedText")}>
+            <Typography variant="body1" as="span" className="font-mono tracking-wide">
+              {" "}
+            </Typography>
+          </RandomizedTextEffect>
         </AppearIn>
       </section>
 

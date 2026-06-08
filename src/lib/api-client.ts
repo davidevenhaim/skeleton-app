@@ -40,16 +40,9 @@ export const apiClient: AxiosInstance = axios.create({
 // lazily (avoids circular-import issues with Zustand stores).
 
 apiClient.interceptors.request.use(async (config) => {
-  if (typeof window !== "undefined") {
-    const [{ useLoaderStore }, { useAuthStore }] = await Promise.all([
-      import("@/store/loader.store"),
-      import("@/store/auth.store"),
-    ]);
-    if (!config.skipGlobalLoader) {
-      useLoaderStore.getState().add("axios");
-    }
-    const token = useAuthStore.getState().token;
-    if (token) config.headers.Authorization = `Bearer ${token}`;
+  if (typeof window !== "undefined" && !config.skipGlobalLoader) {
+    const { useLoaderStore } = await import("@/store/loader.store");
+    useLoaderStore.getState().add("axios");
   }
   return config;
 });
@@ -74,8 +67,11 @@ apiClient.interceptors.response.use(
         error.response?.data?.message ?? error.message ?? "An unexpected error occurred";
 
       if (status === 401) {
-        import("@/store/auth.store").then(({ useAuthStore }) => {
-          useAuthStore.getState().logout();
+        // Supabase manages its own session via cookies + middleware.
+        // For this proxied custom-backend client, surface the 401 via toast
+        // and let the page handle navigation (e.g. redirect to /login).
+        import("@/lib/toast").then(({ toastError }) => {
+          toastError(clientT("toastRequestFailed"), message);
         });
       } else if (status >= 400) {
         import("@/lib/toast").then(({ toastError }) => {

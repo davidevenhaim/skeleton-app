@@ -1,5 +1,9 @@
 const WEB_ROUTES = {
   HOME: "/",
+  LOGIN: "/login",
+  SIGNUP: "/signup",
+  TODOS: "/todos",
+  AUTH_CALLBACK: "/auth/callback",
   CONTACT: "/contact",
   DEMO: "/demo",
   DEMO_GUIDE: "/demo/guide",

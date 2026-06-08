@@ -9,7 +9,14 @@ export type AppConfig = {
   supportEmail: string;
   isProd: boolean;
   isDev: boolean;
+  supabaseUrl: string;
+  supabaseAnonKey: string;
+  /** True when both supabase env vars are present. */
+  isSupabaseConfigured: boolean;
 };
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 
 export const CONFIG: AppConfig = {
   appName: process.env.NEXT_PUBLIC_APP_NAME || "",
@@ -21,6 +28,9 @@ export const CONFIG: AppConfig = {
   supportEmail: process.env.NEXT_PUBLIC_SUPPORT_EMAIL || "",
   isProd: process.env.NODE_ENV === "production",
   isDev: process.env.NODE_ENV === "development",
+  supabaseUrl,
+  supabaseAnonKey,
+  isSupabaseConfigured: Boolean(supabaseUrl && supabaseAnonKey),
 };
 
 // Warn in development if required env vars are not set.

@@ -1180,7 +1180,8 @@
       "formatSsn": "SSN",
       "formatCreditCard": "بطاقة ائتمان",
       "formatInteger": "عدد صحيح",
-      "formatBytes": "بايت"
+      "formatBytes": "بايت",
+      "confirmPassword": "تأكيد كلمة المرور"
     },
     "groups": {
       "frontend": "الواجهة الأمامية",
@@ -1258,5 +1259,37 @@
     "empty": "You're all caught up.",
     "triggerAria": "Notifications, {count} unread"
   },
-  "breadcrumbMore": "المزيد"
+  "breadcrumbMore": "المزيد",
+  "authSupabase": {
+    "loginTitle": "مرحبًا بعودتك",
+    "loginSubtitle": "سجّل الدخول للمتابعة",
+    "signupTitle": "أنشئ حسابك",
+    "signupSubtitle": "لن يستغرق الأمر سوى دقيقة",
+    "login": "تسجيل الدخول",
+    "signup": "إنشاء حساب",
+    "logout": "تسجيل الخروج",
+    "loginFailed": "فشل تسجيل الدخول",
+    "signupFailed": "فشل إنشاء الحساب",
+    "googleFailed": "فشل تسجيل الدخول عبر جوجل",
+    "or": "أو",
+    "continueWithGoogle": "المتابعة مع جوجل",
+    "noAccount": "لا تملك حسابًا؟",
+    "haveAccount": "لديك حساب بالفعل؟",
+    "supabaseNotConfiguredTitle": "Supabase غير متصل",
+    "supabaseNotConfiguredHint": "أضف NEXT_PUBLIC_SUPABASE_URL و NEXT_PUBLIC_SUPABASE_ANON_KEY إلى ملف .env.local — تجدهما في صفحة Settings → API لمشروع Supabase الخاص بك."
+  },
+  "todos": {
+    "pageTitle": "مهامك",
+    "pageSubtitle": "عرض سريع لمصادقة Supabase مع RLS",
+    "placeholder": "ما الذي يجب فعله؟",
+    "add": "إضافة",
+    "delete": "حذف",
+    "empty": "لا توجد مهام بعد. أضف واحدة في الأعلى.",
+    "addFailed": "تعذّر إضافة المهمة",
+    "updateFailed": "تعذّر تحديث المهمة",
+    "deleteFailed": "تعذّر حذف المهمة",
+    "loadFailed": "تعذّر تحميل المهام",
+    "unconfiguredTitle": "Supabase غير متصل",
+    "unconfiguredHint": "بعد ضبط NEXT_PUBLIC_SUPABASE_URL و NEXT_PUBLIC_SUPABASE_ANON_KEY، أنشئ جدول `todos` باستخدام شفرة SQL أدناه."
+  }
 }

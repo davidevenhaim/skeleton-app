@@ -436,9 +436,9 @@ export const GUIDE_IGNORE_FILES: GuideIgnoreFile[] = [
     reason: "pnpm install config. Ignore unless troubleshooting package installs.",
   },
   {
-    file: "src/store/auth.store.ts",
+    file: "src/features/auth-supabase/",
     reason:
-      "Auth placeholder — stores user and token. Replace with your real auth logic when you add login.",
+      "Supabase auth flow (email/password + Google). Edit components or delete if you bring your own auth provider.",
   },
   {
     file: "messages/he.json, es.json, ar.json",
@@ -529,8 +529,9 @@ export const GUIDE_OPTIONAL_FILES: GuideOptionalFile[] = [
     notes: "Lottie + CSS animations. Remove if unused.",
   },
   {
-    file: "src/store/auth.store.ts",
-    notes: "Placeholder — stores user and token. Replace with your real auth.",
+    file: "src/features/auth-supabase/",
+    notes:
+      "Supabase auth (email/password + Google). Swap out if you use a different auth provider.",
   },
   {
     file: "messages/he.json, es.json, ar.json",

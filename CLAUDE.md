@@ -71,6 +71,12 @@ Do not introduce unnecessary abstraction or custom patterns when an existing pro
     - Always use `<Typography>` from `@/components/ui/typography`
     - Pick the closest semantic variant (`h1`–`h6`, `subtitle1/2`, `body1/2`, `caption1/2`, `label1/2`, `overline`)
 
+15. Authentication is Supabase, not a custom store.
+    - Server: `await createClient()` from `@/lib/supabase/server`
+    - Client: `usePermissions()` from `@/hooks`
+    - UI/components: reuse `src/features/auth-supabase/` (LoginForm, SignupForm, GoogleButton, LogoutButton)
+    - Every Supabase table must have RLS enabled — see `.claude/rules/auth.md`
+
 ---
 
 ## Workflow Rules

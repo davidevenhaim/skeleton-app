@@ -21,12 +21,15 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "ci": "pnpm run format:check && pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run build",
+    "reset": "node scripts/reset.mjs",
     "prepare": "husky"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "@iconify/react": "^6.0.2",
     "@motionone/utils": "^10.18.0",
+    "@supabase/ssr": "^0.10.3",
+    "@supabase/supabase-js": "^2.107.0",
     "axios": "^1.13.6",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

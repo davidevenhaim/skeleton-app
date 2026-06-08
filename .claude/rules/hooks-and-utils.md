@@ -33,7 +33,7 @@ All hooks are exported from `src/hooks/index.ts`. Check there for the full list.
 | `useTimeout`         | safe `setTimeout` — fires once, clears on unmount                  |
 | `useScrollPosition`  | `{ x, y }` scroll position (debounced, SSR-safe)                   |
 | `useKeyPress`        | keyboard shortcut handler with optional `enabled` flag             |
-| `usePermissions`     | `{ role, isAdmin, isAuthenticated, hasRole() }` from auth store    |
+| `usePermissions`     | `{ user, isAuthenticated, isLoading }` backed by Supabase session  |
 | `useAsync`           | one-shot async state: `{ data, isLoading, error, execute, reset }` |
 
 ## Available Utils
